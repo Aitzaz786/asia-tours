@@ -1,73 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
-import { LuDoorOpen, LuUsers } from "react-icons/lu";
+import { useCallback, useRef } from "react";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { FaArrowRightLong, FaStar } from "react-icons/fa6";
 import { PiAsteriskSimpleFill } from "react-icons/pi";
 import { motion } from "framer-motion";
+import { fleets } from "@/Data/cars";
+import Link from "next/link";
 
-type Fleet = {
-  name: string;
-  category: string;
-  doors: number;
-  passengers: number;
-  price: number;
-  image: string;
-  imageAlt: string;
-};
-
-const fleets: Fleet[] = [
-  {
-    name: "Harrier Wagon",
-    category: "Coupe Car",
-    doors: 4,
-    passengers: 2,
-    price: 169,
-    image: "/fleets/harrier-wagon.svg",
-    imageAlt: "Gray silver coupe car",
-  },
-  {
-    name: "Eclipse Sedan",
-    category: "Coupe Car",
-    doors: 4,
-    passengers: 2,
-    price: 139,
-    image: "/fleets/eclipse-sedan.svg",
-    imageAlt: "Blue coupe sedan",
-  },
-  {
-    name: "Breeze Compact",
-    category: "Convertible Car",
-    doors: 4,
-    passengers: 2,
-    price: 139,
-    image: "/fleets/breeze-compact.svg",
-    imageAlt: "Purple compact convertible",
-  },
-  {
-    name: "Voyager GT",
-    category: "Luxury Car",
-    doors: 4,
-    passengers: 1,
-    price: 259,
-    image: "/fleets/voyager-gt.svg",
-    imageAlt: "Green luxury grand touring car",
-  },
-  {
-    name: "Viper SXT",
-    category: "Coupe Car",
-    doors: 4,
-    passengers: 2,
-    price: 329,
-    image: "/fleets/viper-sxt.svg",
-    imageAlt: "Dark gray black sports coupe",
-  },
-];
 
 export default function OurFleetsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat("en-PK").format(price);
 
   const cardsContainer = {
     hidden: {},
@@ -88,28 +35,24 @@ export default function OurFleetsSection() {
     rest: { y: 0 },
     hover: { y: -6, transition: { duration: 0.3 } },
   };
+const handleScroll = useCallback((direction: "left" | "right") => {
+  const container = scrollRef.current;
+  if (!container) return;
 
-  const handleScroll = (direction: "left" | "right") => {
-    const container = scrollRef.current;
+  const firstCard = container.querySelector<HTMLElement>("[data-fleet-card]");
+  const cardWidth = firstCard?.offsetWidth ?? 292;
+  const gapWidth = 24;
 
-    if (!container) {
-      return;
-    }
-
-    const cardWidth = 292;
-    const gapWidth = 24;
-
-    container.scrollBy({
-      left: direction === "left" ? -(cardWidth + gapWidth) : cardWidth + gapWidth,
-      behavior: "smooth",
-    });
-  };
+  container.scrollBy({
+    left: direction === "left" ? -(cardWidth + gapWidth) : cardWidth + gapWidth,
+    behavior: "smooth",
+  });
+}, []);
 
   return (
     <section className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-      <span className="absolute left-4 top-16 h-3 w-3 rounded-full bg-[#ff4500] sm:left-8 lg:left-14" aria-hidden="true" />
 
-      <div className="mx-auto max-w-350">
+      <div className="mx-auto max-w-400">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -128,81 +71,90 @@ export default function OurFleetsSection() {
         </motion.div>
 
         <motion.div
+          
+          ref={scrollRef}
           variants={cardsContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          ref={scrollRef}
-          className="scrollbar-hide mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 pr-6 pl-1 sm:gap-6 lg:pr-24"
+       
+     
+       
+          className=" mx-auto mt-16 flex max-w-[1680px]  justify-start gap-5  pb-4 pl-1 sm:gap-6"
         >
-          {fleets.map((fleet) => (
-            <motion.article
-              key={fleet.name}
-              variants={cardItem}
-              whileHover="hover"
-              initial="rest"
-              animate="rest"
-              whileTap={{ scale: 0.99 }}
-              className="w-[84vw] min-w-65 max-w-70 shrink-0 snap-start rounded-3xl border border-gray-200 bg-white p-4 sm:w-67.5 sm:p-5"
-            >
-              <motion.div
-                variants={{
-                  rest: { scale: 1 },
-                  hover: { scale: 1.05, transition: { duration: 0.4 } },
-                }}
-                className="flex h-45.5 items-center justify-center rounded-[20px] bg-gray-50 px-4"
-              >
-                <Image
-                  src={fleet.image}
-                  alt={fleet.imageAlt}
-                  width={238}
-                  height={116}
-                  className="h-auto w-full max-w-59.5 object-contain"
-                />
-              </motion.div>
+         {fleets.map((fleet, i) => (
+<motion.div
+  key={i}
+  initial={{ opacity: 0, y: 60 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ delay: i * 0.2, duration: 0.8, type: "spring" }}
+  viewport={{ once: true }}
+  className="group relative flex flex-col min-w-[85%] sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23%]
+  rounded-3xl overflow-hidden 
+  bg-white/60 backdrop-blur-xl border border-white/30 
+  hover:border-[#ff4402]/50 
+  card-shadow 
+  hover:shadow-[0_10px_40px_rgba(255,68,2,0.3)]
+  transition-all duration-500 ease-out hover:scale-[1.04]"
+>
 
-              <div className="mt-5 inline-flex rounded-full bg-gray-950 px-3 py-1 text-xs font-medium text-white">
-                {fleet.category}
-              </div>
+  {/* Image — single container, no nesting */}
+  <div className="relative w-full aspect-[16/10] overflow-hidden">
+    <img
+      src={fleet.image}
+      alt={fleet.imageAlt}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+  </div>
 
-              <h3 className="mt-4 text-[1.15rem] font-bold text-black">{fleet.name}</h3>
+  {/* Content */}
+  <div className="p-5 text-center">
 
-              <div className="mt-5 space-y-3 border-b border-gray-200 pb-5">
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <span className="inline-flex items-center gap-2.5">
-                    <LuDoorOpen className="text-base text-gray-500" aria-hidden="true" />
-                    <span>Doors</span>
-                  </span>
-                  <span>{fleet.doors}</span>
-                </div>
+    {/* Title */}
+    <h3 className="text-xl font-bold text-gray-900 mb-1">
+      {fleet.name}
+    </h3>
 
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <span className="inline-flex items-center gap-2.5">
-                    <LuUsers className="text-base text-gray-500" aria-hidden="true" />
-                    <span>Passengers</span>
-                  </span>
-                  <span>{fleet.passengers}</span>
-                </div>
-              </div>
+    {/* Price */}
+    <p className="text-lg font-semibold text-[#ff4402] mb-4">
+      PKR {fleet.price} / day
+    </p>
 
-              <div className="mt-5 flex items-center justify-between gap-4">
-                <p className="flex items-end gap-1.5 leading-none text-black">
-                  <span className="text-[1.7rem] font-bold">${fleet.price}</span>
-                  <span className="pb-1 text-sm text-gray-500">/Per Day</span>
-                </p>
+    {/* Highlights */}
+    <ul className="text-gray-600 text-sm sm:text-base space-y-1">
+      {fleet.highlights?.map((h, idx) => (
+        <li
+          key={idx}
+          className="relative before:content-['▹'] before:text-[#ff4402] before:mr-2 before:text-base
+          hover:text-gray-900 transition-all duration-300"
+        >
+          {h.label}: {h.value}
+        </li>
+      ))}
+    </ul>
 
-                <motion.button
-                  type="button"
-                  aria-label={`View ${fleet.name}`}
-                  whileHover={{ scale: 1.15, rotate: 45 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e53d00]"
-                >
-                  <FiArrowUpRight className="text-base" aria-hidden="true" />
-                </motion.button>
-              </div>
-            </motion.article>
-          ))}
+    {/* Button */}
+    <Link href={"#"} className="mt-6 inline-block">
+      <button className="relative z-10 mt-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white rounded-xl 
+        bg-gradient-to-r from-[#ff4402] via-[#ff4402] to-[#ff4402] 
+        hover:opacity-90
+        shadow-lg shadow-[#ff4402]/30 hover:shadow-xl hover:shadow-[#ff4402]/50
+        transform hover:scale-105 active:scale-95
+        transition-all duration-300 ease-out
+        group/btn overflow-hidden">
+
+        <span className="relative z-10">Learn More</span>
+
+        <FaArrowRightLong className="w-4 h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform duration-300" />
+
+        {/* Shine Effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out" />
+      </button>
+    </Link>
+
+  </div>
+</motion.div>
+))}
         </motion.div>
 
         <div className="mt-10 flex items-center justify-center gap-4">
