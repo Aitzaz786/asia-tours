@@ -17,10 +17,10 @@ const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 export default function HomePage() {
   return (
     <>
-      <main className="px-3 pb-32 sm:px-5 lg:px-7">
-      <section className=" relative mx-auto h-[78svh] w-full max-w-[1800px] overflow-visible rounded-3xl">
+      <main className="px-3 pb-10 sm:px-5 lg:px-7">
+      <section className=" relative mx-auto h-[85svh] w-full max-w-[1800px]">
       
-  <video
+  {/* <video
     className="absolute inset-0 h-full w-full object-cover rounded-3xl"
     autoPlay
     loop
@@ -30,8 +30,9 @@ export default function HomePage() {
     aria-hidden="true"
   >
     <source src="/landv.webm" type="video/webm" />
-  </video>
-        <div className="absolute inset-0 rounded-3xl bg-black/30" aria-hidden="true" />
+  </video> */}
+<div className="absolute inset-0">  <img src="/hero-bg.jpg" alt="" className="object-cover h-full w-full rounded-[50px]" /></div>
+        <div className="absolute inset-0 rounded-[50px] bg-black/30" aria-hidden="true" />
 
         <div className="relative z-10 flex h-full w-full flex-col items-center justify-center text-center ">
           <motion.p
@@ -99,13 +100,7 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: easeCurve }}
         >
-          <Image
-            src="https://pngimg.com/d/rolls_royce_PNG70.png"
-            alt="Black luxury sedan"
-            width={980}
-            height={410}
-            className="pointer-events-none absolute bottom-[88px] left-1/2 z-20 w-[92%] max-w-[980px] -translate-x-1/2 select-none"
-          />
+  
         </motion.div>
 
         <motion.form

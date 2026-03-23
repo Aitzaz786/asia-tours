@@ -114,7 +114,6 @@ function FeatureCard({ feature, accentDot = false }: { feature: Feature; accentD
         </div>
       </div>
 
-      {accentDot ? <span className="absolute -bottom-1 right-1 h-3 w-3 rounded-full bg-[#ff4500]" aria-hidden="true" /> : null}
     </article>
   );
 }
@@ -142,7 +141,6 @@ export default function WhyChooseUsSection() {
 
   return (
     <section className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-      <span className="absolute left-1/2 top-12 h-3 w-3 -translate-x-1/2 rounded-full bg-[#ff4500]" aria-hidden="true" />
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -210,9 +208,9 @@ export default function WhyChooseUsSection() {
             transition={{ duration: 0.8, ease: easeCurve }}
             className="relative mx-auto w-full max-w-130"
           >
-            <div className="relative h-155 overflow-hidden rounded-t-[260px] rounded-b-[40px] border border-gray-100 bg-[#f8f8f8]">
+            <div className="relative h-155 overflow-hidden rounded-t-[130px] rounded-b-[40px] border border-gray-100 bg-[#f8f8f8]">
               <Image
-                src="/why-choose/city-skyline.svg"
+                src="/205817.jpg"
                 alt="City skyline at sunset"
                 fill
                 className="object-cover object-center"
@@ -221,20 +219,20 @@ export default function WhyChooseUsSection() {
               <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-white/95 via-white/35 to-transparent" aria-hidden="true" />
             </div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.3, ease: easeCurve }}
             >
               <Image
-                src="/why-choose/red-audi.svg"
+                src="/why.png"
                 alt="Red sports car"
                 width={500}
                 height={190}
                 className="pointer-events-none absolute -bottom-7 left-1/2 z-10 w-[92%] max-w-125 -translate-x-1/2"
               />
-            </motion.div>
+            </motion.div> */}
           </motion.div>
 
           <motion.div

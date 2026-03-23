@@ -7,19 +7,19 @@ import { motion } from "framer-motion";
 const sideArticles = [
   {
     title: "Exploring Your Rental Car Options: Sedan, Suv, Or Convertible?",
-    image: "/articles/side-1.svg",
+    image: "/im1.jpeg",
     imageAlt: "Modern villa at dusk with silver sports car",
     showDot: true,
   },
   {
     title: "The Pros And Cons Of Renting A Car Vs. Using Rideshare Services",
-    image: "/articles/side-2.svg",
+    image: "/im3.jpg",
     imageAlt: "Dark modern house with parked car",
     showDot: false,
   },
   {
     title: "Why You Should Consider Renting A Luxury Car For Your Next Trip",
-    image: "/articles/side-3.svg",
+    image: "/im5.jpeg",
     imageAlt: "Red supercar with autumn trees",
     showDot: false,
   },
@@ -68,11 +68,7 @@ function SideArticleCard({ title, image, imageAlt, showDot }: { title: string; i
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="inline-flex items-center gap-2 text-sm text-gray-500">
-          <CalendarIcon className="h-4 w-4" />
-          <span>August 5, 2024</span>
-          {showDot ? <span className="ml-1 inline-block h-2 w-2 rounded-full bg-[#ff4500]" aria-hidden="true" /> : null}
-        </p>
+     
 
         <h3 className="mt-3 text-base font-semibold leading-7 text-black sm:text-lg">
           {title}
@@ -124,7 +120,7 @@ export default function LatestArticlesSection() {
             className="relative min-h-87.5 overflow-hidden rounded-2xl sm:min-h-105 lg:min-h-140"
           >
             <Image
-              src="/articles/featured.svg"
+              src="/sddefault (1).jpg"
               alt="SUV parked by mountain road at sunset"
               fill
               className="object-cover"

@@ -80,27 +80,14 @@ function ServiceIcon({ type }: { type: ServiceCard["icon"] }) {
 export default function OurServicesSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
-  const cardsContainer = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const cardItem = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: easeCurve },
-    },
-  };
+const arrowVariants = {
+  initial: { scale: 1, rotate: 0 },
+  hover: { scale: 1.15, rotate: 45 }
+};
 
   return (
     <section className="relative bg-[#FFF5F2] px-4 py-20 sm:px-8 lg:py-24">
-      <span className="absolute left-8 top-8 h-3 w-3 rounded-full bg-[#ff4500]" aria-hidden="true" />
+
 
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -121,37 +108,51 @@ export default function OurServicesSection() {
         </motion.div>
 
         <motion.div
-          variants={cardsContainer}
+          
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
         >
-          {cards.map((card) => (
-            <motion.article
-              key={card.title}
-              variants={cardItem}
-              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-              transition={{ duration: 0.3 }}
-              className="flex min-h-75 flex-col rounded-2xl border border-orange-100 bg-white p-6"
-            >
-              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#FFE8E0] text-[#111111]">
-                <ServiceIcon type={card.icon} />
-              </div>
+{cards.map((card) => (
+  <motion.article
+    key={card.title}
+    
+    whileHover={{ y: -8 }}
+    transition={{ duration: 0.3 }}
+    className="group relative overflow-hidden flex min-h-75 flex-col rounded-2xl border border-orange-100 bg-white p-6"
+  >
+ 
+<span className="absolute left-1/2 bottom-0 h-[220%] w-[220%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#fe4700] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100  z-0"></span>    {/* Content Wrapper */}
+    <div className="relative z-10 flex flex-col h-full">
+      
+      {/* Icon */}
+      <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#FFE8E0] text-[#111111] transition-all duration-300 group-hover:bg-white group-hover:text-black">
+        <ServiceIcon type={card.icon} />
+      </div>
 
-              <h3 className="text-xl font-bold leading-7 text-black">{card.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-500">{card.description}</p>
+      {/* Title */}
+      <h3 className="text-xl font-bold leading-7 text-black transition-all duration-300 group-hover:text-white">
+        {card.title}
+      </h3>
 
-              <motion.button
-                aria-label={`${card.title} details`}
-                whileHover={{ scale: 1.15, rotate: 45 }}
-                whileTap={{ scale: 0.9 }}
-                className="mt-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#ff4500] text-xl text-white"
-              >
-                ↗
-              </motion.button>
-            </motion.article>
-          ))}
+      {/* Description */}
+      <p className="mt-3 text-sm leading-6 text-gray-500 transition-all duration-300 group-hover:text-white">
+        {card.description}
+      </p>
+
+      {/* Arrow Button */}
+      <motion.button
+        aria-label={`${card.title} details`}
+      
+        whileTap={{ scale: 0.9 }}
+        className="mt-auto inline-flex cursor-pointer h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-2xl text-white transition-all duration-300 group-hover:bg-black group-hover:rotate-45 group-hover:text-white"
+      >
+        ↗
+      </motion.button>
+    </div>
+  </motion.article>
+))}
         </motion.div>
 
         <motion.div
@@ -166,14 +167,14 @@ export default function OurServicesSection() {
           </p>
 
           <div className="mt-7 inline-flex items-center">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="rounded-full bg-[#ff4500] px-7 py-3 text-sm font-semibold text-white">
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className=" cursor-pointer rounded-full bg-[#ff4500] px-7 py-3 text-sm font-semibold text-white">
               View All Service
             </motion.button>
             <motion.button
               aria-label="View all services"
               whileHover={{ scale: 1.15, rotate: 45 }}
               whileTap={{ scale: 0.9 }}
-              className="-ml-1 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#ff4500] text-white"
+              className="ml-2 inline-flex cursor-pointer h-11 w-11 items-center justify-center rounded-full bg-[#ff4500] hover:bg-[black] text-white"
             >
               ↗
             </motion.button>

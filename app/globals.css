@@ -3,13 +3,13 @@
 @import "tailwindcss";
 
 body {
-  font-family: sans-serif;
+  font-family: 'Epilogue', sans-serif;
 }
 .hero-display-font {
   font-family: 'Epilogue', sans-serif;
 }
 .about-serif-font {
-  font-family: 'Playfair Display', serif;
+ font-family: 'Epilogue', sans-serif;
 }
 
 .scrollbar-hide {
@@ -19,4 +19,7 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+.card-shadow {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

@@ -34,7 +34,7 @@ function Chevron() {
 }
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   const toggle = (index: number) => {
@@ -44,7 +44,7 @@ export default function FaqSection() {
   return (
     <section className="bg-white py-24 sm:py-28">
       <div className="mx-4 rounded-3xl bg-[#FFF5F2] px-4 py-16 sm:mx-6 sm:px-8 sm:py-20 lg:mx-8 lg:px-10">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-18">
+        <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-18">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -57,19 +57,19 @@ export default function FaqSection() {
                 },
               },
             }}
-            className="relative order-1 mx-auto h-105 w-full max-w-140 sm:h-125 lg:order-0 lg:h-140"
+            className="relative order-1 mx-auto h-105 w-full max-w-[1500px] sm:h-125 lg:order-0 lg:h-140"
           >
-            <span className="absolute left-[58%] top-3 z-20 h-3 w-3 rounded-full bg-[#ff4500]" aria-hidden="true" />
+   
 
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 26, x: -20 },
                 visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
               }}
-              className="absolute bottom-3 left-1 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:left-1/2 max-sm:w-52.5 max-sm:-translate-x-[58%] sm:w-62.5 sm:-rotate-6"
+              className="absolute top-6 left-1 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:left-1/2 max-sm:w-52.5 max-sm:-translate-x-[58%] sm:w-90.5 sm:-rotate-6"
             >
               <Image
-                src="/faq/city-cranes.svg"
+                src="/range-rover-vogue-01.webp"
                 alt="City skyline with cranes at sunset"
                 width={250}
                 height={320}
@@ -82,31 +82,60 @@ export default function FaqSection() {
                 hidden: { opacity: 0, y: 26, x: 20 },
                 visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
               }}
-              className="absolute bottom-10 right-0 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:right-1/2 max-sm:w-52.5 max-sm:translate-x-[58%] sm:w-62.5 sm:rotate-6"
+              className="absolute top-10 right-0 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:right-1/2 max-sm:w-52.5 max-sm:translate-x-[58%] sm:w-90.5 sm:rotate-6"
             >
               <Image
-                src="/faq/city-plaza.svg"
+                src="/exterior-image-164.avif"
                 alt="Modern city plaza with geometric flooring"
                 width={250}
                 height={320}
                 className="h-auto w-full"
               />
             </motion.div>
-
+    <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 26, x: 20 },
+                visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
+              }}
+              className="absolute bottom-1 right-0 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:right-1/2 max-sm:w-52.5 max-sm:translate-x-[58%] sm:w-90.5 sm:rotate-6"
+            >
+              <Image
+                src="/images.jpg"
+                alt="Modern city plaza with geometric flooring"
+                width={250}
+                height={320}
+                className="h-auto w-full"
+              />
+            </motion.div>
             <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 26, x: -20 },
+                visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
+              }}
+              className="absolute bottom-3 left-1 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:left-1/2 max-sm:w-52.5 max-sm:-translate-x-[58%] sm:w-90.5 sm:-rotate-6"
+            >
+              <Image
+                src="/white-luxury-sedan-2024-bmw-600nw-2499645683.webp"
+                alt="City skyline with cranes at sunset"
+                width={250}
+                height={320}
+                className="h-auto w-full"
+              />
+            </motion.div>
+            {/* <motion.div
               variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: easeCurve } },
               }}
             >
               <Image
-                src="/faq/black-sedan.svg"
+                src="/images-removebg-preview.png"
                 alt="Black luxury sedan"
                 width={520}
                 height={220}
                 className="pointer-events-none absolute bottom-20 left-1/2 z-10 w-[92%] max-w-125 -translate-x-1/2 object-contain max-sm:bottom-24 max-sm:w-full"
               />
-            </motion.div>
+            </motion.div> */}
           </motion.div>
 
           <motion.div

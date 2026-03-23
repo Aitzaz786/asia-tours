@@ -72,7 +72,7 @@ export default function HowItWorksSection() {
 
   return (
     <section className="relative bg-white px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto grid  max-w-[1600px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {/* Left Column */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -151,107 +151,23 @@ export default function HowItWorksSection() {
           transition={{ duration: 0.8, ease: easeCurve }}
           className="relative flex justify-center lg:justify-end"
         >
-          {/* Orange dot floating between columns */}
-          <span
-            className="absolute -left-6 top-1/2 hidden h-3 w-3 rounded-full bg-[#ff4500] lg:block"
-            aria-hidden="true"
-          />
 
           {/* Main image container */}
-          <div className="relative w-full max-w-105">
-            {/* Large orange asterisk */}
-            <motion.span
-              initial={{ opacity: 0, scale: 0, rotate: 0 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: easeCurve }}
-              className="absolute -right-4 -top-2 z-10 text-[80px] leading-none text-[#ff4500] sm:-right-6"
-              aria-hidden="true"
-            >
-              ✳
-            </motion.span>
+          <div className="relative w-full max-w-[1500px]">
+  
 
             {/* Pill-shaped image */}
             <div className="relative h-130 w-full overflow-hidden rounded-[60px] border border-gray-100 sm:h-145 lg:h-155">
               <Image
-                src="/how-it-works-driver.jpg"
+                src="/how-it-work1.webp"
                 alt="Stylish woman with sunglasses and beret sitting in driver seat"
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 90vw, 420px"
+             
               />
             </div>
 
-            {/* 4-pointed star decoration */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.45, ease: easeCurve }}
-              className="absolute -bottom-4 -left-6"
-            >
-              <FourPointStar className="text-[#111]" />
-            </motion.div>
-
-            {/* Stats card */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: easeCurve }}
-              className="absolute -bottom-6 -right-4 z-10 w-46.25 rounded-2xl bg-[#ff4500] p-5 sm:-right-8"
-            >
-              <p className="text-2xl font-bold text-white">5 m+</p>
-              <p className="mt-1 text-sm leading-5 text-white/90">
-                Trusted world wide global clients
-              </p>
-
-              <div className="my-3 w-12 border-t-2 border-white" />
-
-              {/* Avatar group */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.1,
-                    },
-                  },
-                }}
-                className="flex items-center"
-              >
-                <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-[#ff4500]">
-                  <Image
-                    src="/avatars/avatar-1.jpg"
-                    alt="Client"
-                    fill
-                    className="object-cover"
-                  />
-                </motion.div>
-                <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="relative -ml-2 h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-[#ff4500]">
-                  <Image
-                    src="/avatars/avatar-2.jpg"
-                    alt="Client"
-                    fill
-                    className="object-cover"
-                  />
-                </motion.div>
-                <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="relative -ml-2 h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-[#ff4500]">
-                  <Image
-                    src="/avatars/avatar-3.jpg"
-                    alt="Client"
-                    fill
-                    className="object-cover"
-                  />
-                </motion.div>
-                <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="-ml-2 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white">
-                  +
-                </motion.div>
-              </motion.div>
-            </motion.div>
+          
           </div>
         </motion.div>
       </div>
