@@ -21,7 +21,7 @@ export default function RootLayout({
         <link
           rel="preload"
           href="/landv.webm"
-          aafdas="video"
+          as="video"
           type="video/webm"
         />
       </head>
