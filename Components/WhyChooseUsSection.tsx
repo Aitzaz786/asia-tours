@@ -256,30 +256,28 @@ export default function WhyChooseUsSection() {
           </motion.div>
         </div>
 
-       <div className="mt-14 xl:hidden">
-  <div className="relative mx-auto w-full max-w-115">
-    <div className="relative h-130 overflow-hidden rounded-t-[220px] rounded-b-4xl border border-gray-100 bg-[#f8f8f8] sm:h-140">
-      <Image
-        src="/205817.jpg"
-        alt="City skyline at sunset"
-        fill
-        className="object-cover object-center"
-        sizes="(max-width: 768px) 90vw, 460px"
-      />
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-white/95 via-white/35 to-transparent" aria-hidden="true" />
-    </div>
-  </div>
+        <div className="mt-14 xl:hidden">
+          <div className="relative mx-auto w-full max-w-115">
+            <div className="relative h-130 overflow-hidden rounded-t-[220px] rounded-b-4xl border border-gray-100 bg-[#f8f8f8] sm:h-140">
+              <Image
+                src="/205817.jpg"
+                alt="City skyline at sunset"
+                fill
+                className="object-cover object-center"
+              
+              />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-white/95 via-white/35 to-transparent" aria-hidden="true" />
+            </div>
 
-  <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-    {tabletFeatures.map((feature, index) => (
-      <FeatureCard
-        key={feature.title}
-        feature={feature}
-        accentDot={index === tabletFeatures.length - 1}
-      />
-    ))}
-  </div>
-</div>
+       
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
+            {tabletFeatures.map((feature, index) => (
+              <FeatureCard key={feature.title} feature={feature} accentDot={index === tabletFeatures.length - 1} />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
