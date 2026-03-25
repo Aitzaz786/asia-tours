@@ -147,12 +147,20 @@ const testimonials = [
   },
 ];
 
-function SectionLabel({ children, tone = "orange" }: { children: string; tone?: "orange" | "gold" }) {
+function SectionLabel({
+  children,
+  tone = "orange",
+  className = "",
+}: {
+  children: string;
+  tone?: "orange" | "gold";
+  className?: string;
+}) {
   return (
     <p
       className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] ${
         tone === "gold" ? "text-[#c9a96e]" : "text-[#ff4500]"
-      }`}
+      } ${className}`}
     >
       <span className="text-base leading-none">{"\u2733"}</span>
       <span>{children}</span>
@@ -178,18 +186,18 @@ function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
   );
 }
 
-function CheckIcon() {
+function CheckIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4 text-[#ff4500]" aria-hidden="true">
+    <svg viewBox="0 0 20 20" fill="none" className={`h-4 w-4 text-[#ff4500] ${className}`} aria-hidden="true">
       <path d="M4.5 10.5 8 14l7.5-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-function BookingFeatureIcon({ type }: { type: "booking" | "pickup" }) {
+function BookingFeatureIcon({ type, className = "" }: { type: "booking" | "pickup"; className?: string }) {
   if (type === "booking") {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-[#ff4500]" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className={`h-6 w-6 text-[#ff4500] ${className}`} aria-hidden="true">
         <rect x="4" y="5" width="16" height="15" rx="3" stroke="currentColor" strokeWidth="1.8" />
         <path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         <path d="M8 14h3M13 14h3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -198,7 +206,7 @@ function BookingFeatureIcon({ type }: { type: "booking" | "pickup" }) {
   }
 
   return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-[#ff4500]" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className={`h-6 w-6 text-[#ff4500] ${className}`} aria-hidden="true">
       <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" stroke="currentColor" strokeWidth="1.8" />
       <circle cx="12" cy="9" r="2.3" stroke="currentColor" strokeWidth="1.8" />
     </svg>
@@ -304,7 +312,7 @@ function AboutHeroSection() {
 
           <div className="relative mx-auto flex h-full min-h-[360px] items-end lg:justify-end">
             <div className="grid w-full gap-4 sm:grid-cols-3 lg:w-[88%] lg:grid-cols-1 xl:grid-cols-3">
-              {heroStats.map((stat, index) => (
+              {heroStats.map((stat) => (
                 <div
                   key={stat.label}
                   className={`rounded-[30px] border border-white/10 bg-[rgba(9,15,23,0.68)] p-5 shadow-[0_28px_80px_rgba(0,0,0,0.28)] backdrop-blur-md`}
@@ -492,7 +500,7 @@ function PartnersSection() {
 
   {/* Beautiful Partner Cards */}
 <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  {partners.map((partner, index) => (
+  {partners.map((partner) => (
     <div
       key={partner.name}
       className="group relative flex flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:border-orange-200"
