@@ -4,18 +4,43 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import CtaBannerSection from "@/Components/CtaBannerSection";
 
 type TabKey = "vision" | "mission" | "approach";
 
 const partners = [
-  "Luxe Group",
-  "Royal Drive",
-  "Prime Executive",
-  "Velour Travel",
-  "Summit Elite",
-  "Urban Majesty",
-  "Prestige Route",
-  "Grand Horizon",
+  {
+    name: "Luxe Group",
+    description: "Premium luxury fleet and corporate travel solutions",
+  },
+  {
+    name: "Royal Drive",
+    description: "Exclusive chauffeur-driven experiences",
+  },
+  {
+    name: "Velour Travel",
+    description: "Boutique travel and event transportation",
+  },
+  {
+    name: "Summit Elite",
+    description: "High-end business and leisure transport",
+  },
+  {
+    name: "Urban Majesty",
+    description: "Modern urban mobility partner",
+  },
+  {
+    name: "Prestige Route",
+    description: "Signature routes for distinguished clients",
+  },
+  {
+    name: "Grand Horizon",
+    description: "Luxury long-distance and intercity travel",
+  },
+  {
+    name: "Elite Voyage",
+    description: "Curated journeys for elite clientele",
+  },
 ];
 
 const heroStats = [
@@ -360,7 +385,7 @@ function AboutStorySection() {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.9 }}
-            className="absolute left-0 top-6 h-[380px] w-[380px] overflow-hidden rounded-[50%] border-[10px] border-white shadow-2xl sm:h-[430px] sm:w-[430px] lg:h-[460px] lg:w-[460px]"
+            className="absolute left-0 top-0 h-[380px] w-[380px] overflow-hidden rounded-[50%] border-[10px] border-white shadow-2xl sm:h-[430px] sm:w-[430px] lg:h-[500px] lg:w-[500px]"
           >
             <Image
               src="/Range-Rover.avif"
@@ -376,7 +401,7 @@ function AboutStorySection() {
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="absolute bottom-0 right-0 h-[300px] w-[300px] overflow-hidden rounded-[50%] border-[14px] border-white shadow-2xl sm:h-[380px] sm:w-[380px] lg:right-0"
+            className="absolute bottom-0 right-0 h-[300px] w-[300px] overflow-hidden rounded-[50%] border-[14px] border-white shadow-2xl sm:h-[380px] sm:w-[380px] lg:right-30"
           >
             <Image
               src="/2023-BMW-i7-exterior-1-scaled.jpg"
@@ -452,29 +477,40 @@ function AboutStorySection() {
 
 function PartnersSection() {
   return (
-    <section className="rounded-[40px] bg-[linear-gradient(180deg,#fff4ee,#fef1ea)] px-6 py-12 text-[#111111] sm:px-8 lg:px-12">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+    <section className="bg-[linear-gradient(180deg,#fff4ee,#fef1ea)] px-6 py-12 text-[#111111] sm:px-8 lg:px-12">
+      <div className="mx-auto  w-full text-center">
         <div>
           <SectionLabel>Executive Partners</SectionLabel>
-          <h2 className="mt-4 max-w-xl text-3xl font-semibold leading-tight sm:text-4xl">
+          <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
             Trusted by leading brands
           </h2>
         </div>
-        <p className="max-w-xl text-sm leading-7 text-[#6f6b67]">
+        <p className=" text-sm leading-7 text-[#6f6b67]">
           We proudly support corporate travel, luxury events, airport services, and executive road movement for respected partners across Pakistan.
         </p>
       </div>
 
-      <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {partners.map((partner) => (
-          <div
-            key={partner}
-            className="group flex h-24 items-center justify-center rounded-[24px] border border-[#f3d8cf] bg-white/80 text-center text-sm font-semibold uppercase tracking-[0.22em] text-[#3b3b3b] transition-all duration-300 hover:-translate-y-1 hover:border-[#ff4500]/35 hover:shadow-[0_16px_40px_rgba(255,69,0,0.08)]"
-          >
-            {partner}
-          </div>
-        ))}
+  {/* Beautiful Partner Cards */}
+<div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {partners.map((partner, index) => (
+    <div
+      key={partner.name}
+      className="group relative flex flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:border-orange-200"
+    >
+      {/* Soft hover glow */}
+      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
+      <div className="relative z-10 text-center">
+        <p className="font-semibold text-xl tracking-wide text-gray-900 transition-colors group-hover:text-orange-600">
+          {partner.name}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-gray-500 line-clamp-2">
+          {partner.description}
+        </p>
       </div>
+    </div>
+  ))}
+</div>
     </section>
   );
 }
@@ -489,60 +525,81 @@ function VisionMissionSection({
   const activeContent = tabContent[activeTab];
 
   return (
-    <section className="relative overflow-hidden rounded-[40px] border border-white/8 bg-[#0b121c] px-6 py-12 sm:px-8 lg:px-12">
-      <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(255,69,0,0.12),transparent_68%)]" />
-      <SectionLabel>Vision Mission</SectionLabel>
-      <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-[3rem]">
-        Driving excellence and innovation in car rental services
-      </h2>
+    <section className="relative overflow-hidden bg-white px-6 py-12 sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <SectionLabel className="text-[#ff4500]">Vision Mission</SectionLabel>
 
-      <div className="mt-8 flex flex-wrap gap-3">
-        {([
-          ["vision", "Our Vision"],
-          ["mission", "Our Mission"],
-          ["approach", "Our Approach"],
-        ] as const).map(([key, label]) => {
-          const active = activeTab === key;
-          return (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setActiveTab(key)}
-              className={`rounded-full px-5 py-3 text-sm font-semibold transition-all ${
-                active
-                  ? "bg-[#ff4500] text-white shadow-[0_14px_35px_rgba(255,69,0,0.24)]"
-                  : "border border-[#394251] text-[#d6d6d6] hover:border-[#ff4500] hover:text-white"
-              }`}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </div>
+        <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-gray-900 sm:text-4xl lg:text-[3rem]">
+          Driving excellence and innovation in car rental services
+        </h2>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#c9a96e]">{activeContent.eyebrow}</p>
-          <h3 className="mt-4 max-w-xl text-3xl font-semibold leading-tight text-white">{activeContent.heading}</h3>
-          <p className="mt-5 max-w-xl text-base leading-8 text-[#b8b8b8]">{activeContent.description}</p>
-
-          <ul className="mt-8 space-y-4">
-            {activeContent.bullets.map((bullet) => (
-              <li key={bullet} className="flex items-start gap-3 text-sm leading-7 text-[#dddddd]">
-                <span className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#22120d]">
-                  <CheckIcon />
-                </span>
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-8 flex flex-wrap gap-3">
+          {([
+            ["vision", "Our Vision"],
+            ["mission", "Our Mission"],
+            ["approach", "Our Approach"],
+          ] as const).map(([key, label]) => {
+            const active = activeTab === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setActiveTab(key)}
+                className={`rounded-full px-6 py-3 text-sm font-semibold transition-all ${
+                  active
+                    ? "bg-[#ff4500] text-white shadow-[0_10px_30px_rgba(255,69,0,0.3)]"
+                    : "border border-gray-300 bg-white text-gray-700 hover:border-[#ff4500] hover:text-[#ff4500]"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
 
-        <div className="relative">
-          <div className="absolute -left-6 top-8 hidden h-[78%] w-[78%] rounded-[36px] border border-[#ff4500]/20 lg:block" />
-          <div className="relative h-[330px] overflow-hidden rounded-[34px] border border-white/10 sm:h-[450px]">
-            <Image src={activeContent.image} alt={activeContent.imageAlt} fill className="object-cover" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,10,17,0.04),rgba(5,10,17,0.3))]" />
+        <div className="mt-10 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          {/* Left Content */}
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#c9a96e]">
+              {activeContent.eyebrow}
+            </p>
+            <h3 className="mt-4 max-w-xl text-3xl font-semibold leading-tight text-gray-900">
+              {activeContent.heading}
+            </h3>
+            <p className="mt-5 max-w-xl text-base leading-8 text-gray-600">
+              {activeContent.description}
+            </p>
+
+            <ul className="mt-8 space-y-4">
+              {activeContent.bullets.map((bullet) => (
+                <li
+                  key={bullet}
+                  className="flex items-start gap-3 text-sm leading-7 text-gray-700"
+                >
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ff4500]/10">
+                    <CheckIcon className="h-4 w-4 text-[#ff4500]" />
+                  </span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right Image */}
+          <div className="relative">
+            {/* Decorative border */}
+            <div className="absolute -left-6 top-8 hidden h-[78%] w-[78%] rounded-[36px] border border-[#ff4500]/20 lg:block" />
+
+            <div className="relative h-[330px] overflow-hidden rounded-[34px] border border-gray-200 sm:h-[450px]">
+              <Image
+                src={activeContent.image}
+                alt={activeContent.imageAlt}
+                fill
+                className="object-cover"
+              />
+              {/* Light overlay gradient */}
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.25))]" />
+            </div>
           </div>
         </div>
       </div>
@@ -552,62 +609,110 @@ function VisionMissionSection({
 
 function VideoStatsSection() {
   return (
-    <section className="rounded-[40px] bg-[linear-gradient(180deg,#fff7f2,#fff0e7)] px-6 py-12 text-[#111111] sm:px-8 lg:px-12">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <SectionLabel>Watch Our Video</SectionLabel>
-          <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-[3rem]">
-            Discover what sets us apart in the car rental industry
-          </h2>
-        </div>
-      </div>
+    <section className="bg-white px-6 py-16 text-[#111111] sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+          {/* Left Side - Heading + Content */}
+          <div className="lg:max-w-lg">
+            <SectionLabel>Watch Our Video</SectionLabel>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        <div className="relative min-h-[340px] overflow-hidden rounded-[32px]">
-          <Image src="/black.jpeg" alt="Luxury black car outside a hotel" fill className="object-cover" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.15),rgba(17,17,17,0.7))]" />
-          <div className="relative z-10 flex h-full flex-col justify-end p-7 text-white">
-            <p className="text-5xl font-semibold sm:text-6xl">3100+</p>
-            <p className="mt-2 text-lg font-medium text-white/92">satisfied customer</p>
-            <div className="mt-6 flex items-center">
-              <div className="flex items-center -space-x-3">
-                {["/avatars/avatar-1.jpg", "/avatars/avatar-2.jpg", "/avatars/avatar-3.jpg"].map((avatar) => (
-                  <div key={avatar} className="relative h-11 w-11 overflow-hidden rounded-full border-2 border-white">
-                    <Image src={avatar} alt="" fill className="object-cover" />
-                  </div>
-                ))}
-              </div>
-              <button
-                type="button"
-                className="ml-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#ff4500] text-xl font-semibold text-white"
-                aria-label="More customers"
-              >
-                +
-              </button>
+            <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl lg:text-[3rem]">
+              Discover what sets us apart in the car rental industry
+            </h2>
+
+            <div className="mt-6 space-y-5 text-lg leading-relaxed text-gray-600">
+          
+              <p>
+                 At our core, we believe in delivering more than just a car — we deliver 
+                Watch our videos to see how we combine <strong>premium vehicles</strong>, 
+                exceptional service, and innovative technology to create the ultimate 
+                car rental experience.
+              </p>
+          
             </div>
           </div>
-        </div>
 
-        <div className="relative min-h-[340px] overflow-hidden rounded-[32px]">
-          <Image src="/2023-BMW-i7-exterior-1-scaled.jpg" alt="Luxury executive sedan for promotional video" fill className="object-cover" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.22),rgba(17,17,17,0.5))]" />
-          <div className="relative z-10 flex h-full items-center justify-center">
-            <button
-              type="button"
-              aria-label="Play company video"
-              className="flex h-20 w-20 items-center justify-center rounded-full bg-[#ff4500] text-white shadow-[0_20px_60px_rgba(255,69,0,0.35)] transition-transform hover:scale-105"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-7 w-7" aria-hidden="true">
-                <path d="M8 6.5v11l9-5.5-9-5.5Z" />
-              </svg>
-            </button>
+          {/* Right Side - Two Videos Stacked */}
+          <div className="w-full lg:w-[55%]">
+            <div className="grid gap-6">
+              {/* Top Video */}
+              <div className="relative aspect-video w-full overflow-hidden rounded-3xl shadow-xl">
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/YFNSDdrElfc"
+                  title="BMW M4 Cinematic Edit - Luxury Car Experience"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
+function ContactGatewaySection() {
+  return (
+    <section className="relative flex h-[400px] w-full items-center justify-center overflow-hidden bg-white px-6">
+      {/* Subtle Background Elements */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
+        <span className="text-[20rem] font-bold tracking-tighter text-slate-900 select-none">
+          ASIA
+        </span>
+      </div>
 
+      <div className="relative z-10 flex flex-col items-center text-center">
+        {/* Small Logo / Icon */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#ff4500]"
+        >
+          <span className="text-2xl font-bold">✦</span>
+        </motion.div>
+
+        {/* Content */}
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Ready to elevate <span className="text-[#ff4500]">your journey?</span>
+        </h2>
+        <p className="mt-4 max-w-md text-slate-500">
+          Tailored luxury transport services for executive and private travel.
+        </p>
+
+        {/* Centralized Button Area */}
+        <div className="group relative mt-10">
+          <Link
+            href="/contact-us"
+            className="relative z-10 block rounded-full bg-[#ff4500] px-10 py-4 text-sm font-bold uppercase tracking-widest text-white transition-transform duration-300 hover:scale-105 active:scale-95"
+          >
+            Contact Us
+          </Link>
+          
+          {/* The 1px Animated Line logic */}
+          <div className="absolute left-1/2 top-full mt-4 h-[1px] w-0 -translate-x-1/2 bg-[#ff4500] transition-all duration-500 group-hover:w-32" />
+        </div>
+
+        {/* Footer info in section */}
+        <div className="mt-12 flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            24/7 Support
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            Secure Booking
+          </div>
+        </div>
+      </div>
+
+      {/* Vertical Animated Lines (Optional Decorative) */}
+      <div className="absolute bottom-0 left-10 h-20 w-[1px] bg-gradient-to-t from-orange-100 to-transparent" />
+      <div className="absolute top-0 right-10 h-20 w-[1px] bg-gradient-to-b from-orange-100 to-transparent" />
+    </section>
+  );
+}
 function TestimonialsSection({
   testimonialStart,
   setTestimonialStart,
@@ -617,59 +722,91 @@ function TestimonialsSection({
 }) {
   const visibleTestimonials = useMemo(
     () =>
-      Array.from({ length: 3 }, (_, offset) => testimonials[(testimonialStart + offset) % testimonials.length]),
+      Array.from(
+        { length: 3 },
+        (_, offset) => testimonials[(testimonialStart + offset) % testimonials.length]
+      ),
     [testimonialStart]
   );
 
   return (
-    <section className="rounded-[40px] border border-white/8 bg-[#0b121c] px-6 py-12 sm:px-8 lg:px-12">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <SectionLabel>Testimonials</SectionLabel>
-          <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-[3rem]">
-            What our customers are saying about us
+    <section className="relative overflow-hidden rounded-[48px] bg-[#fff5f3] px-6 py-24 sm:px-8 lg:px-16">
+      <div className="relative z-10 mx-auto max-w-7xl">
+        
+        {/* Header */}
+        <div className="mb-16 flex flex-col items-center text-center">
+          <span className="inline-block rounded-full border border-[#ff4402]/20 bg-[#ff4402]/5 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#ff4402]">
+            Testimonials
+          </span>
+          <h2 className="mt-8 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+            What our clients <span className="text-[#ff4402]">truly think.</span>
           </h2>
         </div>
-      </div>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
-        {visibleTestimonials.map((testimonial, index) => (
-          <article
-            key={`${testimonial.name}-${index}`}
-            className="rounded-[28px] border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ff4500]/20 hover:bg-white/[0.045]"
+        {/* Testimonials Grid */}
+        <div className="grid gap-8 lg:grid-cols-3">
+          {visibleTestimonials.map((testimonial, index) => (
+            <motion.article
+              key={`${testimonial.name}-${index}`}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="group relative flex flex-col justify-between overflow-hidden rounded-[40px] border border-orange-100 bg-white p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,68,2,0.15)]"
+            >
+              {/* The Expanding Circle Background Effect */}
+              <span className="absolute left-1/2 bottom-0 z-0 h-[250%] w-[250%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#ff4402] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100"></span>
+
+              {/* Content Wrapper (Must be relative z-10 to stay above the orange circle) */}
+              <div className="relative z-10">
+                <StarRating rating={testimonial.rating} />
+                <blockquote className="mt-8 text-xl font-medium leading-relaxed text-slate-700 transition-colors duration-300 group-hover:text-white">
+                  “{testimonial.text}”
+                </blockquote>
+              </div>
+
+              <div className="relative z-10 mt-12 flex items-center gap-5 pt-8 border-t border-slate-100 transition-colors duration-300 group-hover:border-white/20">
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl ring-2 ring-transparent transition-all duration-300 group-hover:ring-white/30">
+                  <Image
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-white">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-sm font-medium text-slate-500 transition-colors duration-300 group-hover:text-white/80">
+                    {testimonial.role}
+                  </p>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        {/* Navigation Buttons (Premium Style) */}
+        <div className="mt-16 flex items-center justify-center gap-8 relative z-10">
+          <button
+            type="button"
+            onClick={() => setTestimonialStart((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+            className="group flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-all hover:border-[#ff4402] hover:bg-[#ff4402] hover:text-white hover:shadow-lg active:scale-90"
           >
-            <StarRating rating={testimonial.rating} />
-            <p className="mt-5 text-sm leading-8 text-[#c6c6c6]">{testimonial.text}</p>
-            <div className="mt-8 flex items-center gap-4 border-t border-white/8 pt-5">
-              <div className="relative h-12 w-12 overflow-hidden rounded-full">
-                <Image src={testimonial.avatar} alt={testimonial.name} fill className="object-cover" />
-              </div>
-              <div>
-                <p className="font-semibold text-white">{testimonial.name}</p>
-                <p className="text-sm text-[#b8b8b8]">{testimonial.role}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <div className="mt-8 flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => setTestimonialStart((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e8461c]"
-          aria-label="Previous testimonials"
-        >
-          <ArrowIcon direction="left" />
-        </button>
-        <button
-          type="button"
-          onClick={() => setTestimonialStart((prev) => (prev + 1) % testimonials.length)}
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e8461c]"
-          aria-label="Next testimonials"
-        >
-          <ArrowIcon direction="right" />
-        </button>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          
+          <button
+            type="button"
+            onClick={() => setTestimonialStart((prev) => (prev + 1) % testimonials.length)}
+            className="group flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-all hover:border-[#ff4402] hover:bg-[#ff4402] hover:text-white hover:shadow-lg active:scale-90"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
   );
@@ -680,15 +817,23 @@ export default function AboutUsPage() {
   const [testimonialStart, setTestimonialStart] = useState(0);
 
   return (
-    <main className="min-h-screen  px-4 pb-10 pt-6 text-white sm:px-6 lg:px-8">
-      
+    <main className="min-h-screen ">
+      <div className=" px-4 pb-10 pt-6 text-white sm:px-6 lg:px-8">
         <AboutHeroSection />
     
         <AboutStorySection />
+      </div>
+        
         <PartnersSection />
-        <VisionMissionSection activeTab={activeTab} setActiveTab={setActiveTab} />
-        <VideoStatsSection />
+             <div className=" px-4 pb-10 pt-6 text-white sm:px-6 lg:px-8">
+               <VideoStatsSection />
+               <CtaBannerSection/>
+              <VisionMissionSection activeTab={activeTab} setActiveTab={setActiveTab} />
+       
         <TestimonialsSection testimonialStart={testimonialStart} setTestimonialStart={setTestimonialStart} />
+         <ContactGatewaySection />
+      </div>
+
       
     </main>
     
