@@ -23,3 +23,60 @@ body {
 .card-shadow {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+@keyframes globe-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes shine {
+  0%   { transform: translateX(-100%) rotate(20deg); }
+  100% { transform: translateX(300%) rotate(20deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.8; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-25px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(2deg); }
+  50%      { transform: translateY(-35px) rotate(-2deg); }
+}
+
+@keyframes float-image {
+  0%, 100% { transform: translateY(0px) rotate(1deg); }
+  50%      { transform: translateY(-18px) rotate(-1deg); }
+}
+
+.animate-globe-rotate {
+  animation: globe-rotate 35s linear infinite;
+}
+
+.animate-shine {
+  animation: shine 8s linear infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 6s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 9s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 14s ease-in-out infinite;
+}
+
+.animate-float-image {
+  animation: float-image 11s ease-in-out infinite;
+}
+
+.animate-float-image-delay {
+  animation: float-image 13s ease-in-out infinite 2s;
+}
