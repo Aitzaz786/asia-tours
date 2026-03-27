@@ -7,6 +7,7 @@ type Feature = {
   title: string;
   description: string;
   icon: "fleet" | "support" | "location" | "safety";
+  number: string;
 };
 
 const featureDescription =
@@ -17,11 +18,13 @@ const leftFeatures: Feature[] = [
     title: "Extensive Fleet Options",
     description: featureDescription,
     icon: "fleet",
+    number: "01",
   },
   {
     title: "Exceptional Customer Service",
     description: featureDescription,
     icon: "support",
+    number: "02",
   },
 ];
 
@@ -30,11 +33,13 @@ const rightFeatures: Feature[] = [
     title: "Convenient Locations",
     description: featureDescription,
     icon: "location",
+    number: "03",
   },
   {
     title: "Reliability And Safety",
     description: featureDescription,
     icon: "safety",
+    number: "04",
   },
 ];
 
@@ -100,37 +105,67 @@ function FeatureIcon({ type }: { type: Feature["icon"] }) {
   );
 }
 
-function FeatureCard({ feature, accentDot = false }: { feature: Feature; accentDot?: boolean }) {
+function FeatureCard({ feature }: { feature: Feature }) {
+  const iconBgClass =
+    feature.icon === "fleet"
+      ? "bg-orange-50"
+      : feature.icon === "support"
+        ? "bg-blue-50"
+        : feature.icon === "location"
+          ? "bg-green-50"
+          : "bg-purple-50";
+
   return (
-    <article className="relative border-b border-gray-200 pb-8">
+    <article className="group relative border-b border-gray-200 pl-0 pb-8 transition-all duration-300 hover:-translate-x-1 hover:border-l-[3px] hover:border-l-[#ff4500] hover:pl-4">
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#FFE8E0] text-[#111111]">
+        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${iconBgClass} text-[#111111]`}>
           <FeatureIcon type={feature.icon} />
         </div>
 
         <div className="max-w-xs">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#ff4500]">
+            {feature.number}
+          </p>
           <h3 className="text-lg font-semibold leading-7 text-black">{feature.title}</h3>
           <p className="mt-2 text-sm leading-6 text-gray-500">{feature.description}</p>
         </div>
       </div>
-
     </article>
+  );
+}
+
+function CurvedConnector() {
+  return (
+    <svg
+      viewBox="0 0 300 280"
+      className="pointer-events-none absolute -right-24 top-10 hidden h-[280px] w-[300px] xl:block"
+      aria-hidden="true"
+    >
+      <path
+        d="M10 20C120 20 155 95 200 135C235 165 255 175 290 180"
+        fill="none"
+        stroke="#ff4500"
+        strokeWidth="2"
+        strokeDasharray="6 8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 170C125 170 150 145 195 120C228 102 250 98 290 100"
+        fill="none"
+        stroke="#ff4500"
+        strokeWidth="2"
+        strokeDasharray="6 8"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+    </svg>
   );
 }
 
 export default function WhyChooseUsSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
-  const leftCards = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const rightCards = {
+  const stagger = {
     hidden: {},
     visible: {
       transition: {
@@ -140,7 +175,12 @@ export default function WhyChooseUsSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+    <section
+      className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8 lg:py-28"
+      style={{
+        backgroundImage: "repeating-linear-gradient(135deg, rgba(243,244,246,0.85) 0, rgba(243,244,246,0.85) 1px, transparent 1px, transparent 16px)",
+      }}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -171,7 +211,7 @@ export default function WhyChooseUsSection() {
           className="mx-auto max-w-2xl text-center"
         >
           <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#ff4500]">
-            <span className="text-xs">✳</span>
+            <span className="text-xs">{"\u2733"}</span>
             <span>Why Choose Us</span>
           </p>
 
@@ -182,12 +222,13 @@ export default function WhyChooseUsSection() {
 
         <div className="mt-14 hidden items-center gap-10 xl:grid xl:grid-cols-[1fr_520px_1fr]">
           <motion.div
-            variants={leftCards}
+            variants={stagger}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="flex flex-col justify-center gap-12"
+            className="relative flex flex-col justify-center gap-12"
           >
+            <CurvedConnector />
             {leftFeatures.map((feature) => (
               <motion.div
                 key={feature.title}
@@ -206,43 +247,28 @@ export default function WhyChooseUsSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: easeCurve }}
-            className="relative mx-auto w-full max-w-130"
+            className="relative mx-auto w-full max-w-[520px]"
           >
-            <div className="relative h-155 overflow-hidden rounded-t-[130px] rounded-b-[40px] border border-gray-100 bg-[#f8f8f8]">
+            <div className="relative h-[520px] overflow-hidden rounded-t-[130px] rounded-b-[40px] border border-gray-100 bg-[#f8f8f8]">
               <Image
-                src="/205817.jpg"
-                alt="City skyline at sunset"
+                src="/range-rover-vogue-01.webp"
+                alt="Luxury Range Rover parked in an urban setting"
                 fill
                 className="object-cover object-center"
                 sizes="520px"
               />
               <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-white/95 via-white/35 to-transparent" aria-hidden="true" />
             </div>
-
-            {/* <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: easeCurve }}
-            >
-              <Image
-                src="/why.png"
-                alt="Red sports car"
-                width={500}
-                height={190}
-                className="pointer-events-none absolute -bottom-7 left-1/2 z-10 w-[92%] max-w-125 -translate-x-1/2"
-              />
-            </motion.div> */}
           </motion.div>
 
           <motion.div
-            variants={rightCards}
+            variants={stagger}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             className="flex flex-col justify-center gap-12"
           >
-            {rightFeatures.map((feature, index) => (
+            {rightFeatures.map((feature) => (
               <motion.div
                 key={feature.title}
                 variants={{
@@ -250,31 +276,28 @@ export default function WhyChooseUsSection() {
                   visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: easeCurve } },
                 }}
               >
-                <FeatureCard feature={feature} accentDot={index === 1} />
+                <FeatureCard feature={feature} />
               </motion.div>
             ))}
           </motion.div>
         </div>
 
         <div className="mt-14 xl:hidden">
-          <div className="relative mx-auto w-full max-w-115">
-            <div className="relative h-130 overflow-hidden rounded-t-[220px] rounded-b-4xl border border-gray-100 bg-[#f8f8f8] sm:h-140">
+          <div className="relative mx-auto w-full max-w-[460px]">
+            <div className="relative h-[420px] overflow-hidden rounded-t-[160px] rounded-b-[32px] border border-gray-100 bg-[#f8f8f8] sm:h-[500px]">
               <Image
-                src="/205817.jpg"
-                alt="City skyline at sunset"
+                src="/range-rover-vogue-01.webp"
+                alt="Luxury Range Rover parked in an urban setting"
                 fill
                 className="object-cover object-center"
-              
               />
               <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-white/95 via-white/35 to-transparent" aria-hidden="true" />
             </div>
-
-       
           </div>
 
           <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-            {tabletFeatures.map((feature, index) => (
-              <FeatureCard key={feature.title} feature={feature} accentDot={index === tabletFeatures.length - 1} />
+            {tabletFeatures.map((feature) => (
+              <FeatureCard key={feature.title} feature={feature} />
             ))}
           </div>
         </div>

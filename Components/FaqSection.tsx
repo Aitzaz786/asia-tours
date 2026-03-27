@@ -33,6 +33,26 @@ function Chevron() {
   );
 }
 
+function XIcon() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      className="h-5 w-5 text-black"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M5 5L15 15M15 5L5 15"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
@@ -42,8 +62,8 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="bg-white py-24 sm:py-28">
-      <div className="mx-4 rounded-3xl bg-[#FFF5F2] px-4 py-16 sm:mx-6 sm:px-8 sm:py-20 lg:mx-8 lg:px-10">
+    <section className="bg-white py-24 sm:py-14">
+      <div className="grain-overlay-card relative mx-4 overflow-hidden rounded-3xl bg-[#FFF5F2] px-4 py-16 sm:mx-6 sm:px-8 sm:py-20 lg:mx-8 lg:px-10">
         <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-18">
           <motion.div
             initial="hidden"
@@ -57,23 +77,21 @@ export default function FaqSection() {
                 },
               },
             }}
-            className="relative order-1 mx-auto h-105 w-full max-w-[1500px] sm:h-125 lg:order-0 lg:h-140"
+            className="relative order-1 mx-auto grid w-full max-w-[760px] grid-cols-1 gap-3 sm:grid-cols-2 lg:order-0"
           >
-   
-
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 26, x: -20 },
                 visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
               }}
-              className="absolute top-6 left-1 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:left-1/2 max-sm:w-52.5 max-sm:-translate-x-[58%] sm:w-90.5 sm:-rotate-6"
+              className="overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)]"
             >
               <Image
                 src="/range-rover-vogue-01.webp"
-                alt="City skyline with cranes at sunset"
-                width={250}
-                height={320}
-                className="h-auto w-full"
+                alt="Luxury SUV parked outside a premium destination"
+                width={400}
+                height={192}
+                className="h-48 w-full object-cover"
               />
             </motion.div>
 
@@ -82,60 +100,48 @@ export default function FaqSection() {
                 hidden: { opacity: 0, y: 26, x: 20 },
                 visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
               }}
-              className="absolute top-10 right-0 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:right-1/2 max-sm:w-52.5 max-sm:translate-x-[58%] sm:w-90.5 sm:rotate-6"
+              className="overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)]"
             >
               <Image
                 src="/exterior-image-164.avif"
-                alt="Modern city plaza with geometric flooring"
-                width={250}
-                height={320}
-                className="h-auto w-full"
+                alt="Premium sedan exterior in a polished urban setting"
+                width={400}
+                height={192}
+                className="h-48 w-full object-cover"
               />
             </motion.div>
-    <motion.div
+
+            <motion.div
               variants={{
                 hidden: { opacity: 0, y: 26, x: 20 },
                 visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
               }}
-              className="absolute bottom-1 right-0 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:right-1/2 max-sm:w-52.5 max-sm:translate-x-[58%] sm:w-90.5 sm:rotate-6"
+              className="overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)]"
             >
               <Image
                 src="/images.jpg"
-                alt="Modern city plaza with geometric flooring"
-                width={250}
-                height={320}
-                className="h-auto w-full"
+                alt="Luxury vehicle front grille and headlights"
+                width={400}
+                height={192}
+                className="h-48 w-full object-cover"
               />
             </motion.div>
+
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 26, x: -20 },
                 visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.7, ease: easeCurve } },
               }}
-              className="absolute bottom-3 left-1 w-55 overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)] max-sm:left-1/2 max-sm:w-52.5 max-sm:-translate-x-[58%] sm:w-90.5 sm:-rotate-6"
+              className="overflow-hidden rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.08)]"
             >
               <Image
                 src="/white-luxury-sedan-2024-bmw-600nw-2499645683.webp"
-                alt="City skyline with cranes at sunset"
-                width={250}
-                height={320}
-                className="h-auto w-full"
+                alt="White executive sedan ready for booking"
+                width={400}
+                height={192}
+                className="h-48 w-full object-cover"
               />
             </motion.div>
-            {/* <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: easeCurve } },
-              }}
-            >
-              <Image
-                src="/images-removebg-preview.png"
-                alt="Black luxury sedan"
-                width={520}
-                height={220}
-                className="pointer-events-none absolute bottom-20 left-1/2 z-10 w-[92%] max-w-125 -translate-x-1/2 object-contain max-sm:bottom-24 max-sm:w-full"
-              />
-            </motion.div> */}
           </motion.div>
 
           <motion.div
@@ -145,7 +151,7 @@ export default function FaqSection() {
             transition={{ duration: 0.7, ease: easeCurve }}
           >
             <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#ff4500]">
-              <span className="text-xs">✳</span>
+              <span className="text-xs">{"\u2733"}</span>
               <span>Frequently Asked Questions</span>
             </p>
 
@@ -158,7 +164,10 @@ export default function FaqSection() {
                 const open = openIndex === index;
 
                 return (
-                  <div key={question} className="border-b border-gray-200">
+                  <div
+                    key={question}
+                    className={`border-b border-gray-200 transition-all duration-300 ${open ? "border-l-2 border-l-[#ff4500] bg-orange-50 pl-4" : ""}`}
+                  >
                     <motion.button
                       type="button"
                       onClick={() => toggle(index)}
@@ -167,13 +176,13 @@ export default function FaqSection() {
                       whileHover={{ x: 4 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <span className="text-base font-semibold leading-7 text-black sm:text-lg">{question}</span>
-                      <motion.span
-                        animate={{ rotate: open ? 180 : 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                      >
-                        <Chevron />
-                      </motion.span>
+                      <div className="flex items-start gap-3">
+                        <span className="pt-0.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ff4500]">
+                          Q{index + 1}
+                        </span>
+                        <span className="text-base font-semibold leading-7 text-black sm:text-lg">{question}</span>
+                      </div>
+                      <span>{open ? <XIcon /> : <Chevron />}</span>
                     </motion.button>
 
                     <AnimatePresence initial={false}>
@@ -194,6 +203,14 @@ export default function FaqSection() {
                 );
               })}
             </div>
+
+            <a
+              href="/contact-us"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#ff4500] transition-opacity hover:opacity-80"
+            >
+              <span>Still have questions? Contact us</span>
+              <span aria-hidden="true">{"\u2192"}</span>
+            </a>
           </motion.div>
         </div>
       </div>

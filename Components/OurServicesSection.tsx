@@ -6,6 +6,8 @@ type ServiceCard = {
   title: string;
   description: string;
   icon: "driver" | "business" | "airport" | "chauffeur";
+  category: "Premium" | "Corporate" | "Transfer" | "VIP";
+  number: string;
 };
 
 const cards: ServiceCard[] = [
@@ -13,21 +15,29 @@ const cards: ServiceCard[] = [
     title: "Car Rental With Driver",
     description: "Enhance your rental experience with additional options.",
     icon: "driver",
+    category: "Premium",
+    number: "01",
   },
   {
     title: "Business Car Rental",
     description: "Enhance your rental experience with additional options.",
     icon: "business",
+    category: "Corporate",
+    number: "02",
   },
   {
     title: "Airport Transfer",
     description: "Enhance your rental experience with additional options.",
     icon: "airport",
+    category: "Transfer",
+    number: "03",
   },
   {
     title: "Chauffeur Services",
     description: "Enhance your rental experience with additional options.",
     icon: "chauffeur",
+    category: "VIP",
+    number: "04",
   },
 ];
 
@@ -80,15 +90,14 @@ function ServiceIcon({ type }: { type: ServiceCard["icon"] }) {
 export default function OurServicesSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
-const arrowVariants = {
-  initial: { scale: 1, rotate: 0 },
-  hover: { scale: 1.15, rotate: 45 }
-};
-
   return (
-    <section className="relative bg-[#FFF5F2] px-4 py-20 sm:px-8 lg:py-24">
-
-
+    <section
+      className="relative overflow-hidden bg-[#FFF5F2] px-4 py-20 sm:px-8 lg:py-24"
+      style={{
+        backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 69, 0, 0.12) 1px, transparent 0)",
+        backgroundSize: "24px 24px",
+      }}
+    >
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -98,7 +107,7 @@ const arrowVariants = {
           className="text-center"
         >
           <p className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] text-[#ff4500]">
-            <span className="text-sm">✳</span>
+            <span className="text-sm">{"\u2733"}</span>
             <span>Our Services</span>
           </p>
 
@@ -108,51 +117,52 @@ const arrowVariants = {
         </motion.div>
 
         <motion.div
-          
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
         >
-{cards.map((card) => (
-  <motion.article
-    key={card.title}
-    
-    whileHover={{ y: -8 }}
-    transition={{ duration: 0.3 }}
-    className="group relative overflow-hidden flex min-h-75 flex-col rounded-2xl border border-orange-100 bg-white p-6"
-  >
- 
-<span className="absolute left-1/2 bottom-0 h-[220%] w-[220%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#fe4700] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100  z-0"></span>    {/* Content Wrapper */}
-    <div className="relative z-10 flex flex-col h-full">
-      
-      {/* Icon */}
-      <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#FFE8E0] text-[#111111] transition-all duration-300 group-hover:bg-white group-hover:text-black">
-        <ServiceIcon type={card.icon} />
-      </div>
+          {cards.map((card) => (
+            <motion.article
+              key={card.title}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="group relative flex h-96 overflow-hidden rounded-2xl border border-orange-100 bg-white p-6"
+            >
+              <span className="absolute right-4 top-3 z-0 text-[80px] font-black leading-none text-gray-100 transition-colors duration-300 group-hover:text-white/20">
+                {card.number}
+              </span>
+              <span className="absolute left-1/2 bottom-0 z-0 h-[220%] w-[220%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#fe4700] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100" />
 
-      {/* Title */}
-      <h3 className="text-xl font-bold leading-7 text-black transition-all duration-300 group-hover:text-white">
-        {card.title}
-      </h3>
+              <div className="relative z-10 flex h-full flex-col">
+                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center border border-[#f2d7ca] bg-[#FFF8F4] text-[#111111] transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10 group-hover:text-white">
+                  <ServiceIcon type={card.icon} />
+                </div>
 
-      {/* Description */}
-      <p className="mt-3 text-sm leading-6 text-gray-500 transition-all duration-300 group-hover:text-white">
-        {card.description}
-      </p>
+                <div className="mb-6 h-px w-full bg-[#f1ddd4] transition-colors duration-300 group-hover:bg-white/20" />
 
-      {/* Arrow Button */}
-      <motion.button
-        aria-label={`${card.title} details`}
-      
-        whileTap={{ scale: 0.9 }}
-        className="mt-auto inline-flex cursor-pointer h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-2xl text-white transition-all duration-300 group-hover:bg-black group-hover:rotate-45 group-hover:text-white"
-      >
-        ↗
-      </motion.button>
-    </div>
-  </motion.article>
-))}
+                <h3 className="text-xl font-bold leading-7 text-black transition-colors duration-300 group-hover:text-white">
+                  {card.title}
+                </h3>
+
+                <span className="mt-3 inline-flex w-fit rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-orange-500 transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white">
+                  {card.category}
+                </span>
+
+                <p className="mt-4 text-sm leading-6 text-gray-500 transition-colors duration-300 group-hover:text-white">
+                  {card.description}
+                </p>
+
+                <motion.button
+                  aria-label={`${card.title} details`}
+                  whileTap={{ scale: 0.9 }}
+                  className="mt-auto inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#ff4500] text-2xl text-white transition-all duration-300 group-hover:rotate-45 group-hover:bg-black group-hover:text-white"
+                >
+                  {"\u2197"}
+                </motion.button>
+              </div>
+            </motion.article>
+          ))}
         </motion.div>
 
         <motion.div
@@ -167,16 +177,16 @@ const arrowVariants = {
           </p>
 
           <div className="mt-7 inline-flex items-center">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className=" cursor-pointer rounded-full bg-[#ff4500] px-7 py-3 text-sm font-semibold text-white">
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="cursor-pointer rounded-full bg-[#ff4500] px-7 py-3 text-sm font-semibold text-white">
               View All Service
             </motion.button>
             <motion.button
               aria-label="View all services"
               whileHover={{ scale: 1.15, rotate: 45 }}
               whileTap={{ scale: 0.9 }}
-              className="ml-2 inline-flex cursor-pointer h-11 w-11 items-center justify-center rounded-full bg-[#ff4500] hover:bg-[black] text-white"
+              className="ml-2 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-[#ff4500] text-white hover:bg-[black]"
             >
-              ↗
+              {"\u2197"}
             </motion.button>
           </div>
         </motion.div>
