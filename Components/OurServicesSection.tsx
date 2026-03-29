@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FiArrowUpRight } from "react-icons/fi";
 
 type ServiceCard = {
   title: string;
@@ -92,7 +93,7 @@ export default function OurServicesSection() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#FFF5F2] px-4 py-20 sm:px-8 lg:py-24"
+      className="relative overflow-hidden bg-[#FFF5F2] px-4 py-14 sm:px-8 sm:py-16 lg:py-[4.5rem]"
       style={{
         backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 69, 0, 0.12) 1px, transparent 0)",
         backgroundSize: "24px 24px",
@@ -120,7 +121,7 @@ export default function OurServicesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
+          className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
         >
           {cards.map((card) => (
             <motion.article
@@ -158,7 +159,7 @@ export default function OurServicesSection() {
                   whileTap={{ scale: 0.9 }}
                   className="mt-auto inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#ff4500] text-2xl text-white transition-all duration-300 group-hover:rotate-45 group-hover:bg-black group-hover:text-white"
                 >
-                  {"\u2197"}
+                 <FiArrowUpRight />
                 </motion.button>
               </div>
             </motion.article>
@@ -170,24 +171,28 @@ export default function OurServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.3, ease: easeCurve }}
-          className="mx-auto mt-12 max-w-2xl text-center"
+          className="mx-auto mt-10 max-w-2xl text-center"
         >
           <p className="text-sm leading-7 text-gray-500 sm:text-base">
             Discover our range of car rental services designed to meet all your travel needs. From a diverse fleet of vehicles to flexible rental plans.
           </p>
 
           <div className="mt-7 inline-flex items-center">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="cursor-pointer rounded-full bg-[#ff4500] px-7 py-3 text-sm font-semibold text-white">
-              View All Service
-            </motion.button>
-            <motion.button
-              aria-label="View all services"
-              whileHover={{ scale: 1.15, rotate: 45 }}
-              whileTap={{ scale: 0.9 }}
-              className="ml-2 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-[#ff4500] text-white hover:bg-[black]"
-            >
-              {"\u2197"}
-            </motion.button>
+       <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.97 }}
+  className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#ff4500] px-7  text-sm font-semibold text-white transition-all duration-300"
+>
+  <span>View All Service</span>
+
+  <motion.span
+    className="flex h-11 w-5 items-center justify-center rounded-full  transition-all duration-300 group-hover:rotate-45"
+    
+  >
+    <FiArrowUpRight className="text-[19px]" />
+  </motion.span>
+</motion.button>
+        
           </div>
         </motion.div>
       </div>

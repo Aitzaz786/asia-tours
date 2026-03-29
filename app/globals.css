@@ -80,3 +80,43 @@ body {
 .animate-float-image-delay {
   animation: float-image 13s ease-in-out infinite 2s;
 }
+
+.lahore-map-pin-wrap {
+  background: transparent;
+  border: 0;
+}
+
+.lahore-map-pin {
+  position: relative;
+  width: 30px;
+  height: 42px;
+  border-radius: 999px 999px 999px 0;
+  transform: rotate(-45deg);
+  background: linear-gradient(180deg, #ff6b2c 0%, #ff4500 100%);
+  box-shadow: 0 12px 24px rgba(255, 69, 0, 0.28);
+}
+
+.lahore-map-pin__dot {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #fff7f2;
+}
+
+.city-map-tooltip {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+.city-map-tooltip::before {
+  display: none;
+}

@@ -35,7 +35,7 @@ const categories: CategoryCard[] = [
 
 export default function CategorySection() {
   return (
-    <section className="bg-white px-3 pb-24 sm:px-5 sm:pb-30 lg:px-7 ">
+    <section className="bg-white px-3 pb-14 sm:px-5 sm:pb-16 lg:px-7">
       <div className="mx-auto max-w-[1900px]">
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-5">
@@ -47,7 +47,7 @@ export default function CategorySection() {
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.55, delay: index * 0.08 }}
               whileHover={{ y: -8 }}
-              className="group relative min-h-[420px] overflow-hidden rounded-[28px] sm:min-h-[520px] lg:min-h-[620px] xl:min-h-[640px]"
+              className="group relative min-h-[340px] overflow-hidden rounded-[28px] sm:min-h-[430px] lg:min-h-[520px] xl:min-h-[560px]"
             >
               <Image
                 src={category.image}

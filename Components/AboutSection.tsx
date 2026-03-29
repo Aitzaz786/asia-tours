@@ -22,9 +22,9 @@ export default function AboutSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   return (
-    <section className="bg-white px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="relative mx-auto w-full max-w-2xl">
+    <section className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+      <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+        <div className="relative mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -106,19 +106,18 @@ export default function AboutSection() {
             transition={{ duration: 0.6, delay: 0.35, ease: easeCurve }}
             className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <Link
-              href="/about-us"
-              className="inline-flex items-center justify-center rounded-full bg-[#ff4500] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#e53d00]"
-            >
-              Learn More
-            </Link>
-            <Link
-              href="/about-us"
-              aria-label="Go to about us"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e53d00]"
-            >
-              <FiArrowUpRight className="text-lg" />
-            </Link>
+<Link
+  href="/about-us"
+  aria-label="Go to about us"
+  className="group inline-flex items-center gap-2 rounded-full bg-[#ff4500] px-7  text-sm font-semibold text-white transition-all duration-300 hover:bg-[#e53d00]"
+>
+  Learn More
+
+  <span className="flex h-11 w-5 items-center justify-center rounded-full  transition-all duration-300 group-hover:rotate-45 group-hover:scale-105">
+ <FiArrowUpRight className="text-[19px]" />
+  </span>
+</Link>
+         
           </motion.div>
         </div>
       </div>

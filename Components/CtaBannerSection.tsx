@@ -48,8 +48,8 @@ function CountUpNumber({ value, suffix }: { value: number; suffix?: string }) {
 
 export default function CtaBannerSection() {
   return (
-    <main className="px-3 pb-10 sm:px-5 lg:px-7">
-      <section className="relative mx-auto max-w-[1800px] overflow-hidden rounded-[44px] bg-[#050505] px-6 py-18 sm:px-8 lg:px-12 lg:py-24">
+    <main className="px-3 pb-8 sm:px-5 sm:pb-10 lg:px-7">
+      <section className="relative mx-auto max-w-[1800px] overflow-hidden rounded-[36px] bg-[#050505] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
 
         {/* Grid background */}
         <div
@@ -92,7 +92,7 @@ export default function CtaBannerSection() {
           </motion.div>
 
           {/* Stats grid */}
-          <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {stats.map((stat, index) => (
               <motion.article
                 key={stat.label}

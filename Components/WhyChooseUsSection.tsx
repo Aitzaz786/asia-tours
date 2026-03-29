@@ -176,7 +176,7 @@ export default function WhyChooseUsSection() {
 
   return (
     <section
-      className="relative overflow-hidden bg-white px-4 py-24 sm:px-6 lg:px-8 lg:py-28"
+      className="relative overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]"
       style={{
         backgroundImage: "repeating-linear-gradient(135deg, rgba(243,244,246,0.85) 0, rgba(243,244,246,0.85) 1px, transparent 1px, transparent 16px)",
       }}
@@ -220,7 +220,7 @@ export default function WhyChooseUsSection() {
           </h2>
         </motion.div>
 
-        <div className="mt-14 hidden items-center gap-10 xl:grid xl:grid-cols-[1fr_520px_1fr]">
+        <div className="mt-10 hidden items-center gap-10 xl:grid xl:grid-cols-[1fr_520px_1fr]">
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -295,7 +295,7 @@ export default function WhyChooseUsSection() {
             </div>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
             {tabletFeatures.map((feature) => (
               <FeatureCard key={feature.title} feature={feature} />
             ))}
