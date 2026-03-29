@@ -18,7 +18,7 @@ export default async function ServiceCarDetailPage({ params }: PageProps) {
 
   if (!fleet) notFound();
 
-  const similarFleets = fleets.filter((item) => item.name !== fleet.name).slice(0, 3);
+  const similarFleets = fleets.filter((item) => item.name !== fleet.name).slice(0, 4);
 
   return <ServiceCarDetailView fleet={fleet} similarFleets={similarFleets} />;
 }

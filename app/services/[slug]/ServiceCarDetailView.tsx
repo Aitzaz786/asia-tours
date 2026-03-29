@@ -363,42 +363,44 @@ export default function ServiceCarDetailView({ fleet, similarFleets }: Props) {
     </p>
 
     {/* Vehicles Grid */}
-    <div className="w-full mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-   {similarFleets.map((item) => (
-      <motion.article
-        key={item.name}
-        whileHover={{ scale: 1.02 }}
-        className="flex flex-col items-center text-center overflow-hidden rounded-[32px] bg-[#111111] shadow-md hover:shadow-lg transition-all duration-300 border border-white/10"
-      >
-        <div className="relative w-full h-60 rounded-t-[32px] overflow-hidden">
-          <Image
-            src={item.image}
-            alt={item.imageAlt}
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70" />
-        </div>
-        <div className="p-6">
-          <h3 className="text-2xl font-bold text-white">{item.name}</h3>
-          <p className="mt-2 text-lg font-semibold text-[#ff4500]">
-            PKR {formatPrice(item.price)} / day
-          </p>
-          <Link
-            href={`/services/${getFleetSlug(item.name)}`}
-            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-[#ffbfa0]"
-          >
-            Open Details <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </motion.article>
-    ))}
-    </div>
+  <div className="w-full mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  {similarFleets.map((item) => (
+    <motion.article
+      key={item.name}
+      whileHover={{ scale: 1.03 }}
+      className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+    >
+      {/* Image */}
+      <div className="relative w-full h-56 overflow-hidden rounded-t-2xl">
+        <Image
+          src={item.image}
+          alt={item.imageAlt}
+          fill
+          className="object-cover hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col items-center text-center">
+        <h3 className="text-xl font-semibold text-gray-900">{item.name}</h3>
+        <p className="mt-2 text-lg font-bold text-orange-500">
+          PKR {formatPrice(item.price)} / day
+        </p>
+        <Link
+          href={`/services/${getFleetSlug(item.name)}`}
+          className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors duration-300"
+        >
+          View Details <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </motion.article>
+  ))}
+</div>
 
     {/* CTA Button at bottom */}
     <Link
       href="/services"
-      className="mt-10 inline-block bg-gradient-to-r from-[#ff4500] to-[#ff7b5f] text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+      className="mt-10 inline-block bg-[#f74900] text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
     >
       View All Services
     </Link>
