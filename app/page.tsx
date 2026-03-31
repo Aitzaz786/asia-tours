@@ -138,7 +138,7 @@ export default function HomePage() {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.8, ease: easeCurve }}
-                    className="mt-8 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3"
+                    className="mt-8  max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3 hidden lg:grid"
                   >
                     {quickStats.map((item) => (
                       <div
@@ -189,8 +189,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1, ease: easeCurve }}
-            className="relative z-30 mx-auto -mt-12 w-[calc(100%-1.5rem)] max-w-7xl overflow-hidden rounded-full border border-white/55 bg-white/92 px-3 py-3 shadow-lg backdrop-blur-md sm:-mt-14 sm:w-[calc(100%-2.5rem)] sm:px-4 sm:py-3 lg:-mt-16 lg:px-5"
-          >
+className="relative z-30 mx-auto -mt-8 w-[calc(100%-1.5rem)] max-w-7xl overflow-hidden rounded-2xl lg:rounded-full border border-white/55 bg-white/92 px-3 py-3 shadow-lg backdrop-blur-md sm:-mt-14 sm:w-[calc(100%-2.5rem)] sm:px-4 sm:py-3 lg:-mt-16 lg:px-5"          >
             <div className="relative flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
               <div className="flex min-w-0 items-center px-4 py-2 sm:px-5 lg:w-[21%] lg:border-r lg:border-[#ebe7e2] lg:px-6">
                 <div className="min-w-0">

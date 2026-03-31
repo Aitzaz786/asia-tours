@@ -178,10 +178,7 @@ export default function ServiceCarDetailView({ fleet, similarFleets }: Props) {
                       backgroundRepeat: "no-repeat",
                     }}
                   />
-                  <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#111111] shadow-[0_12px_24px_rgba(15,23,42,0.12)]">
-                    <Sparkles className="h-3.5 w-3.5 text-[#ff4500]" />
-                    Hover To Zoom
-                  </div>
+              
                 </div>
 
                 <div className="mt-4 grid grid-cols-4 gap-3">

@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
-import { FaArrowRightLong } from "react-icons/fa6";
 import { PiAsteriskSimpleFill } from "react-icons/pi";
 import { motion } from "framer-motion";
 import { fleets, getFleetSlug } from "@/Data/cars";
@@ -12,6 +11,7 @@ import Link from "next/link";
 export default function OurFleetsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const formatPrice = (price: number) => new Intl.NumberFormat("en-PK").format(price);
+  const loopedFleets = [...fleets, ...fleets];
 
   const cardsContainer = {
     hidden: {},
@@ -22,57 +22,62 @@ export default function OurFleetsSection() {
     },
   };
 
-  const getScrollAmount = useCallback(() => {
+  const getScrollAmount = () => {
     const container = scrollRef.current;
     if (!container) return 316;
 
     const firstCard = container.querySelector<HTMLElement>("[data-fleet-card]");
-    const cardWidth = firstCard?.offsetWidth ?? 292;
-    const gapWidth = 24;
+    const cardWidth = firstCard?.getBoundingClientRect().width ?? 292;
+    const computedStyles = window.getComputedStyle(container);
+    const gapWidth = Number.parseFloat(computedStyles.columnGap || computedStyles.gap || "24") || 24;
 
     return cardWidth + gapWidth;
-  }, []);
+  };
 
-  const handleScroll = useCallback(
-    (direction: "left" | "right") => {
-      const container = scrollRef.current;
-      if (!container) return;
+  const handleScroll = (direction: "left" | "right") => {
+    const container = scrollRef.current;
+    if (!container) return;
 
-      const scrollAmount = getScrollAmount();
+    const scrollAmount = getScrollAmount();
+    const halfwayPoint = container.scrollWidth / 2;
 
-      container.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    },
-    [getScrollAmount]
-  );
+    if (direction === "left" && container.scrollLeft <= 8) {
+      container.scrollLeft = halfwayPoint;
+    } else if (direction === "right" && container.scrollLeft >= halfwayPoint - scrollAmount) {
+      container.scrollLeft -= halfwayPoint;
+    }
+
+    container.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
+
+    container.scrollLeft = 0;
 
     const interval = window.setInterval(() => {
       const currentContainer = scrollRef.current;
       if (!currentContainer) return;
 
       const scrollAmount = getScrollAmount();
-      const maxScrollLeft = currentContainer.scrollWidth - currentContainer.clientWidth;
-      const nextScrollLeft = currentContainer.scrollLeft + scrollAmount;
+      const halfwayPoint = currentContainer.scrollWidth / 2;
 
-      if (nextScrollLeft >= maxScrollLeft - 8) {
-        currentContainer.scrollTo({ left: 0, behavior: "smooth" });
-        return;
+      if (currentContainer.scrollLeft >= halfwayPoint - scrollAmount) {
+        currentContainer.scrollLeft -= halfwayPoint;
       }
 
       currentContainer.scrollBy({
         left: scrollAmount,
         behavior: "smooth",
       });
-    }, 5000);
+    }, 3000);
 
     return () => window.clearInterval(interval);
-  }, [getScrollAmount]);
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:pb-12 lg:pt-[4.5rem]">
@@ -97,12 +102,13 @@ export default function OurFleetsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="scrollbar-hide mx-auto mt-8 flex max-w-[1680px] justify-start gap-5 overflow-x-auto overflow-y-hidden pt-8 pb-4 pl-1 pr-1 scroll-smooth sm:gap-6"
+          className="scrollbar-hide mx-auto mt-8 flex max-w-[1680px] snap-x snap-mandatory justify-start gap-5 overflow-x-auto overflow-y-hidden px-0 pt-8 pb-4 scroll-smooth sm:gap-6"
         >
-          {fleets.map((fleet) => (
+          {loopedFleets.map((fleet, index) => (
       <motion.div
-  key={fleet.name}
-  className="group relative flex min-w-[85%] flex-col overflow-hidden rounded-[2rem] border border-white/40 bg-white/70 backdrop-blur-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23.7%]"
+  key={`${fleet.name}-${index}`}
+  data-fleet-card
+  className="group relative flex min-w-[calc(100%-0.0rem)] snap-start flex-col overflow-hidden rounded-[2rem] border border-white/40 bg-white/70 backdrop-blur-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] sm:min-w-[calc(50%-0.75rem)] lg:min-w-[calc((100%-4.5rem)/4)]"
 >
   {/* Image Section with a subtle overlay */}
   <div className="relative h-64 w-full overflow-hidden">

@@ -196,42 +196,42 @@ className='w-[156px]'
           <div className="border-t border-[#f3dfd8] bg-white md:hidden">
             <div className="px-4 py-3">
               {navLinks.map((link) => {
-                if (link.label === "Services") {
-                  return (
-                    <div key={link.label} className="rounded-2xl border border-[#f3e5df] bg-[#fffaf8]">
-                      <button
-                        type="button"
-                        onClick={() => setMobileServicesOpen((prev) => !prev)}
-                        className="flex w-full items-center justify-between px-4 py-4 text-left text-sm font-semibold uppercase tracking-[0.16em] text-[#fa3132]"
-                      >
-                        <span>Services</span>
-                        <ChevronDown className={`h-4 w-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
-                      </button>
+                // if (link.label === "Services") {
+                //   return (
+                //     <div key={link.label} className="rounded-2xl border border-[#f3e5df] bg-[#fffaf8]">
+                //       <button
+                //         type="button"
+                //         onClick={() => setMobileServicesOpen((prev) => !prev)}
+                //         className="flex w-full items-center justify-between px-4 py-4 text-left text-sm font-semibold uppercase tracking-[0.16em] text-[#fa3132]"
+                //       >
+                //         <span>Services</span>
+                //         <ChevronDown className={`h-4 w-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
+                //       </button>
 
-                      {mobileServicesOpen && (
-                        <div className="space-y-2 border-t border-[#f3e5df] px-3 py-3">
-                          <Link
-                            href="/services"
-                            onClick={() => setMenuOpen(false)}
-                            className="block rounded-xl bg-white px-3 py-3 text-sm font-medium text-[#111111]"
-                          >
-                            All Services
-                          </Link>
-                          {fleetLinks.map((fleet) => (
-                            <Link
-                              key={fleet.href}
-                              href={fleet.href}
-                              onClick={() => setMenuOpen(false)}
-                              className="block rounded-xl bg-white px-3 py-3 text-sm text-[#444]"
-                            >
-                              {fleet.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
+                //       {mobileServicesOpen && (
+                //         <div className="space-y-2 border-t border-[#f3e5df] px-3 py-3">
+                //           <Link
+                //             href="/services"
+                //             onClick={() => setMenuOpen(false)}
+                //             className="block rounded-xl bg-white px-3 py-3 text-sm font-medium text-[#111111]"
+                //           >
+                //             All Services
+                //           </Link>
+                //           {fleetLinks.map((fleet) => (
+                //             <Link
+                //               key={fleet.href}
+                //               href={fleet.href}
+                //               onClick={() => setMenuOpen(false)}
+                //               className="block rounded-xl bg-white px-3 py-3 text-sm text-[#444]"
+                //             >
+                //               {fleet.label}
+                //             </Link>
+                //           ))}
+                //         </div>
+                //       )}
+                //     </div>
+                //   );
+                // }
 
                 return (
                   <Link

@@ -55,7 +55,7 @@ export default function HowItWorksSection() {
   };
 
   return (
-    <section className="relative bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]">
+    <section className="relative overflow-x-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
