@@ -1,388 +1,465 @@
-import Image from "next/image";
-import Link from "next/link";
+﻿"use client";
+
+import { Fragment, FormEvent, useEffect, useRef, useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CalendarMonth, DayPicker, useDayPicker } from "react-day-picker";
+import { format } from "date-fns";
 import {
-  ArrowRight,
-  Check,
+  CalendarDays,
+  ChevronDown,
+  ChevronLeft,
   ChevronRight,
   Clock3,
   Mail,
   MapPin,
+  MessageCircleMore,
   Phone,
-  ShieldCheck,
-  Sparkles,
+  X,
+  Send,
+  Check,
 } from "lucide-react";
 
-const contactMethods = [
-  {
-    title: "Call Our Team",
-    value: "+92 300 0000000",
-    description: "Speak directly with our booking desk for urgent reservations and live coordination.",
-    icon: Phone,
-    href: "tel:+923000000000",
-  },
-  {
-    title: "Email Us",
-    value: "hello@asiatours.com",
-    description: "Send itinerary details, vehicle preferences, or corporate travel requirements anytime.",
-    icon: Mail,
-    href: "mailto:hello@asiatours.com",
-  },
-  {
-    title: "Visit Office",
-    value: "Islamabad, Pakistan",
-    description: "Meet our team to discuss executive transport, long-term bookings, and event travel planning.",
-    icon: MapPin,
-    href: "#location",
-  },
-];
-
-const trustPoints = [
-  "Fast response for new booking requests",
-  "Luxury fleet recommendations based on your route",
-  "Event, airport, and intercity coordination support",
-  "Professional service with polished vehicle standards",
-];
-
-const serviceSteps = [
-  {
-    title: "Share your plans",
-    text: "Tell us your date, route, number of guests, and preferred vehicle style.",
-  },
-  {
-    title: "Receive recommendations",
-    text: "We suggest the best available options based on comfort, timing, and occasion.",
-  },
-  {
-    title: "Confirm smoothly",
-    text: "Once approved, we coordinate the pickup and prepare your service experience.",
-  },
-];
-
-export default function ContactUsPage() {
+/* ── Custom calendar header ─────────────────────────── */
+function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
+  const { goToMonth, nextMonth, previousMonth } = useDayPicker();
   return (
-    <main className="bg-[#fcfaf7] text-[#050a11]">
-      <section className="bg-[#071018] px-4 pb-8 pt-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="relative overflow-hidden rounded-[30px] border border-white/10 sm:rounded-[42px]">
-            <div className="absolute inset-0">
-              <Image
-                src="/about.jpeg"
-                alt="Luxury vehicle contact page hero"
-                fill
-                priority
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,10,17,0.95),rgba(5,10,17,0.74),rgba(5,10,17,0.42))]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,77,10,0.18),transparent_28%)]" />
+    <div className="flex items-center justify-between px-1 pb-1">
+      <span className="text-sm font-bold text-[#111111]">
+        {format(calendarMonth.date, "MMMM yyyy")}
+      </span>
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => previousMonth && goToMonth(previousMonth)}
+          disabled={!previousMonth}
+          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#ff4d0a] hover:text-[#ff4d0a] disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          <ChevronLeft className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => nextMonth && goToMonth(nextMonth)}
+          disabled={!nextMonth}
+          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#ff4d0a] hover:text-[#ff4d0a] disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
-            <div className="relative grid min-h-[560px] gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-14 lg:py-16">
-              <div className="flex max-w-3xl flex-col justify-center">
-                <div className="flex flex-wrap items-center gap-2 text-sm text-[#c9a96e]">
-                  <Link href="/" className="transition-colors hover:text-white">
-                    Home
-                  </Link>
-                  <ChevronRight className="h-4 w-4" />
-                  <span>Contact Us</span>
+/* ── Date Picker ────────────────────────────────────── */
+function DatePickerField({
+  value,
+  onChange,
+}: {
+  value: Date | undefined;
+  onChange: (d: Date | undefined) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((p) => !p)}
+        className={`flex w-full items-center gap-2.5 rounded-xl border bg-[#fdfaf8] px-4 py-3 text-sm outline-none transition-all ${
+          open
+            ? "border-[#ff4d0a] ring-2 ring-[#ff4d0a]/10"
+            : "border-[#e8ddd4] hover:border-[#cfc5ba]"
+        }`}
+      >
+        <CalendarDays className={`h-4 w-4 shrink-0 ${value ? "text-[#ff4d0a]" : "text-[#aaa49d]"}`} />
+        <span className={value ? "text-[#111111]" : "text-[#c0b8b0]"}>
+          {value ? format(value, "dd MMM yyyy") : "Pick a date"}
+        </span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.98 }}
+            transition={{ duration: 0.18 }}
+            className="absolute left-0 top-[calc(100%+8px)] z-[999] w-72 rounded-2xl border border-[#efe3d8] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.14)]"
+          >
+            <DayPicker
+              mode="single"
+              selected={value}
+              onSelect={(d) => {
+                onChange(d);
+                if (d) setOpen(false);
+              }}
+              disabled={{ before: new Date() }}
+              showOutsideDays
+              classNames={{
+                root: "p-4",
+                months: "flex flex-col",
+                month: "space-y-3",
+                month_caption: "hidden",
+                nav: "hidden",
+                month_grid: "w-full border-collapse",
+                weekdays: "flex",
+                weekday:
+                  "w-9 text-center text-[10px] font-semibold uppercase tracking-wide text-[#b0a89f] pb-2",
+                week: "flex mt-1",
+                day: "relative p-0",
+                day_button:
+                  "h-9 w-9 rounded-xl text-sm font-medium transition-all outline-none hover:bg-[#fff4ef] hover:text-[#ff4d0a] focus-visible:ring-2 focus-visible:ring-[#ff4d0a]/30",
+                selected:
+                  "[&>button]:!bg-[#ff4d0a] [&>button]:!text-white [&>button]:!font-bold [&>button]:shadow-[0_4px_14px_rgba(255,77,10,0.35)]",
+                today:
+                  "[&>button]:border [&>button]:border-[#ff4d0a]/40 [&>button]:text-[#ff4d0a] [&>button]:font-semibold",
+                outside:
+                  "[&>button]:text-[#d0c9c2] [&>button]:hover:bg-transparent [&>button]:hover:text-[#d0c9c2]",
+                disabled:
+                  "[&>button]:!text-[#ddd8d2] [&>button]:!cursor-not-allowed [&>button]:hover:bg-transparent",
+                hidden: "invisible",
+              }}
+              components={{
+                MonthCaption: CalendarCaption,
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ── Data ────────────────────────────────────────────── */
+const serviceOptions = [
+  { id: 1, label: "Executive Chauffeur", icon: "🚘" },
+  { id: 2, label: "Airport Transfer", icon: "✈️" },
+  { id: 3, label: "Wedding & Events", icon: "💍" },
+  { id: 4, label: "Intercity Travel", icon: "🛣️" },
+  { id: 5, label: "Tour Package", icon: "🏔️" },
+  { id: 6, label: "Custom Booking", icon: "✨" },
+];
+
+const quickLinks = [
+  { icon: Phone, label: "+92 300 0000000", href: "tel:+923000000000", sub: "Call us anytime" },
+  { icon: Mail, label: "hello@asiatours.com", href: "mailto:hello@asiatours.com", sub: "Reply within 2 hrs" },
+  { icon: MessageCircleMore, label: "WhatsApp", href: "https://wa.me/923000000000", sub: "Instant response" },
+];
+
+type ToastState = { title: string; message: string; tone: "success" | "error" } | null;
+
+/* ── Page ────────────────────────────────────────────── */
+export default function ContactUsPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<ToastState>(null);
+  const [selectedService, setSelectedService] = useState(serviceOptions[0]);
+  const [travelDate, setTravelDate] = useState<Date | undefined>(undefined);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = window.setTimeout(() => setToast(null), 4200);
+    return () => window.clearTimeout(t);
+  }, [toast]);
+
+  useEffect(() => {
+    const html = document.documentElement;
+    html.style.overflowY = "scroll";
+    html.style.scrollbarGutter = "stable";
+    const observer = new MutationObserver(() => {
+      if (html.style.overflow === "hidden") {
+        html.style.overflow = "";
+        html.style.overflowY = "scroll";
+        html.style.paddingRight = "";
+      }
+    });
+    observer.observe(html, { attributes: true, attributeFilter: ["style"] });
+    return () => {
+      observer.disconnect();
+      html.style.overflowY = "";
+      html.style.scrollbarGutter = "";
+    };
+  }, []);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!travelDate) return;
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    formData.set("serviceType", selectedService.label);
+    formData.set("travelDate", format(travelDate, "dd MMM yyyy"));
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("https://formspree.io/f/meepkjko", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+      if (!res.ok) throw new Error();
+      form.reset();
+      setSelectedService(serviceOptions[0]);
+      setTravelDate(undefined);
+      setToast({
+        title: "Inquiry sent successfully",
+        message: "Our concierge team will review your details and contact you shortly.",
+        tone: "success",
+      });
+    } catch {
+      setToast({
+        title: "Unable to send inquiry",
+        message: "Please try again or reach us by phone, email, or WhatsApp.",
+        tone: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <main className="overflow-x-hidden">
+
+      {/* ── Toast ── */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -14, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -14, scale: 0.97 }}
+            transition={{ duration: 0.26 }}
+            className="pointer-events-none fixed right-4 top-4 z-50 w-[calc(100%-2rem)] max-w-sm"
+          >
+            <div
+              className={`pointer-events-auto rounded-2xl border px-5 py-4 shadow-2xl backdrop-blur-xl ${
+                toast.tone === "success" ? "border-green-100 bg-white" : "border-red-100 bg-white"
+              }`}
+              role="status" aria-live="polite"
+            >
+              <div className="flex items-start gap-3">
+                <div className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white ${toast.tone === "success" ? "bg-green-500" : "bg-red-500"}`}>
+                  {toast.tone === "success" ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
                 </div>
-
-                <p className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">
-                  <Sparkles className="h-4 w-4" />
-                  <span>Contact Asia Tours</span>
-                </p>
-
-                <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[0.95] text-white sm:text-5xl lg:text-[5rem]">
-                  Let’s plan your next
-                  <span className="mt-2 block text-[#f0e5d4]">premium journey.</span>
-                </h1>
-
-                <p className="mt-6 max-w-2xl text-base leading-8 text-white/75 sm:text-lg">
-                  Reach our team for bookings, itinerary planning, airport transfers, executive movement, family travel, and tailored luxury transport support.
-                </p>
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <a
-                    href="tel:+923000000000"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4d0a] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_20px_50px_rgba(255,77,10,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#eb4300]"
-                  >
-                    <span>Call Now</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                  <a
-                    href="mailto:hello@asiatours.com"
-                    className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/25 hover:bg-white/10"
-                  >
-                    Send Email
-                  </a>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-[#111111]">{toast.title}</p>
+                  <p className="mt-0.5 text-sm leading-6 text-[#66615b]">{toast.message}</p>
                 </div>
-              </div>
-
-              <div className="self-end">
-                <div className="rounded-[30px] border border-white/10 bg-[#08111a]/80 p-6 text-white backdrop-blur-md">
-                  <p className="text-xs uppercase tracking-[0.22em] text-[#c9a96e]">Quick Support</p>
-                  <h2 className="mt-4 text-3xl font-semibold">Need a fast response?</h2>
-                  <p className="mt-3 text-sm leading-7 text-white/68">
-                    Our team helps with same-day plans, airport timing, vehicle selection, and premium travel coordination.
-                  </p>
-
-                  <div className="mt-6 grid gap-3">
-                    {[
-                      { label: "Booking Desk", value: "Available Daily" },
-                      { label: "Response Time", value: "Usually within minutes" },
-                      { label: "Support Style", value: "Call, email, and tailored planning" },
-                    ].map((item) => (
-                      <div key={item.label} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                        <p className="text-xs uppercase tracking-[0.18em] text-white/45">{item.label}</p>
-                        <p className="mt-2 text-lg font-semibold">{item.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="rounded-[34px] border border-[#eadfd4] bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.04)] sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">
-              Direct Contact
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
-              Multiple ways to reach our team
-            </h2>
-
-            <div className="mt-8 space-y-4">
-              {contactMethods.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <a
-                    key={item.title}
-                    href={item.href}
-                    className="block rounded-[24px] border border-[#efe4d8] bg-[#fffaf7] p-5 transition-all hover:-translate-y-0.5 hover:border-[#f3d4c8]"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#fff1ea] text-[#ff4d0a]">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#c9a96e]">
-                          {item.title}
-                        </p>
-                        <h3 className="mt-2 text-xl font-semibold">{item.value}</h3>
-                        <p className="mt-2 text-sm leading-7 text-[#66615b]">{item.description}</p>
-                      </div>
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 rounded-[28px] bg-[#071018] p-6 text-white">
-              <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#ff4d0a]/14 text-[#ff8457]">
-                  <Clock3 className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#c9a96e]">
-                    Availability
-                  </p>
-                  <h3 className="mt-3 text-2xl font-semibold">Daily booking support</h3>
-                  <p className="mt-3 text-sm leading-7 text-white/72">
-                    Our team is available for reservations, itinerary planning, and premium fleet recommendations throughout the week.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[34px] border border-[#eadfd4] bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.04)] sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">
-              Send Inquiry
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
-              Tell us about your travel plans
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-8 text-[#66615b]">
-              Share your trip details below and our team will suggest the right service or vehicle for your schedule and occasion.
-            </p>
-
-            <form className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Full Name</span>
-                <input
-                  type="text"
-                  placeholder="Enter your full name"
-                  className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors placeholder:text-[#958e88] focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Phone Number</span>
-                <input
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors placeholder:text-[#958e88] focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Email Address</span>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors placeholder:text-[#958e88] focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Service Type</span>
-                <select className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors focus:border-[#ff4d0a]">
-                  <option>Executive Chauffeur</option>
-                  <option>Airport Transfer</option>
-                  <option>Wedding & Events</option>
-                  <option>Intercity Travel</option>
-                  <option>Custom Booking</option>
-                </select>
-              </label>
-
-              <label className="block sm:col-span-2">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Pickup Location</span>
-                <input
-                  type="text"
-                  placeholder="Where should we pick you up?"
-                  className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors placeholder:text-[#958e88] focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Travel Date</span>
-                <input
-                  type="date"
-                  className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Passengers</span>
-                <input
-                  type="number"
-                  min="1"
-                  placeholder="Number of guests"
-                  className="w-full rounded-2xl border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors placeholder:text-[#958e88] focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <label className="block sm:col-span-2">
-                <span className="mb-2 block text-sm font-semibold text-[#111111]">Trip Details</span>
-                <textarea
-                  rows={6}
-                  placeholder="Tell us your route, vehicle preference, event type, airport timing, or any special request."
-                  className="w-full rounded-[24px] border border-[#eadfd4] bg-[#fffaf7] px-4 py-3 text-sm text-[#111111] outline-none transition-colors placeholder:text-[#958e88] focus:border-[#ff4d0a]"
-                />
-              </label>
-
-              <div className="sm:col-span-2">
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center rounded-full bg-[#ff4d0a] px-8 py-4 text-sm font-semibold text-white shadow-[0_18px_45px_rgba(255,77,10,0.22)] transition-all hover:-translate-y-0.5 hover:bg-[#eb4300]"
-                >
-                  Send Inquiry
+                <button type="button" onClick={() => setToast(null)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8a837d] transition-colors hover:bg-[#f0ebe4]" aria-label="Close">
+                  <X className="h-3.5 w-3.5" />
                 </button>
               </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-4 pb-6 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-[34px] bg-[#071018] p-6 text-white sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">
-              Why Contact Us
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
-              We help turn simple inquiries into smooth premium travel
-            </h2>
-
-            <div className="mt-8 grid gap-3">
-              {trustPoints.map((point) => (
-                <div key={point} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ff4d0a]/14">
-                    <Check className="h-4 w-4 text-[#ff8457]" />
-                  </span>
-                  <p className="text-sm leading-7 text-white/78">{point}</p>
-                </div>
-              ))}
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Main Split Layout ── */}
+      <section className="min-h-[calc(100vh-80px)] px-4 py-16 sm:px-6 lg:px-8 lg:py-8">
+        <div className="mx-auto max-w-6xl">
+
+          {/* wrapper: NO overflow-hidden — rounded corners on each child separately */}
+          <div className="shadow-[0_0px_28px_rgba(15,23,42,0.14)] lg:flex lg:items-start rounded-3xl">
+
+       {/* ── Left Panel (Enhanced UI) ── */}
+<div className="relative flex flex-col justify-between rounded-tl-3xl rounded-bl-3xl border border-white/10 bg-gradient-to-b from-[#0f0f0f] to-[#0b0b0b] px-8 py-10 shadow-2xl lg:w-[420px] lg:shrink-0 lg:px-10 lg:py-6 lg:sticky lg:top-6 lg:self-start">
+
+  {/* Header */}
+  <div className="relative">
+    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c9a96e] backdrop-blur">
+      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ff4d0a]" />
+      Asia Tours Concierge
+    </span>
+
+    <h2 className="mt-6 text-4xl font-extrabold leading-tight text-white">
+      Let&apos;s plan your{" "}
+      <span className="bg-gradient-to-r from-[#ff4d0a] via-[#ff8a3d] to-[#ffd08a] bg-clip-text text-transparent">
+        perfect journey
+      </span>
+    </h2>
+
+    <p className="mt-4 text-sm leading-7 text-white/55">
+      Every inquiry is handled by a dedicated travel specialist — not a bot.
+      We listen, plan, and deliver unforgettable experiences.
+    </p>
+
+    {/* Quick Links */}
+    <div className="mt-8 space-y-3">
+      {quickLinks.map((link) => (
+        <a
+          key={link.label}
+          href={link.href}
+          target={link.href.startsWith("http") ? "_blank" : undefined}
+          rel="noreferrer"
+          className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#ff4d0a]/40 hover:bg-white/10 hover:shadow-lg"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#ff4d0a]/15 text-[#ff9d75] transition-all group-hover:bg-[#ff4d0a]/25 group-hover:scale-110">
+            <link.icon className="h-4 w-4" />
           </div>
 
-          <div id="location" className="rounded-[34px] border border-[#eadfd4] bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.04)] sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">
-              Booking Journey
+          <div>
+            <p className="text-sm font-semibold text-white group-hover:text-[#ffd1b3] transition">
+              {link.label}
             </p>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
-              What happens after you contact us
-            </h2>
+            <p className="text-[11px] text-white/40">{link.sub}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
 
-            <div className="mt-8 space-y-4">
-              {serviceSteps.map((step, index) => (
-                <div key={step.title} className="rounded-[24px] border border-[#efe4d8] bg-[#fffaf7] p-5">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#fff1ea] text-sm font-semibold text-[#ff4d0a]">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold">{step.title}</h3>
-                      <p className="mt-2 text-sm leading-7 text-[#66615b]">{step.text}</p>
-                    </div>
+  {/* Map Section */}
+  <div className="relative z-10 mt-10">
+    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-xl">
+      <iframe
+        title="Asia Tours Location"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.6!2d73.0479!3d33.7294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbfd07891722f%3A0x6789f1c2d7ea0!2sBlue%20Area%2C%20Islamabad%2C%20Islamabad%20Capital%20Territory!5e0!3m2!1sen!2spk!4v1"
+        width="100%"
+        height="170"
+        style={{ border: 0, display: "block", pointerEvents: "auto" }}
+        allowFullScreen
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+    </div>
+
+    <div className="mt-4 flex items-center gap-2.5">
+      <MapPin className="h-4 w-4 text-[#ff4d0a]" />
+      <p className="text-xs text-white/50">
+        Blue Area, Islamabad, Pakistan
+      </p>
+    </div>
+
+    <div className="mt-3 flex items-start gap-2.5">
+      <Clock3 className="mt-0.5 h-4 w-4 text-[#c9a96e]" />
+      <div className="flex flex-wrap gap-x-3 gap-y-1">
+        {["Mon-Fri 8am-10pm", "Sat 9am-8pm", "Sun Emergency"].map((s) => (
+          <span key={s} className="text-[11px] text-white/40">
+            {s}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+            {/* ── Right Panel (form) ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+              className="flex-1 bg-white px-7 py-10 sm:px-10 sm:py-12 rounded-b-[40px] lg:rounded-b-none lg:rounded-r-[40px]"
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">Send Inquiry</p>
+              <h3 className="mt-2 text-2xl font-extrabold text-[#111111] sm:text-3xl">Tell us your travel plans</h3>
+              <p className="mt-2 text-sm leading-7 text-[#6d655e]">
+                Fill in the details and our team will respond with tailored options and pricing.
+              </p>
+
+              <form action="https://formspree.io/f/meepkjko" method="POST" onSubmit={handleSubmit} className="mt-7 space-y-4">
+                <input type="hidden" name="_subject" value="New Asia Tours contact inquiry" />
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Full Name</span>
+                    <input type="text" name="fullName" autoComplete="name" required placeholder="Your full name"
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                  </label>
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Phone</span>
+                    <input type="tel" name="phone" autoComplete="tel" required placeholder="+92 300 0000000"
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                  </label>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Email</span>
+                    <input type="email" name="email" autoComplete="email" required placeholder="you@email.com"
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                  </label>
+                  <div>
+                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Service Type</span>
+                    <Listbox value={selectedService} onChange={setSelectedService}>
+                      <div className="relative">
+                        <Listbox.Button className="relative w-full cursor-pointer rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-left text-sm text-[#111111] outline-none transition-all focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10">
+                          <span className="flex items-center gap-2">
+                  
+                            <span className="block truncate">{selectedService.label}</span>
+                          </span>
+                          <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                            <ChevronDown className="h-4 w-4 text-[#aaa49d]" />
+                          </span>
+                        </Listbox.Button>
+                        <Transition as={Fragment}
+                          enter="transition ease-out duration-150" enterFrom="opacity-0 translate-y-1" enterTo="opacity-100 translate-y-0"
+                          leave="transition ease-in duration-100" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 translate-y-1">
+                          <Listbox.Options className="absolute z-30 mt-1.5 w-full overflow-hidden rounded-2xl border border-[#efe3d8] bg-white py-1 shadow-2xl focus:outline-none">
+                            {serviceOptions.map((opt) => (
+                              <Listbox.Option key={opt.id} value={opt} as={Fragment}>
+                                {({ active, selected }) => (
+                                  <li className={`flex cursor-pointer items-center gap-3 px-4 py-2.5 text-sm transition-colors ${active ? "bg-[#fff4ef] text-[#ff4d0a]" : "text-[#111111]"}`}>
+                                    <span className={`flex-1 ${selected ? "font-semibold" : ""}`}>{opt.label}</span>
+                                    {selected && <Check className="h-3.5 w-3.5 text-[#ff4d0a]" />}
+                                  </li>
+                                )}
+                              </Listbox.Option>
+                            ))}
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </Listbox>
                   </div>
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-8 rounded-[28px] border border-[#efe4d8] bg-[#fffaf7] p-5">
-              <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#fff1ea] text-[#ff4d0a]">
-                  <ShieldCheck className="h-5 w-5" />
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Pickup Location</span>
+                  <input type="text" name="pickupLocation" autoComplete="street-address" required placeholder="Where should we pick you up?"
+                    className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                </label>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Travel Date</span>
+                    <DatePickerField value={travelDate} onChange={setTravelDate} />
+                  </div>
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Passengers</span>
+                    <input type="number" name="passengers" min="1" required placeholder="No. of guests"
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                  </label>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Service-first support</h3>
-                  <p className="mt-2 text-sm leading-7 text-[#66615b]">
-                    We focus on practical coordination, polished service, and matching the right vehicle to your exact travel needs.
+
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Trip Details</span>
+                  <textarea name="tripDetails" rows={4} required
+                    placeholder="Describe your route, vehicle preference, event type, airport timing, or any special request."
+                    className="w-full resize-none rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                </label>
+
+                <div className="h-px bg-[#f0ebe4]" />
+
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-[#8a837d]">
+                    Faster reply?{" "}
+                    <a href="https://wa.me/923000000000" target="_blank" rel="noreferrer"
+                      className="font-semibold text-[#169c49] underline-offset-2 hover:underline">WhatsApp us</a>
                   </p>
+                  <motion.button type="submit" disabled={isSubmitting || !travelDate}
+                    whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+                    className="inline-flex shrink-0 items-center gap-2.5 rounded-full bg-[#ff4d0a] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_10px_36px_rgba(255,77,10,0.30)] transition-colors hover:bg-[#eb4300] disabled:cursor-not-allowed disabled:opacity-55">
+                    <Send className="h-4 w-4" />
+                    {isSubmitting ? "Sending..." : "Send Inquiry"}
+                  </motion.button>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              </form>
+            </motion.div>
 
-      <section className="px-4 pb-20 pt-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-[40px] border border-[#eadfd4] bg-white px-6 py-16 text-center shadow-[0_18px_50px_rgba(15,23,42,0.04)] sm:px-10 lg:py-20">
-          <p className="text-xl text-[#c9a96e]">{"\u2726"}</p>
-          <h2 className="mx-auto mt-6 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-[3rem]">
-            Need quick answers before you book?
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#66615b]">
-            Explore our frequently asked questions or connect directly with the team for help choosing the right premium travel option.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center rounded-full bg-[#ff4d0a] px-8 py-4 text-base font-semibold text-white shadow-[0_18px_45px_rgba(255,77,10,0.22)] transition-all hover:-translate-y-0.5 hover:bg-[#eb4300]"
-            >
-              Back to Home
-            </Link>
-            <a
-              href="mailto:hello@asiatours.com"
-              className="inline-flex items-center justify-center rounded-full border border-[#f0d8cc] px-8 py-4 text-base font-semibold text-[#111111] transition-colors hover:bg-[#fff5f1]"
-            >
-              Email Our Team
-            </a>
           </div>
         </div>
       </section>

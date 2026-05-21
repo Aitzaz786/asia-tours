@@ -425,7 +425,7 @@ export default function ServiceCarDetailView({ fleet, similarFleets }: Props) {
           Ready to reserve <span className="text-[#ff4500]">{fleet.name}?</span>
         </h2>
         <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
-      Share your route and timing with us. We'll help you confirm availability and prepare a smooth premium booking experience.
+      Share your route and timing with us. We&apos;ll help you confirm availability and prepare a smooth premium booking experience.
         </p>
 
       <div className="flex justify-center items-center gap-5">

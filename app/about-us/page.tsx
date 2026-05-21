@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import CtaBannerSection from "@/Components/CtaBannerSection";
 
 type TabKey = "vision" | "mission" | "approach";
@@ -521,59 +521,104 @@ function VisionMissionSection({
           ] as const).map(([key, label]) => {
             const active = activeTab === key;
             return (
-              <button
+              <motion.button
                 key={key}
                 type="button"
                 onClick={() => setActiveTab(key)}
-                className={`rounded-full px-5 py-3 text-sm font-semibold transition-all sm:px-6 ${
+                whileTap={{ scale: 0.96 }}
+                className={`relative overflow-hidden rounded-full px-5 py-3 text-sm font-semibold transition-all sm:px-6 ${
                   active
-                    ? "bg-[#ff4500] text-white shadow-[0_10px_30px_rgba(255,69,0,0.3)]"
+                    ? "border border-[#ff4500] text-white shadow-[0_10px_30px_rgba(255,69,0,0.3)]"
                     : "border border-gray-300 bg-white text-gray-700 hover:border-[#ff4500] hover:text-[#ff4500]"
                 }`}
               >
-                {label}
-              </button>
+                {active ? (
+                  <motion.span
+                    layoutId="vision-mission-active-tab"
+                    className="absolute inset-0 z-0 rounded-full bg-[#ff4500]"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                ) : null}
+                <span className="relative z-10">{label}</span>
+              </motion.button>
             );
           })}
         </div>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#c9a96e]">
-              {activeContent.eyebrow}
-            </p>
-            <h3 className="mt-4 max-w-xl text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">
-              {activeContent.heading}
-            </h3>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
-              {activeContent.description}
-            </p>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#c9a96e]">
+                {activeContent.eyebrow}
+              </p>
+              <h3 className="mt-4 max-w-xl text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">
+                {activeContent.heading}
+              </h3>
+              <p className="mt-5 max-w-xl text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
+                {activeContent.description}
+              </p>
 
-            <ul className="mt-8 space-y-4">
-              {activeContent.bullets.map((bullet) => (
-                <li
-                  key={bullet}
-                  className="flex items-start gap-3 text-sm leading-7 text-gray-700"
-                >
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ff4500]/10">
-                    <CheckIcon className="h-4 w-4 text-[#ff4500]" />
-                  </span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <motion.ul
+                className="mt-8 space-y-4"
+                initial="hidden"
+                animate="show"
+                variants={{
+                  hidden: {},
+                  show: {
+                    transition: {
+                      staggerChildren: 0.07,
+                      delayChildren: 0.08,
+                    },
+                  },
+                }}
+              >
+                {activeContent.bullets.map((bullet) => (
+                  <motion.li
+                    key={bullet}
+                    variants={{
+                      hidden: { opacity: 0, x: -10 },
+                      show: { opacity: 1, x: 0 },
+                    }}
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                    className="flex items-start gap-3 text-sm leading-7 text-gray-700"
+                  >
+                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ff4500]/10">
+                      <CheckIcon className="h-4 w-4 text-[#ff4500]" />
+                    </span>
+                    <span>{bullet}</span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.div>
+          </AnimatePresence>
 
           <div className="relative">
             <div className="absolute -left-4 top-6 hidden h-[78%] w-[78%] rounded-[30px] border border-[#ff4500]/20 lg:block xl:-left-6 xl:top-8 xl:rounded-[36px]" />
 
             <div className="relative h-[280px] overflow-hidden rounded-[26px] border border-gray-200 sm:h-[360px] sm:rounded-[30px] lg:h-[450px] lg:rounded-[34px]">
-              <Image
-                src={activeContent.image}
-                alt={activeContent.imageAlt}
-                fill
-                className="object-cover"
-              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeContent.image}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={activeContent.image}
+                    alt={activeContent.imageAlt}
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
+              </AnimatePresence>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.25))]" />
             </div>
           </div>
@@ -619,7 +664,7 @@ function VideoStatsSection() {
   );
 }
 
-function ContactGatewaySection() {
+export function ContactGatewaySection() {
   return (
     <section className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[28px] bg-white px-4 py-14 sm:min-h-[360px] sm:rounded-[36px] sm:px-6 lg:min-h-[400px] lg:px-10">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">

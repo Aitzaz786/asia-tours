@@ -2,8 +2,84 @@
 
 @import "tailwindcss";
 
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: auto;
+  scrollbar-color: #ff4500 #f4eee9;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 body {
   font-family: 'Epilogue', sans-serif;
+  scroll-behavior: smooth;
+  scrollbar-width: auto;
+  scrollbar-color: #ff4500 #f4eee9;
+}
+
+::selection {
+  background: #ff4500;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: #ff4500;
+  color: #ffffff;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: #f4eee9;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff6a35 0%, #ff4500 100%);
+  border: 2px solid #f4eee9;
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: #e53d00;
+}
+
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #ff4500 #f4eee9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
 }
 .hero-display-font {
   font-family: 'Epilogue', sans-serif;

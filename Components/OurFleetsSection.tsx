@@ -1,17 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import { PiAsteriskSimpleFill } from "react-icons/pi";
 import { motion } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
 import { fleets, getFleetSlug } from "@/Data/cars";
 import Link from "next/link";
 
 export default function OurFleetsSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    loop: true,
+    dragFree: false,
+    containScroll: "trimSnaps",
+  });
   const formatPrice = (price: number) => new Intl.NumberFormat("en-PK").format(price);
-  const loopedFleets = [...fleets, ...fleets];
 
   const cardsContainer = {
     hidden: {},
@@ -22,62 +27,16 @@ export default function OurFleetsSection() {
     },
   };
 
-  const getScrollAmount = () => {
-    const container = scrollRef.current;
-    if (!container) return 316;
-
-    const firstCard = container.querySelector<HTMLElement>("[data-fleet-card]");
-    const cardWidth = firstCard?.getBoundingClientRect().width ?? 292;
-    const computedStyles = window.getComputedStyle(container);
-    const gapWidth = Number.parseFloat(computedStyles.columnGap || computedStyles.gap || "24") || 24;
-
-    return cardWidth + gapWidth;
-  };
-
-  const handleScroll = (direction: "left" | "right") => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const scrollAmount = getScrollAmount();
-    const halfwayPoint = container.scrollWidth / 2;
-
-    if (direction === "left" && container.scrollLeft <= 8) {
-      container.scrollLeft = halfwayPoint;
-    } else if (direction === "right" && container.scrollLeft >= halfwayPoint - scrollAmount) {
-      container.scrollLeft -= halfwayPoint;
-    }
-
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    container.scrollLeft = 0;
-
     const interval = window.setInterval(() => {
-      const currentContainer = scrollRef.current;
-      if (!currentContainer) return;
-
-      const scrollAmount = getScrollAmount();
-      const halfwayPoint = currentContainer.scrollWidth / 2;
-
-      if (currentContainer.scrollLeft >= halfwayPoint - scrollAmount) {
-        currentContainer.scrollLeft -= halfwayPoint;
-      }
-
-      currentContainer.scrollBy({
-        left: scrollAmount,
-        behavior: "smooth",
-      });
-    }, 3000);
+      emblaApi?.scrollNext();
+    }, 3600);
 
     return () => window.clearInterval(interval);
-  }, []);
+  }, [emblaApi]);
 
   return (
     <section className="relative overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:pb-12 lg:pt-[4.5rem]">
@@ -96,19 +55,24 @@ export default function OurFleetsSection() {
           </h2>
         </motion.div>
 
-        <motion.div
-          ref={scrollRef}
-          variants={cardsContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="scrollbar-hide mx-auto mt-8 flex max-w-[1680px] snap-x snap-mandatory justify-start gap-5 overflow-x-auto overflow-y-hidden px-0 pt-8 pb-4 scroll-smooth sm:gap-6"
-        >
-          {loopedFleets.map((fleet, index) => (
-      <motion.div
+        <div ref={emblaRef} className="mx-auto mt-8 max-w-[1680px] overflow-hidden pt-8 pb-4">
+          <motion.div
+            variants={cardsContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="flex touch-pan-y"
+          >
+          {fleets.map((fleet, index) => (
+      <div
   key={`${fleet.name}-${index}`}
   data-fleet-card
-  className="group relative flex min-w-[calc(100%-0.0rem)] snap-start flex-col overflow-hidden rounded-[2rem] border border-white/40 bg-white/70 backdrop-blur-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] sm:min-w-[calc(50%-0.75rem)] lg:min-w-[calc((100%-4.5rem)/4)]"
+  className="mr-5 min-w-0 flex-[0_0_100%] sm:mr-6 sm:flex-[0_0_calc(50%-0.75rem)] lg:flex-[0_0_calc(25%-1.125rem)]"
+>
+      <motion.div
+  className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/40 bg-white/75 backdrop-blur-2xl transition-shadow duration-300 ease-out hover:shadow-[0_16px_38px_rgba(15,23,42,0.09)]"
+  whileHover={{ y: -3 }}
+  transition={{ duration: 0.24, ease: "easeOut" }}
 >
   {/* Image Section with a subtle overlay */}
   <div className="relative h-64 w-full overflow-hidden">
@@ -116,7 +80,7 @@ export default function OurFleetsSection() {
       src={fleet.image}
       alt={fleet.imageAlt}
       fill
-      className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+      className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.04]"
     />
     {/* Gradient Overlay for a high-end feel */}
     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -130,12 +94,12 @@ export default function OurFleetsSection() {
   <div className="flex flex-col p-6">
     {/* Header & Price */}
     <div className="mb-4">
-      <h3 className="text-2xl font-extrabold tracking-tight text-gray-900 group-hover:text-[#ff4402] transition-colors duration-300">
+      <h3 className="text-2xl font-extrabold tracking-tight text-gray-900">
         {fleet.name}
       </h3>
       <div className="mt-1 flex items-baseline gap-1">
         <span className="text-xs font-medium text-gray-500">PKR</span>
-        <span className="text-xl font-black group-hover:text-[#ff4402]">{formatPrice(fleet.price)}</span>
+        <span className="text-xl font-black text-gray-950">{formatPrice(fleet.price)}</span>
         <span className="text-xs font-medium text-gray-500">/ day</span>
       </div>
     </div>
@@ -148,7 +112,7 @@ export default function OurFleetsSection() {
           className="flex items-center justify-between text-sm"
         >
           <span className="font-medium text-gray-500">{h.label}</span>
-          <span className="font-semibold text-gray-900 group-hover:text-[#ff4402]">
+          <span className="font-semibold text-gray-900">
             {typeof h.value === "boolean" ? (h.value ? "Yes" : "No") : h.value}
           </span>
         </div>
@@ -169,14 +133,16 @@ export default function OurFleetsSection() {
   {/* Subtle accent border on hover */}
   <div className="absolute inset-x-0 bottom-0 h-1 bg-[#ff4402] scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 </motion.div>
+</div>
           ))}
-        </motion.div>
+          </motion.div>
+        </div>
 
         <div className="mt-8 flex items-center justify-center gap-4">
           <motion.button
             type="button"
             aria-label="Scroll fleets left"
-            onClick={() => handleScroll("left")}
+            onClick={scrollPrev}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e53d00]"
@@ -187,7 +153,7 @@ export default function OurFleetsSection() {
           <motion.button
             type="button"
             aria-label="Scroll fleets right"
-            onClick={() => handleScroll("right")}
+            onClick={scrollNext}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e53d00]"
