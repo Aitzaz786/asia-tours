@@ -142,7 +142,7 @@ export const fleets: Fleet[] = [
   {
     name: "Toyota Corolla",
     price: 12000,
-    image: "https://images.unsplash.com/photo-1623005329814-9949082c0f8a?w=800&q=80",
+    image: "/white-luxury-sedan-2024-bmw-600nw-2499645683.webp",
     imageAlt: "Toyota Corolla white sedan",
     highlights: [
       { label: "Passengers", value: 5 },

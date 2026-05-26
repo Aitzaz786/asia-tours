@@ -19,6 +19,7 @@ import {
   Send,
   Check,
 } from "lucide-react";
+import { submitInquiry } from "@/app/actions/submitInquiry";
 
 /* ── Custom calendar header ─────────────────────────── */
 function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
@@ -192,18 +193,24 @@ export default function ContactUsPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!travelDate) return;
+
     const form = event.currentTarget;
-    const formData = new FormData(form);
-    formData.set("serviceType", selectedService.label);
-    formData.set("travelDate", format(travelDate, "dd MMM yyyy"));
+    const data = new FormData(form);
+
     setIsSubmitting(true);
     try {
-      const res = await fetch("https://formspree.io/f/meepkjko", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
+      await submitInquiry({
+        full_name: data.get("fullName") as string,
+        phone: data.get("phone") as string,
+        email: data.get("email") as string,
+        service_type: selectedService.label,
+        pickup_location: data.get("pickupLocation") as string,
+        travel_date: format(travelDate, "dd MMM yyyy"),
+        passengers: Number(data.get("passengers")),
+        trip_details: data.get("tripDetails") as string,
+        form_source: "contact_us",
       });
-      if (!res.ok) throw new Error();
+
       form.reset();
       setSelectedService(serviceOptions[0]);
       setTravelDate(undefined);
@@ -361,9 +368,7 @@ export default function ContactUsPage() {
                 Fill in the details and our team will respond with tailored options and pricing.
               </p>
 
-              <form action="https://formspree.io/f/meepkjko" method="POST" onSubmit={handleSubmit} className="mt-7 space-y-4">
-                <input type="hidden" name="_subject" value="New Asia Tours contact inquiry" />
-
+              <form onSubmit={handleSubmit} className="mt-7 space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Full Name</span>

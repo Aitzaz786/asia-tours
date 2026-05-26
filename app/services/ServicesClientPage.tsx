@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,17 +23,18 @@ import {
   Plane,
   Route,
   Search,
-  ShieldCheck,
-  SlidersHorizontal,
   Snowflake,
-  TimerReset,
   Users,
-  X,
 } from "lucide-react";
 import { fleets, getFleetSlug, type Fleet } from "@/Data/cars";
 import { services } from "./servicesData";
 import { motion } from "framer-motion";
 import QuickBookingForm from "@/Components/QuickBookingForm";
+import CtaBannerSection from "@/Components/CtaBannerSection";
+import FaqSection from "@/Components/FaqSection";
+import { TestimonialsSection, VideoStatsSection } from "../about-us/page";
+
+const LahoreServiceMap = dynamic(() => import("@/Components/LahoreServiceMap"), { ssr: false });
 
 type ServiceVisual = {
   icon: LucideIcon;
@@ -49,23 +56,7 @@ const serviceVisuals: ServiceVisual[] = [
   { icon: CarFront, image: "/Range-Rover.avif", accent: "With chauffeur", tag: "Professional Ã‚Â· Elite", stat1: "100%", label1: "Professional", stat2: "5Ã¢Ëœâ€¦", label2: "Rated Drivers" },
 ];
 
-const standards = [
-  {
-    title: "Fast Response",
-    description: "Quick confirmations, itinerary updates, and booking support whenever plans change.",
-    icon: TimerReset,
-  },
-  {
-    title: "Professional Drivers",
-    description: "Courteous chauffeurs trained for punctuality, presentation, and guest comfort.",
-    icon: Users,
-  },
-  {
-    title: "Secure Travel",
-    description: "Insured vehicles, dependable scheduling, and quality checks before every booking.",
-    icon: ShieldCheck,
-  },
-];
+
 
 const bookingFlow = [
   { step: "01", title: "Tell us the movement", text: "Share pickup, drop-off, timing, guests, luggage, and the occasion." },
@@ -82,29 +73,16 @@ const easeCurve: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
 type PriceFilter = "all" | "under-15000" | "15000-30000" | "30000-50000" | "50000-plus";
 type VehicleType = "All" | "SUV" | "Sedan" | "Luxury" | "4x4 Pickup" | "Van";
-type FuelFilter = "All" | "Petrol" | "Diesel";
-type PassengerFilter = "Any" | "4" | "5" | "7+" | "14+";
 type SortOption = "price-asc" | "price-desc" | "passengers-desc";
 type ContentTab = "fleet" | "services";
 
-const ITEMS_PER_PAGE = 9;
-
-const priceOptions: { label: string; value: PriceFilter }[] = [
-  { label: "Under 15,000", value: "under-15000" },
-  { label: "15k - 30k", value: "15000-30000" },
-  { label: "30k - 50k", value: "30000-50000" },
-  { label: "50k+", value: "50000-plus" },
-];
+const ITEMS_PER_PAGE = 12;
 
 const sortOptions: { label: string; value: SortOption }[] = [
   { label: "Price: Low to High", value: "price-asc" },
   { label: "Price: High to Low", value: "price-desc" },
   { label: "Most Passengers", value: "passengers-desc" },
 ];
-
-const vehicleTypes: VehicleType[] = ["All", "SUV", "Sedan", "Luxury", "4x4 Pickup", "Van"];
-const fuelTypes: FuelFilter[] = ["All", "Petrol", "Diesel"];
-const passengerOptions: PassengerFilter[] = ["Any", "4", "5", "7+", "14+"];
 
 const serviceIcons: Record<string, LucideIcon> = {
   "airport-transfer": Plane,
@@ -149,17 +127,9 @@ function matchesPrice(fleet: Fleet, priceFilter: PriceFilter) {
   return fleet.price >= 50000;
 }
 
-function matchesPassengers(fleet: Fleet, passengerFilter: PassengerFilter) {
-  const passengers = getPassengers(fleet);
-
-  if (passengerFilter === "Any") return true;
-  if (passengerFilter === "7+") return passengers >= 7;
-  if (passengerFilter === "14+") return passengers >= 14;
-  return passengers === Number(passengerFilter);
-}
-
 export default function ServicesClientPage() {
   const [activeTab, setActiveTab] = useState(services[0]?.slug ?? "");
+  const [testimonialStart, setTestimonialStart] = useState(0);
   const activeService = services.find((service) => service.slug === activeTab) ?? services[0];
   const activeIndex = Math.max(services.findIndex((service) => service.slug === activeTab), 0);
   const activeVisual = serviceVisuals[activeIndex % serviceVisuals.length];
@@ -169,18 +139,8 @@ export default function ServicesClientPage() {
   const [search, setSearch] = useState("");
   const [priceFilter, setPriceFilter] = useState<PriceFilter>("all");
   const [vehicleType, setVehicleType] = useState<VehicleType>("All");
-  const [fuelFilter, setFuelFilter] = useState<FuelFilter>("All");
-  const [passengerFilter, setPassengerFilter] = useState<PassengerFilter>("Any");
   const [sortOption, setSortOption] = useState<SortOption>("price-asc");
   const [currentPage, setCurrentPage] = useState(1);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const hasActiveFilters =
-    search.trim() ||
-    priceFilter !== "all" ||
-    vehicleType !== "All" ||
-    fuelFilter !== "All" ||
-    passengerFilter !== "Any";
 
   const resetPage = () => setCurrentPage(1);
 
@@ -188,8 +148,6 @@ export default function ServicesClientPage() {
     setSearch("");
     setPriceFilter("all");
     setVehicleType("All");
-    setFuelFilter("All");
-    setPassengerFilter("Any");
     setCurrentPage(1);
   };
 
@@ -197,15 +155,12 @@ export default function ServicesClientPage() {
     const query = search.trim().toLowerCase();
 
     const result = fleets.filter((fleet) => {
-      const fuel = getFuel(fleet);
       const type = getVehicleType(fleet);
 
       return (
         (!query || fleet.name.toLowerCase().includes(query)) &&
         matchesPrice(fleet, priceFilter) &&
-        (vehicleType === "All" || type === vehicleType) &&
-        (fuelFilter === "All" || fuel === fuelFilter) &&
-        matchesPassengers(fleet, passengerFilter)
+        (vehicleType === "All" || type === vehicleType)
       );
     });
 
@@ -214,7 +169,7 @@ export default function ServicesClientPage() {
       if (sortOption === "passengers-desc") return getPassengers(b) - getPassengers(a);
       return a.price - b.price;
     });
-  }, [fuelFilter, passengerFilter, priceFilter, search, sortOption, vehicleType]);
+  }, [priceFilter, search, sortOption, vehicleType]);
 
   const totalPages = Math.max(1, Math.ceil(filteredFleets.length / ITEMS_PER_PAGE));
   const visibleFleets = filteredFleets.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
@@ -222,38 +177,6 @@ export default function ServicesClientPage() {
   const goToPage = (page: number) => {
     setCurrentPage(Math.min(Math.max(page, 1), totalPages));
   };
-
-  const filters = (
-    <FiltersPanel
-      search={search}
-      priceFilter={priceFilter}
-      vehicleType={vehicleType}
-      fuelFilter={fuelFilter}
-      passengerFilter={passengerFilter}
-      hasActiveFilters={Boolean(hasActiveFilters)}
-      onSearchChange={(value) => {
-        setSearch(value);
-        resetPage();
-      }}
-      onPriceChange={(value) => {
-        setPriceFilter(value);
-        resetPage();
-      }}
-      onVehicleTypeChange={(value) => {
-        setVehicleType(value);
-        resetPage();
-      }}
-      onFuelChange={(value) => {
-        setFuelFilter(value);
-        resetPage();
-      }}
-      onPassengerChange={(value) => {
-        setPassengerFilter(value);
-        resetPage();
-      }}
-      onClear={clearFilters}
-    />
-  );
 
   return (
     <main className="w-full max-w-[100vw] overflow-x-clip text-[#080b10]" 
@@ -379,8 +302,8 @@ export default function ServicesClientPage() {
       </section>
     </div>
 
-      <section className="border-b border-[#e8e2da] bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="bg-white pt-10">
+        <div className="mx-auto flex w-fit items-center justify-center rounded-full border border-[#eadfd6] bg-[#fbfaf8] p-1 shadow-sm">
           {[
             { label: "Our Fleet", value: "fleet" as const },
             { label: "Our Services", value: "services" as const },
@@ -389,10 +312,10 @@ export default function ServicesClientPage() {
               key={tab.value}
               type="button"
               onClick={() => setContentTab(tab.value)}
-              className={`border-b-2 px-6 py-4 text-sm font-black uppercase tracking-[0.12em] transition-colors ${
+              className={`rounded-full px-6 py-3 text-xs font-black uppercase tracking-[0.12em] transition-all sm:text-sm ${
                 contentTab === tab.value
-                  ? "border-[#ff4500] text-[#ff4500]"
-                  : "border-transparent text-[#746b61] hover:text-[#0f0e0c]"
+                  ? "bg-[#0f0e0c] text-white shadow-sm"
+                  : "text-[#746b61] hover:bg-white hover:text-[#0f0e0c]"
               }`}
             >
               {tab.label}
@@ -401,30 +324,94 @@ export default function ServicesClientPage() {
         </div>
       </section>
 
+
+
       {contentTab === "fleet" ? (
-        <section id="fleet-showcase" className=" px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <div className="mb-8 flex flex-col gap-4 lg:hidden">
-              <button
-                type="button"
-                onClick={() => setDrawerOpen(true)}
-                className="inline-flex w-fit items-center gap-2 rounded-full bg-[#0f0e0c] px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-white"
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                Filters
-              </button>
+        <section id="fleet-showcase" className="bg-white px-4 pb-24 pt-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-[1600px]">
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 border-b border-[#efe6dc] pb-10 text-center">
+              <p className="inline-flex rounded-full border border-[#f3d5c6] bg-[#fff7f2] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.28em] text-[#ff4500]">
+                Curated Luxury Fleet
+              </p>
+              <h2 className="whitespace-nowrap text-3xl font-black leading-tight tracking-tight text-[#08111f] sm:text-4xl lg:text-5xl">
+                Premium cars.{" "}
+                <span className="text-[#ff4500]">Private chauffeurs.</span>
+              </h2>
+              <p className="max-w-lg text-sm font-medium leading-7 text-[#5f6877]">
+                Luxury sedans, SUVs, and vans for airport transfers, business travel, weddings, and city rides.
+              </p>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-[280px_minmax(0,1fr)]">
-              <aside className="hidden lg:block">
-                <div className="sticky top-[100px] h-fit">{filters}</div>
-              </aside>
-
+            <div className="pt-6">
               <div className="min-w-0">
-                <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-[#e8e2da] bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm font-bold text-[#5f574f]">
-                    Showing <span className="text-[#0f0e0c]">{visibleFleets.length}</span> of{" "}
-                    <span className="text-[#0f0e0c]">{filteredFleets.length}</span> vehicles
+                <div className="mb-8 flex flex-col gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="w-12 shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9ca3af]">Type</span>
+                    {(["All", "SUV", "Sedan", "Luxury", "4x4 Pickup", "Van"] as VehicleType[]).map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => {
+                          setVehicleType(type);
+                          resetPage();
+                        }}
+                        className={`rounded-full border px-4 py-1.5 text-[13px] transition-all ${
+                          vehicleType === type
+                            ? "border-[#ff4500] bg-[#ff4500] font-medium text-white"
+                            : "border-[#e2e8f0] bg-white text-[#64748b] hover:border-[#ff4500] hover:text-[#ff4500]"
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="w-12 shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9ca3af]">Price</span>
+                    {([
+                      { label: "Any", value: "all" },
+                      { label: "Under 15k", value: "under-15000" },
+                      { label: "15k - 30k", value: "15000-30000" },
+                      { label: "30k - 50k", value: "30000-50000" },
+                      { label: "50k+", value: "50000-plus" },
+                    ] as { label: string; value: PriceFilter }[]).map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => {
+                          setPriceFilter(opt.value);
+                          resetPage();
+                        }}
+                        className={`rounded-full border px-4 py-1.5 text-[13px] transition-all ${
+                          priceFilter === opt.value
+                            ? "border-[#ff4500] bg-[#ff4500] font-medium text-white"
+                            : "border-[#e2e8f0] bg-white text-[#64748b] hover:border-[#ff4500] hover:text-[#ff4500]"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+
+                    <div className="relative ml-auto">
+                      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#9ca3af]" />
+                      <input
+                        type="text"
+                        value={search}
+                        onChange={(e) => {
+                          setSearch(e.target.value);
+                          resetPage();
+                        }}
+                        placeholder="Search vehicles..."
+                        className="w-56 rounded-full border border-[#e2e8f0] bg-white py-1.5 pl-9 pr-4 text-[13px] text-[#0f172a] outline-none placeholder:text-[#9ca3af] focus:border-[#ff4500]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm font-semibold text-[#667085]">
+                    Showing <span className="font-black text-[#ff4500]">{visibleFleets.length}</span> of{" "}
+                    <span className="font-black text-[#08111f]">{filteredFleets.length}</span> vehicles
                   </p>
                   <div className="relative">
                     <Listbox
@@ -434,22 +421,22 @@ export default function ServicesClientPage() {
                         resetPage();
                       }}
                     >
-                      <ListboxButton className="flex items-center gap-2 rounded-xl border border-[#e8e2da] bg-white px-4 py-3 text-sm font-bold text-[#0f0e0c] outline-none transition-colors hover:border-[#ff4500] focus:border-[#ff4500]">
+                      <ListboxButton className="flex items-center gap-2 rounded-full border border-[#d7dde7] bg-white px-5 py-3 text-sm font-black text-[#08111f] outline-none transition-colors hover:border-[#08111f] focus:border-[#ff4500]">
                         <span>
                           {sortOptions.find((o) => o.value === sortOption)?.label}
                         </span>
-                        <ChevronDown className="h-4 w-4 text-[#9b9389]" />
+                        <ChevronDown className="h-4 w-4 text-[#667085]" />
                       </ListboxButton>
 
                       <ListboxOptions
                         anchor="bottom end"
-                        className="z-50 mt-2 w-[200px] overflow-hidden rounded-xl border border-[#e8e2da] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.10)] focus:outline-none"
+                        className="z-50 mt-2 w-[220px] overflow-hidden rounded-2xl border border-[#d7dde7] bg-white p-1 shadow-[0_18px_45px_rgba(15,23,42,0.12)] focus:outline-none"
                       >
                         {sortOptions.map((option) => (
                           <ListboxOption
                             key={option.value}
                             value={option.value}
-                            className="group flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-bold text-[#0f0e0c] transition-colors data-[focus]:bg-[#fff4f0] data-[focus]:text-[#ff4500]"
+                            className="group flex cursor-pointer items-center justify-between rounded-xl px-4 py-3 text-sm font-bold text-[#475467] transition-colors data-[focus]:bg-[#f6f7f9] data-[focus]:text-[#08111f]"
                           >
                             <span>{option.label}</span>
                             <Check className="invisible h-4 w-4 text-[#ff4500] group-data-[selected]:visible" />
@@ -461,15 +448,15 @@ export default function ServicesClientPage() {
                 </div>
 
                 {visibleFleets.length > 0 ? (
-                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                     {visibleFleets.map((fleet) => (
                       <VehicleCard key={fleet.name} fleet={fleet} />
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-2xl border border-[#e8e2da] bg-white px-6 py-16 text-center">
-                    <h2 className="text-2xl font-black text-[#0f0e0c]">No vehicles found</h2>
-                    <p className="mt-2 text-sm font-medium text-[#71685e]">Try clearing a filter or searching another model.</p>
+                  <div className="flex min-h-[760px] flex-col items-center justify-center rounded-lg border border-[#dbe2ea] bg-white px-6 py-16 text-center">
+                    <h2 className="text-2xl font-black text-[#08111f]">No vehicles found</h2>
+                    <p className="mt-2 text-sm font-medium text-[#667085]">Try clearing a filter or searching another model.</p>
                     <button
                       type="button"
                       onClick={clearFilters}
@@ -488,180 +475,82 @@ export default function ServicesClientPage() {
           </div>
         </section>
       ) : (
-        <section className=" px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-9 max-w-3xl text-center">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#ff4500]">Choose Your Service</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-[#0f0e0c] sm:text-4xl">
+              Simple options for every journey.
+            </h2>
+          </div>
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <ServiceCard key={service.slug} service={service} index={index} />
             ))}
           </div>
         </section>
       )}
+<CtaBannerSection/>
+     <VideoStatsSection/>
+     <LahoreServiceMap/>
+     <div className="mx-auto mt-16  text-center ">
+    <TestimonialsSection testimonialStart={testimonialStart} setTestimonialStart={setTestimonialStart} />  
 
-      {drawerOpen && (
-        <div className="fixed inset-0 z-[80] lg:hidden">
-          <button
-            type="button"
-            aria-label="Close filters"
-            onClick={() => setDrawerOpen(false)}
-            className="absolute inset-0 bg-black/45"
-          />
-          <motion.aside
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.25, ease: easeCurve }}
-            className="relative h-full w-[88vw] max-w-[340px] overflow-y-auto  p-4 shadow-2xl"
+</div>
+     <div className="mx-auto mt-16  text-center">
+      
+<FaqSection/>
+</div>
+
+ <section className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[28px] bg-white px-4 py-14 sm:min-h-[360px] sm:rounded-[36px] sm:px-6 lg:min-h-[400px] lg:px-10">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
+        <span className="text-[7rem] font-bold tracking-tighter text-slate-900 select-none sm:text-[10rem] lg:text-[20rem]">
+          ASIA
+        </span>
+      </div>
+
+      <div className="relative z-10 flex max-w-2xl flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#ff4500]"
+        >
+          <span className="text-2xl font-bold">{"✦"}</span>
+        </motion.div>
+
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Ready to elevate <span className="text-[#ff4500]">your journey?</span>
+        </h2>
+        <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
+          Tailored luxury transport services for executive and private travel.
+        </p>
+
+        <div className="group relative mt-8 sm:mt-10">
+          <Link
+            href="/contact-us"
+            className="relative z-10 block rounded-full bg-[#ff4500] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-white transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
           >
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#ff4500]">Filters</p>
-              <button
-                type="button"
-                onClick={() => setDrawerOpen(false)}
-                className="rounded-full bg-white p-2 text-[#0f0e0c]"
-                aria-label="Close filters"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            {filters}
-          </motion.aside>
+            Contact Us
+          </Link>
+
+          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#ff4500] transition-all duration-500 group-hover:w-32 sm:block" />
         </div>
-      )}
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:mt-12 sm:gap-8">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            24/7 Support
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            Secure Booking
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-orange-100 to-transparent sm:left-10 sm:block" />
+      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-orange-100 to-transparent sm:right-10 sm:block" />
+    </section>
     </main>
-  );
-}
-
-function FiltersPanel({
-  search,
-  priceFilter,
-  vehicleType,
-  fuelFilter,
-  passengerFilter,
-  hasActiveFilters,
-  onSearchChange,
-  onPriceChange,
-  onVehicleTypeChange,
-  onFuelChange,
-  onPassengerChange,
-  onClear,
-}: {
-  search: string;
-  priceFilter: PriceFilter;
-  vehicleType: VehicleType;
-  fuelFilter: FuelFilter;
-  passengerFilter: PassengerFilter;
-  hasActiveFilters: boolean;
-  onSearchChange: (value: string) => void;
-  onPriceChange: (value: PriceFilter) => void;
-  onVehicleTypeChange: (value: VehicleType) => void;
-  onFuelChange: (value: FuelFilter) => void;
-  onPassengerChange: (value: PassengerFilter) => void;
-  onClear: () => void;
-}) {
-  return (
-    <div className="rounded-2xl border border-[#e8e2da] bg-white p-6">
-      <div className="mb-5 flex items-center justify-between">
-        <p className="text-xs font-black uppercase tracking-[0.2em] text-[#0f0e0c]">Filters</p>
-        {hasActiveFilters && (
-          <button
-            type="button"
-            onClick={onClear}
-            className="text-xs font-bold text-[#ff4500] underline underline-offset-2"
-          >
-            Clear all filters
-          </button>
-        )}
-      </div>
-
-      <div className="relative">
-        <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#b0a99f]" />
-        <input
-          type="text"
-          value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Search vehicles..."
-          className="w-full rounded-xl border border-[#e8e2da] bg-white py-3 pl-10 pr-4 text-sm font-semibold text-[#0f0e0c] outline-none placeholder:text-[#b0a99f] transition-colors focus:border-[#ff4500] focus:ring-4 focus:ring-[#ff4500]/15"
-        />
-      </div>
-
-      <FilterSection label="Daily Rate (PKR)">
-        {priceOptions.map((option) => (
-          <FilterRow
-            key={option.value}
-            active={priceFilter === option.value}
-            label={option.label}
-            onClick={() => onPriceChange(priceFilter === option.value ? "all" : option.value)}
-          />
-        ))}
-      </FilterSection>
-
-      <FilterSection label="Vehicle Type">
-        {vehicleTypes.map((type) => (
-          <FilterRow
-            key={type}
-            active={vehicleType === type}
-            label={type}
-            onClick={() => onVehicleTypeChange(type)}
-          />
-        ))}
-      </FilterSection>
-
-      <FilterSection label="Fuel Type">
-        {fuelTypes.map((fuelType) => (
-          <FilterRow
-            key={fuelType}
-            active={fuelFilter === fuelType}
-            label={fuelType}
-            onClick={() => onFuelChange(fuelType)}
-          />
-        ))}
-      </FilterSection>
-
-      <FilterSection label="Passengers">
-        {passengerOptions.map((option) => (
-          <FilterRow
-            key={option}
-            active={passengerFilter === option}
-            label={option}
-            onClick={() => onPassengerChange(option)}
-          />
-        ))}
-      </FilterSection>
-    </div>
-  );
-}
-
-function FilterSection({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="my-4 border-t border-[#f0ebe4] pt-4">
-      <p className="mb-3 text-[11px] font-black uppercase tracking-[0.2em] text-[#9b9389]">{label}</p>
-      <div className="space-y-1.5">{children}</div>
-    </div>
-  );
-}
-
-function FilterRow({
-  active,
-  label,
-  onClick,
-}: {
-  active: boolean;
-  label: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex w-full items-center justify-between rounded-xl border-l-2 py-2.5 pl-3 pr-3 text-left text-sm font-bold transition-colors ${
-        active
-          ? "border-l-[#ff4500] bg-[#fff4f0] text-[#0f0e0c]"
-          : "border-l-transparent text-[#0f0e0c] hover:bg-[#fafaf8]"
-      }`}
-    >
-      <span>{label}</span>
-      {active && <Check className="h-4 w-4 text-[#ff4500]" />}
-    </button>
   );
 }
 
@@ -672,65 +561,49 @@ function VehicleCard({ fleet }: { fleet: Fleet }) {
   const type = getVehicleType(fleet);
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-[#e8e2da] bg-white transition-all duration-300 hover:border-[#ff4500]/40 hover:shadow-[0_4px_20px_rgba(255,69,0,0.08)]">
-      
-      {/* Image */}
-      <div className="relative h-52 overflow-hidden rounded-t-2xl bg-[#f5f1ec]">
-        <Image
-          src={fleet.image}
-          alt={fleet.imageAlt}
-          fill
-          className="object-cover"
-          sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
-        />
-        <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-[#0f0e0c] shadow-sm">
-          {type === "Luxury" ? "Luxury" : type}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="p-5">
-        <h2 className="text-lg font-black text-[#0f0e0c]">{fleet.name}</h2>
-        
-        <p className="mt-1 text-base font-black text-[#ff4500]">
-          PKR {formatPrice(fleet.price)}
-          <span className="text-xs font-semibold text-[#9b9389]"> / day</span>
-        </p>
-
-        {/* Specs */}
-        <div className="mt-4 flex items-center gap-0 divide-x divide-[#f0ebe4] border-t border-[#f0ebe4] pt-4">
-          <div className="flex flex-1 flex-col items-center gap-1 px-2">
-            <Users className="h-3.5 w-3.5 text-[#ff4500]" />
-            <span className="text-[11px] font-bold text-[#746b61]">{passengers}</span>
-          </div>
-          <div className="flex flex-1 flex-col items-center gap-1 px-2">
-            <Fuel className="h-3.5 w-3.5 text-[#ff4500]" />
-            <span className="text-[11px] font-bold text-[#746b61]">{fuel}</span>
-          </div>
-          <div className="flex flex-1 flex-col items-center gap-1 px-2">
-            <Snowflake className="h-3.5 w-3.5 text-[#ff4500]" />
-            <span className="text-[11px] font-bold text-[#746b61]">A/C</span>
-          </div>
+    <Link href={`/services/${slug}`} className="block">
+      <div className="group cursor-pointer overflow-hidden rounded-2xl border border-[#e8edf4] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#ff4500]/40 hover:shadow-[0_8px_24px_rgba(255,69,0,0.10)]">
+        <div className="relative h-[200px] overflow-hidden bg-[#f8fafc]">
+          <Image
+            src={fleet.image}
+            alt={fleet.imageAlt}
+            fill
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            sizes="(min-width: 1280px) 20vw, (min-width: 640px) 33vw, 50vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <span className="absolute left-3 top-3 rounded-full border border-white/60 bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#ff4500] backdrop-blur-sm">
+            {type}
+          </span>
+          <span className="absolute bottom-3 right-3 flex h-8 w-8 translate-y-1 items-center justify-center rounded-full bg-black text-white opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+            <ArrowRight className="h-3.5 w-3.5" />
+          </span>
         </div>
 
-        {/* Button */}
-        <Link
-          href={`/services/${slug}`}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0f0e0c] py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition-colors duration-300 hover:bg-[#ff4500]"
-        >
-          View Details <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-    </article>
-  );
-}
+        <div className="p-4">
+          <p className="mb-3 line-clamp-2 text-[13px] font-semibold leading-snug text-[#0f172a] transition-colors group-hover:text-[#ff4500]">{fleet.name}</p>
+          <div className="mb-3 flex items-baseline justify-between">
+            <span className="text-[17px] font-semibold text-[#0f172a]">{formatPrice(fleet.price)}</span>
+            <span className="text-[10px] uppercase tracking-wide text-[#94a3b8]">PKR/day</span>
+          </div>
 
-function Spec({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
-  return (
-    <div className="flex items-center justify-center gap-1.5 px-2 text-center">
-      <Icon className="h-4 w-4 flex-shrink-0 text-[#ff4500]" />
-      <span className="text-xs font-bold text-[#5f574f]">{label}</span>
-    </div>
+          <div className="flex items-center gap-3 border-t border-[#f1f5f9] pt-3">
+            <div className="flex items-center gap-1 text-[11px] text-[#64748b]">
+              <Users className="h-3.5 w-3.5" />
+              {passengers}
+            </div>
+            <div className="flex items-center gap-1 text-[11px] text-[#64748b]">
+              <Fuel className="h-3.5 w-3.5" />
+              {fuel}
+            </div>
+            <div className="flex items-center gap-1 text-[11px] text-[#64748b]">
+              <Snowflake className="h-3.5 w-3.5" />
+              A/C
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -738,22 +611,22 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
   const Icon = serviceIcons[service.slug] ?? CarFront;
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-[#e8e2da] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ff4500]/40 hover:shadow-[0_8px_30px_rgba(255,69,0,0.10)]">
-      <span className="pointer-events-none absolute right-4 top-4 text-[4rem] font-black leading-none text-[#f0ebe4]">
+    <article className="group relative overflow-hidden rounded-[20px] border border-[#eadfd6] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#dacdc2] hover:shadow-[0_16px_40px_rgba(35,27,21,0.08)]">
+      <span className="pointer-events-none absolute right-5 top-5 text-4xl font-black leading-none text-[#f4eee9]">
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-[#fff4f0] text-[#ff4500]">
-        <Icon className="h-6 w-6" />
+      <div className="relative z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-[#eadfd6] bg-[#fbfaf8] text-[#ff4500]">
+        <Icon className="h-5 w-5" />
       </div>
 
-      <h2 className="relative z-10 mt-4 text-xl font-black text-[#0f0e0c]">{service.title}</h2>
-      <p className="relative z-10 mt-2 line-clamp-2 text-sm leading-6 text-[#746b61]">{service.summary}</p>
+      <h2 className="relative z-10 mt-5 text-xl font-black text-[#0f0e0c]">{service.title}</h2>
+      <p className="relative z-10 mt-2 line-clamp-3 text-sm leading-6 text-[#746b61]">{service.summary}</p>
 
-      <div className="relative z-10 mt-4 space-y-2">
-        {service.highlights.slice(0, 3).map((highlight) => (
-          <div key={highlight} className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#ff4500]" />
+      <div className="relative z-10 mt-5 space-y-2 border-t border-[#f0ebe4] pt-4">
+        {service.highlights.slice(0, 2).map((highlight) => (
+          <div key={highlight} className="flex items-start gap-2">
+            <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#ff4500]" />
             <span className="text-xs font-semibold text-[#5f574f]">{highlight}</span>
           </div>
         ))}
@@ -761,7 +634,7 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
 
       <Link
         href={`/services/${service.slug}`}
-        className="relative z-10 mt-6 flex items-center gap-1.5 border-t border-[#f0ebe4] pt-4 text-sm font-black text-[#ff4500] transition-all hover:gap-3"
+        className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-black text-[#0f0e0c] transition-all hover:gap-3 hover:text-[#ff4500]"
       >
         Learn More <ArrowRight className="h-4 w-4" />
       </Link>
@@ -778,23 +651,25 @@ function Pagination({
   totalPages: number;
   onPageChange: (page: number) => void;
 }) {
+  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
   return (
-    <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+    <div className="mt-8 flex flex-wrap items-center justify-center gap-2 border-t border-[#f0ebe4] pt-6">
       <button
         type="button"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="rounded-full border border-[#ded6cd] bg-white px-4 py-2 text-sm font-bold text-[#0f0e0c] disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full border border-[#ded6cd] bg-white px-4 py-2 text-sm font-bold text-[#0f0e0c] transition-colors hover:border-[#0f0e0c] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[#ded6cd]"
       >
         Previous
       </button>
-      {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+      {pages.map((page) => (
         <button
           key={page}
           type="button"
           onClick={() => onPageChange(page)}
-          className={`h-10 w-10 rounded-full text-sm font-black ${
-            currentPage === page ? "bg-[#ff4500] text-white" : "border border-[#ded6cd] bg-white text-[#0f0e0c]"
+          className={`h-10 w-10 rounded-full text-sm font-black transition-colors ${
+            currentPage === page ? "bg-[#0f0e0c] text-white" : "border border-[#ded6cd] bg-white text-[#0f0e0c] hover:border-[#0f0e0c]"
           }`}
         >
           {page}
@@ -804,7 +679,7 @@ function Pagination({
         type="button"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="rounded-full border border-[#ded6cd] bg-white px-4 py-2 text-sm font-bold text-[#0f0e0c] disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full border border-[#ded6cd] bg-white px-4 py-2 text-sm font-bold text-[#0f0e0c] transition-colors hover:border-[#0f0e0c] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[#ded6cd]"
       >
         Next
       </button>

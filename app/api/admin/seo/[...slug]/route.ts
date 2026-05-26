@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPageSeo, updatePageSeo } from "@/lib/seo";
 import { KNOWN_PAGES } from "@/lib/knownPages";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function verifyAdmin(request: NextRequest) {
   const token = request.cookies.get("admin_token")?.value;
   return token === "asia_tours_admin_authenticated";
@@ -17,7 +20,11 @@ export async function GET(request: NextRequest, { params }: Context) {
   const pageSlug = slug.join("/");
 
   const seo = await getPageSeo(pageSlug);
-  if (seo) return NextResponse.json(seo);
+  if (seo) {
+    return NextResponse.json(seo, {
+      headers: { "Cache-Control": "no-store, max-age=0" },
+    });
+  }
 
   // Fall back to known page defaults so the edit form loads even before sync
   const known = KNOWN_PAGES.find((p) => p.slug === pageSlug);
@@ -34,6 +41,8 @@ export async function GET(request: NextRequest, { params }: Context) {
       canonical_url: "",
       no_index: false,
       updated_at: "",
+    }, {
+      headers: { "Cache-Control": "no-store, max-age=0" },
     });
   }
 
@@ -58,5 +67,8 @@ export async function PATCH(request: NextRequest, { params }: Context) {
   if (!result.success) {
     return NextResponse.json({ error: result.error }, { status: 500 });
   }
-  return NextResponse.json({ success: true });
+  return NextResponse.json(
+    { success: true },
+    { headers: { "Cache-Control": "no-store, max-age=0" } }
+  );
 }

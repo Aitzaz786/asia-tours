@@ -101,7 +101,7 @@ export const areas: AreaData[] = [
       { from: "Faisalabad", to: "Islamabad", duration: "3 hrs" },
       { from: "Faisalabad", to: "Multan", duration: "3 hrs" },
     ],
-    image: "/black.jpeg",
+    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
   },
   {
     slug: "multan",

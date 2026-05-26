@@ -5,10 +5,11 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, MapPin, Search, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Search, X } from "lucide-react";
 import { areas } from "./areasData";
+import { LahoreServiceMap } from "../HomePageContent";
+import QuickBookingForm from "@/Components/QuickBookingForm";
 
-const LahoreServiceMap = dynamic(() => import("@/Components/LahoreServiceMap"), { ssr: false });
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -24,12 +25,7 @@ type Province = "Punjab" | "Capital Territory" | "Hill Stations";
 
 const PROVINCES: Province[] = ["Punjab", "Capital Territory", "Hill Stations"];
 
-const coverageStats = [
-  { value: "45+", label: "Cities & Destinations" },
-  { value: "24/7", label: "Booking Support" },
-  { value: "15+", label: "Years Experience" },
-  { value: "100%", label: "Chauffeur Driven" },
-];
+
 
 const cityMarquee = [
   "Lahore",
@@ -97,191 +93,161 @@ export default function AreasPage() {
       `}</style>
 
       <HeroSection />
-      <CityTicker />
-      <CoverageIntro groupedAreas={groupedAreas} />
-      <MapCoverageSection />
+    
       <AreasDirectory
         search={search}
         groupedAreas={groupedAreas}
         filteredAreas={filteredAreas}
         onSearchChange={setSearch}
       />
-      <RouteStorySection />
-      <BottomCTA />
+     <LahoreServiceMap/>
+      <section className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[28px] bg-white px-4 py-14 sm:min-h-[360px] sm:rounded-[36px] sm:px-6 lg:min-h-[400px] lg:px-10">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
+        <span className="text-[7rem] font-bold tracking-tighter text-slate-900 select-none sm:text-[10rem] lg:text-[20rem]">
+          ASIA
+        </span>
+      </div>
+
+      <div className="relative z-10 flex max-w-2xl flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#ff4500]"
+        >
+          <span className="text-2xl font-bold">{"✦"}</span>
+        </motion.div>
+
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Ready to elevate <span className="text-[#ff4500]">your journey?</span>
+        </h2>
+        <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
+          Tailored luxury transport services for executive and private travel.
+        </p>
+
+        <div className="group relative mt-8 sm:mt-10">
+          <Link
+            href="/contact-us"
+            className="relative z-10 block rounded-full bg-[#ff4500] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-white transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
+          >
+            Contact Us
+          </Link>
+
+          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#ff4500] transition-all duration-500 group-hover:w-32 sm:block" />
+        </div>
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:mt-12 sm:gap-8">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            24/7 Support
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            Secure Booking
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-orange-100 to-transparent sm:left-10 sm:block" />
+      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-orange-100 to-transparent sm:right-10 sm:block" />
+    </section>
     </main>
   );
 }
 
 function HeroSection() {
-  const easeCurve: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+  const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   return (
-    <section className="relative min-h-[700px] w-full overflow-hidden pt-0">
-      <Image
-        src="/Badshahi_Mosque_front_picture.jpg"
-        alt="Asia Tours service coverage across Pakistan"
-        fill
-        priority
-        className="object-cover"
-        sizes="100vw"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.72)_50%,rgba(0,0,0,0.35)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.12)_48%,rgba(0,0,0,0.82)_100%)]" />
+    <section className="px-3 pb-6 pt-4 sm:px-5 sm:pb-8 lg:px-7">
+      <div className="relative mx-auto w-full max-w-[1800px]">
+        <div className="relative min-h-[620px] overflow-hidden rounded-[28px] sm:min-h-[700px] sm:rounded-[36px] lg:min-h-[760px] lg:rounded-[46px] xl:min-h-[800px]">
+          <Image
+            src="/hero-bg.jpg"
+            alt="Luxury chauffeur service coverage areas"
+            fill
+            priority
+            className="object-cover object-[72%_center] lg:object-center"
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.86),rgba(0,0,0,0.72),rgba(0,0,0,0.52))] md:bg-[linear-gradient(115deg,rgba(0,0,0,0.84),rgba(0,0,0,0.68),rgba(0,0,0,0.30))] lg:bg-gradient-to-r lg:from-[rgba(0,0,0,0.86)] lg:via-[rgba(0,0,0,0.52)] lg:to-[rgba(0,0,0,0.14)]"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
 
-      <div className="relative z-10 flex min-h-[700px] flex-col justify-center px-6 py-20 pt-32 sm:px-10 lg:px-16">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
-          <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
-            <span className="h-px w-8 bg-[#ff4500]" />
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ff4500]">
-              Asia Tours Service Areas
-            </p>
-            <span className="h-px w-8 bg-[#ff4500]" />
-          </motion.div>
+          <div className="relative z-10 flex min-h-[620px] w-full items-center justify-center px-5 py-12 sm:min-h-[700px] sm:px-8 sm:py-14 lg:min-h-[760px] lg:px-12 xl:px-[4.5rem]">
+            <div className="grid w-full place-items-center">
+              <div className="mx-auto max-w-4xl text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: -16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1, ease: easeCurve }}
+                  className="mb-5 inline-flex items-center justify-center gap-2"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#ff4500]" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#ff4500] sm:text-xs sm:tracking-[0.28em]">
+                    Complete Area Directory
+                  </span>
+                </motion.div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="max-w-[13ch] text-[3rem] font-black leading-[1.02] tracking-[-2px] text-white sm:text-6xl lg:text-[5.4rem]"
-          >
-            Premium rides across every key route.
-          </motion.h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 36 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: easeCurve }}
+                  className="mx-auto max-w-5xl text-[2.45rem] font-black leading-[0.96] tracking-tight text-white sm:text-5xl lg:text-[4.1rem] xl:text-[4.9rem]"
+                >
+                  <span className="block whitespace-nowrap">
+                    Find your <span className="text-[#ff4500]">pickup</span>
+                  </span>
+                  <span className="block whitespace-nowrap">or destination city.</span>
+                </motion.h1>
 
-          <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-sm leading-7 text-white/62 sm:text-base">
-            Airport pickups, corporate transport, wedding movements, family tours, and hill station routes across
-            Punjab, Islamabad, and northern destinations with professional chauffeurs.
-          </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.35, ease: easeCurve }}
+                  className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/72 sm:text-base lg:text-lg"
+                >
+                  Chauffeur-driven cars for airport transfers, business travel, weddings, family tours, and long-distance routes across Pakistan.
+                </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link
-              href="#coverage-map"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4500] px-9 py-4 text-sm font-black uppercase tracking-wide text-white shadow-[0_18px_45px_rgba(255,69,0,0.30)] transition-all hover:-translate-y-0.5 hover:bg-[#d83a00]"
-            >
-              View Coverage <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/contact-us"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-black/20 px-9 py-4 text-sm font-black text-white/75 backdrop-blur-md transition-colors hover:bg-white/10 hover:text-white"
-            >
-              Request Your City
-            </Link>
-          </motion.div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.58, ease: easeCurve }}
-          className="mt-14 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-[22px] border border-white/10 bg-white/10 backdrop-blur-md lg:grid-cols-4"
-        >
-          {coverageStats.map((stat) => (
-            <div key={stat.label} className="bg-white/8 px-5 py-5 backdrop-blur-md">
-              <p className="text-4xl font-black text-white">{stat.value}</p>
-              <p className="mt-2 text-[10px] font-black uppercase tracking-[0.22em] text-white/45">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.65, ease: easeCurve }}
+                  className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+                >
+                  <Link
+                    href="#coverage-map"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4500] px-8 py-3.5 text-sm font-bold text-white shadow-[0_20px_45px_rgba(255,69,0,0.3)] transition-all hover:-translate-y-0.5 hover:bg-[#e63e00]"
+                  >
+                    View Coverage <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="#area-directory"
+                    className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/8 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/12"
+                  >
+                    Browse Cities
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
+                  </Link>
+                </motion.div>
 
-function CityTicker() {
-  return (
-    <section className="overflow-hidden border-y border-[#1a1714] bg-[#0f0e0c] py-4">
-      <div className="flex w-max items-center whitespace-nowrap" style={{ animation: "areasTicker 30s linear infinite" }}>
-        {[...Array(2)].map((_, group) => (
-          <div key={group} className="flex items-center">
-            {cityMarquee.map((city) => (
-              <span
-                key={`${group}-${city}`}
-                className="mx-5 inline-flex items-center gap-5 text-xs font-black uppercase tracking-[0.28em] text-white/85 sm:text-sm"
-              >
-                {city}
-                <span className="h-1.5 w-1.5 rounded-full bg-[#ff4500]" />
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function CoverageIntro({ groupedAreas }: { groupedAreas: { province: Province; cities: typeof areas }[] }) {
-  return (
-    <section className="px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
-          <motion.p variants={fadeUp} className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4500]">
-            Where We Serve
-          </motion.p>
-          <motion.h2 variants={fadeUp} className="mt-4 max-w-2xl text-4xl font-black leading-tight tracking-tight sm:text-5xl">
-            A practical coverage network for real travel needs.
-          </motion.h2>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-          className="grid gap-3 sm:grid-cols-3"
-        >
-          {groupedAreas.map((group) => (
-            <motion.div
-              key={group.province}
-              variants={fadeUp}
-              className="rounded-2xl border border-[#e8e2da] bg-white px-6 py-7 shadow-sm transition-all hover:border-[#ff4500]/30 hover:shadow-[0_4px_20px_rgba(255,69,0,0.08)]"
-            >
-              <div className="mb-4 h-0.5 w-8 rounded bg-[#ff4500]" />
-              <p className="text-4xl font-black text-[#0f0e0c]">{group.cities.length}</p>
-              <p className="mt-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#9b9389]">{group.province}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function MapCoverageSection() {
-  return (
-    <section id="coverage-map" className="px-4 pb-20 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[32px] border border-[#e8e2da] bg-white shadow-[0_4px_40px_rgba(0,0,0,0.06)] lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="flex flex-col justify-between bg-[#faf8f5] p-7 sm:p-10">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4500]">Live Coverage Map</p>
-            <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
-              See the service footprint, not just a list.
-            </h2>
-            <p className="mt-5 text-sm leading-7 text-[#746b61] sm:text-base">
-              Our map highlights the cities and destinations where Asia Tours arranges chauffeur-driven cars for
-              airport transfers, events, executive movement, and intercity routes.
-            </p>
-          </div>
-
-          <div className="mt-8 space-y-4">
-            {[
-              "Premium car rental with driver",
-              "Long-distance route planning",
-              "Airport and hotel transfers",
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#ff4500] text-white">
-                  <Check className="h-4 w-4" />
-                </span>
-                <span className="text-sm font-bold text-[#0f0e0c]">{item}</span>
+         
               </div>
-            ))}
+
+     
+            </div>
           </div>
         </div>
-
-        <div className="min-h-[480px] border-t border-[#e8e2da] bg-[#f0ede8] lg:border-l lg:border-t-0">
-          <LahoreServiceMap />
-        </div>
       </div>
+      <QuickBookingForm easeCurve={easeCurve} />
     </section>
   );
 }
+
 
 function AreasDirectory({
   search,
@@ -297,12 +263,12 @@ function AreasDirectory({
   const showFiltered = search.trim().length > 0;
 
   return (
-    <section className=" px-4 py-20 sm:px-6 lg:px-8">
+    <section id="area-directory" className=" px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4500]">Complete Area Directory</p>
-            <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight sm:text-5xl">
+            <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight sm:text-[34px]">
               Select your pickup or destination city.
             </h2>
           </div>
@@ -351,19 +317,21 @@ function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
         <span className="text-xs font-bold text-[#9b9389]">{cities.length}</span>
       </div>
 
-      <div className="grid gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-0 border-l border-t border-[#ececec] sm:grid-cols-2 lg:grid-cols-3">
         {cities.map((area) => (
           <motion.div key={area.slug} variants={fadeUp}>
             <Link
               href={`/areas/${area.slug}`}
-              className="group relative flex items-center justify-between border-b border-[#f0ebe4] py-4 pl-3 transition-all hover:border-[#ff4500]/30 hover:pl-5"
+              className="group relative flex h-full items-center justify-between overflow-hidden border-b border-r border-[#ececec] bg-white px-[26px] py-6 text-inherit no-underline transition-all duration-300 hover:bg-[#fafafa] hover:pl-[34px]"
             >
-              <div className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded bg-[#ff4500] opacity-0 transition-opacity group-hover:opacity-100" />
+              <span className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-[#ff4500] transition-transform duration-300 group-hover:origin-top group-hover:scale-y-100" />
               <div>
-                <p className="text-xl font-black text-[#0f0e0c] transition-colors group-hover:text-[#ff4500]">{area.name}</p>
-                <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-[#9b9389]">{area.province}</p>
+                <p className="font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.015em] text-[#0e0e10] transition-colors duration-300 group-hover:text-[#ff4500]">
+                  {area.name}
+                </p>
+                <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.22em] text-[#6b6b73]">{area.province}</p>
               </div>
-              <ArrowRight className="h-4 w-4 text-[#c4bbb1] transition-all group-hover:translate-x-1 group-hover:text-[#ff4500]" />
+              <ArrowUpRight className="ml-3 h-[18px] w-[18px] flex-shrink-0 text-[#6b6b73] transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#ff4500]" />
             </Link>
           </motion.div>
         ))}
@@ -372,39 +340,6 @@ function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
   );
 }
 
-function RouteStorySection() {
-  return (
-    <section className=" px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-10 max-w-3xl">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4500]">How We Cover Routes</p>
-          <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight sm:text-5xl">
-            Every area connects to a real service plan.
-          </h2>
-        </div>
-
-        <div className="grid gap-px overflow-hidden rounded-[28px] border border-[#e8e2da] bg-[#e8e2da] lg:grid-cols-3">
-          {routeStories.map((story, index) => (
-            <motion.div
-              key={story.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="bg-white p-8 transition-all duration-300 hover:bg-[#fff8f4] hover:shadow-inner sm:p-10"
-            >
-              <p className="text-[6rem] font-black leading-none text-[#ff4500]/10">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mt-6 text-xl font-black text-[#0f0e0c]">{story.title}</h3>
-              <p className="mt-4 text-sm leading-7 text-[#746b61]">{story.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function BottomCTA() {
   return (

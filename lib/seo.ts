@@ -1,4 +1,4 @@
-import { unstable_cache } from "next/cache";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { createAdminClient } from "./supabase/admin";
 import { KNOWN_PAGES, type KnownPage } from "./knownPages";
 
@@ -34,35 +34,35 @@ function knownToSeo(p: KnownPage): PageSeo {
   };
 }
 
-export const getPageSeo = unstable_cache(
-  async (slug: string): Promise<PageSeo | null> => {
-    try {
-      const supabase = createAdminClient();
-      const { data, error } = await supabase
-        .from("pages_seo")
-        .select("*")
-        .eq("slug", slug)
-        .single();
-      if (error || !data) return null;
-      return data as PageSeo;
-    } catch {
-      return null;
-    }
-  },
-  ["page-seo"],
-  { revalidate: 60, tags: ["seo"] }
-);
+export async function getPageSeo(slug: string): Promise<PageSeo | null> {
+  noStore();
+  try {
+    const supabase = createAdminClient();
+    const { data } = await supabase
+      .from("pages_seo")
+      .select("*")
+      .eq("slug", slug)
+      .single()
+      .throwOnError();
+    if (!data) return null;
+    return data as PageSeo;
+  } catch {
+    return null;
+  }
+}
 
 export async function getAllPages(): Promise<PageSeo[]> {
+  noStore();
   const base = KNOWN_PAGES.map(knownToSeo);
   try {
     const supabase = createAdminClient();
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("pages_seo")
       .select("*")
-      .order("slug");
+      .order("slug")
+      .throwOnError();
 
-    if (error || !data || data.length === 0) return base;
+    if (!data || data.length === 0) return base;
 
     const dbMap = new Map<string, PageSeo>(
       (data as PageSeo[]).map((p) => [p.slug, p])
@@ -77,6 +77,7 @@ export async function updatePageSeo(
   slug: string,
   updates: Partial<Omit<PageSeo, "id" | "slug" | "updated_at">>
 ): Promise<{ success: boolean; error?: string }> {
+  noStore();
   try {
     const supabase = createAdminClient();
     const known = KNOWN_PAGES.find((p) => p.slug === slug);
@@ -97,6 +98,9 @@ export async function updatePageSeo(
       { onConflict: "slug" }
     );
     if (error) return { success: false, error: error.message };
+    revalidatePath("/admin/seo");
+    revalidatePath("/admin/seo/[slug]", "page");
+    revalidatePath("/admin");
     return { success: true };
   } catch (e) {
     return { success: false, error: String(e) };
@@ -104,25 +108,41 @@ export async function updatePageSeo(
 }
 
 export async function seedAllPages(): Promise<{ success: boolean; count: number; error?: string }> {
+  noStore();
   try {
     const supabase = createAdminClient();
-    const rows = KNOWN_PAGES.map((p) => ({
-      slug: p.slug,
-      page_title: p.page_title,
-      meta_title: p.meta_title,
-      meta_description: p.meta_description,
-      og_title: "",
-      og_description: "",
-      og_image: "",
-      canonical_url: "",
-      no_index: false,
-      updated_at: new Date().toISOString(),
-    }));
+
+    const { data: existing } = await supabase
+      .from("pages_seo")
+      .select("slug");
+
+    const existingSlugs = new Set((existing ?? []).map((r: { slug: string }) => r.slug));
+
+    const newRows = KNOWN_PAGES
+      .filter((p) => !existingSlugs.has(p.slug))
+      .map((p) => ({
+        slug: p.slug,
+        page_title: p.page_title,
+        meta_title: p.meta_title,
+        meta_description: p.meta_description,
+        og_title: "",
+        og_description: "",
+        og_image: "",
+        canonical_url: "",
+        no_index: false,
+        updated_at: new Date().toISOString(),
+      }));
+
+    if (newRows.length === 0) {
+      return { success: true, count: 0 };
+    }
+
     const { error } = await supabase
       .from("pages_seo")
-      .upsert(rows, { onConflict: "slug" });
+      .insert(newRows); // upsert nahi — sirf insert
+
     if (error) return { success: false, count: 0, error: error.message };
-    return { success: true, count: rows.length };
+    return { success: true, count: newRows.length };
   } catch (e) {
     return { success: false, count: 0, error: String(e) };
   }
@@ -133,6 +153,7 @@ export function buildMetadata(
   pagePath: string,
   defaults: { title: string; description: string }
 ) {
+  noStore();
   const title = seo?.meta_title || defaults.title;
   const description = seo?.meta_description || defaults.description;
   const ogTitle = seo?.og_title || title;

@@ -200,8 +200,10 @@ export default function HomePageContent() {
 
 
 
-      <PremiumExperienceSection />
-      <FaqSection />
+
+     <div className="mx-auto mt-16  text-center">
+       <FaqSection />
+     </div>
  <section className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[28px] bg-white px-4 py-14 sm:min-h-[360px] sm:rounded-[36px] sm:px-6 lg:min-h-[400px] lg:px-10">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
         <span className="text-[7rem] font-bold tracking-tighter text-slate-900 select-none sm:text-[10rem] lg:text-[20rem]">

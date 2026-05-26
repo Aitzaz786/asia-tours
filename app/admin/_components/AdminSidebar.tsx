@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Globe, LayoutDashboard, LogOut, Settings } from "lucide-react";
+import { Globe, LayoutDashboard, LogOut, MessageSquare, Settings } from "lucide-react";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, key: "dashboard" },
+  { href: "/admin/inquiries", label: "Inquiries", icon: MessageSquare, key: "inquiries" },
   { href: "/admin/seo", label: "SEO Manager", icon: Globe, key: "seo" },
   { href: "/admin/settings", label: "Settings", icon: Settings, key: "settings" },
 ];
@@ -16,6 +17,7 @@ export default function AdminSidebar() {
 
   function isActive(key: string) {
     if (key === "dashboard") return pathname === "/admin";
+    if (key === "inquiries") return pathname.startsWith("/admin/inquiries");
     if (key === "seo") return pathname.startsWith("/admin/seo");
     if (key === "settings") return pathname.startsWith("/admin/settings");
     return false;

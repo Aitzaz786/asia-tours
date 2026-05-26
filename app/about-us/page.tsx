@@ -628,7 +628,7 @@ function VisionMissionSection({
   );
 }
 
-function VideoStatsSection() {
+export function VideoStatsSection() {
   return (
     <section className="rounded-[28px] bg-white px-4 py-12 text-[#111111] sm:rounded-[36px] sm:px-6 sm:py-14 lg:px-12 lg:py-16">
       <div className="mx-auto max-w-7xl">
@@ -718,7 +718,7 @@ export function ContactGatewaySection() {
   );
 }
 
-function TestimonialsSection({
+export function TestimonialsSection({
   testimonialStart,
   setTestimonialStart,
 }: {

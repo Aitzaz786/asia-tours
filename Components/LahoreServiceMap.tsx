@@ -27,7 +27,6 @@ const serviceAreas = [
   { name: "Sahiwal", lat: 30.6682, lng: 73.1066 },
   { name: "Okara", lat: 30.8108, lng: 73.4502 },
   { name: "Rahim Yar Khan", lat: 28.4200, lng: 70.2950 },
-  { name: "Bahawalpur", lat: 29.3956, lng: 71.6835 },
   { name: "D.G. Khan", lat: 30.0491, lng: 70.6340 },
   { name: "Jhelum", lat: 32.9425, lng: 73.7257 },
   { name: "Chakwal", lat: 32.9308, lng: 72.8561 },
@@ -90,9 +89,9 @@ export default function PunjabServiceMap() {
     <div className="relative overflow-hidden">
       <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={7}>
-        {serviceAreas.map((area) => (
+        {serviceAreas.map((area, index) => (
           <MarkerF
-            key={area.name}
+            key={`${area.name}-${area.lat}-${area.lng}-${index}`}
             position={{ lat: area.lat, lng: area.lng }}
             title={area.name}
           />

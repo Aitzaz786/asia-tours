@@ -5,6 +5,7 @@ import AdminSidebar from "./_components/AdminSidebar";
 import { ArrowRight, Edit3, Globe, LayoutDashboard, Settings } from "lucide-react";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function AdminDashboardPage() {
   const pages = await getAllPages();

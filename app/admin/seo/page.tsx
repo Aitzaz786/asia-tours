@@ -6,6 +6,7 @@ import SyncButton from "./SyncButton";
 import { Edit3, Globe } from "lucide-react";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type PageSeoRow = Awaited<ReturnType<typeof getAllPages>>[number];
 

@@ -119,7 +119,7 @@ export default function SeoEditPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`/api/admin/seo/${fullSlug}`)
+    fetch(`/api/admin/seo/${fullSlug}`, { cache: "no-store" })
       .then((r) => { if (r.status === 401) { router.push("/admin/login"); return null; } return r.json(); })
       .then((d) => { if (d) setData(d); setLoading(false); })
       .catch(() => { setError("Failed to load."); setLoading(false); });
@@ -136,10 +136,11 @@ export default function SeoEditPage() {
     try {
       const res = await fetch(`/api/admin/seo/${fullSlug}`, {
         method: "PATCH",
+        cache: "no-store",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (res.ok) { setSaved(true); setTimeout(() => setSaved(false), 3000); }
+      if (res.ok) { router.refresh(); setSaved(true); setTimeout(() => setSaved(false), 3000); }
       else { const d = await res.json(); setError(d.error ?? "Save failed"); }
     } catch { setError("Network error."); }
     finally { setSaving(false); }

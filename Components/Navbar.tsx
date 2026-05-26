@@ -285,45 +285,45 @@ export default function Navbar() {
                                 {/* Card 1 - Lahore */}
                                 <Link
                                   href="/areas/lahore"
-                                  className="flex min-h-[160px] flex-1 flex-col rounded-2xl bg-[#0f0e0c] p-5 transition-all duration-300 hover:border hover:border-[#ff4500]/40 hover:shadow-[0_18px_36px_rgba(255,69,0,0.18)]"
+                                  className="flex min-h-[160px] flex-1 flex-col rounded-2xl bg-[#0f0e0c] p-5 transition-all duration-300"
                                 >
                                   <p className="text-[9px] font-black uppercase tracking-[0.18em] text-[#ff6a35]">
                                     PUNJAB
                                   </p>
-                                  <p className="mt-3 text-2xl font-black leading-tight text-white">Lahore</p>
-                                  <p className="mt-2 text-sm font-medium text-white/60">Pakistan's cultural capital & primary service hub</p>
-                                  <span className="mt-auto inline-flex items-center gap-1 text-sm font-black uppercase tracking-[0.12em] text-[#ff6a35]">
-                                    Book <ChevronRight className="h-4 w-4" />
+                                  <p className="mt-3 text-xl font-black leading-tight text-white">Lahore</p>
+                                  <p className="mt-2 text-xs font-medium leading-relaxed text-white/60">Pakistan's cultural capital & primary service hub</p>
+                                  <span className="mt-auto inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.12em] text-[#ff6a35]">
+                                    Book <ChevronRight className="h-3.5 w-3.5" />
                                   </span>
                                 </Link>
 
                                 {/* Card 2 - Islamabad */}
                                 <Link
                                   href="/areas/islamabad"
-                                  className="flex min-h-[160px] flex-1 flex-col rounded-2xl bg-[#0f0e0c] p-5 transition-all duration-300 hover:border hover:border-[#ff4500]/40 hover:shadow-[0_18px_36px_rgba(255,69,0,0.18)]"
+                                  className="flex min-h-[160px] flex-1 flex-col rounded-2xl bg-[#0f0e0c] p-5 transition-all duration-300"
                                 >
                                   <p className="text-[9px] font-black uppercase tracking-[0.12em] text-[#ff6a35]">
                                     CAPITAL TERRITORY
                                   </p>
-                                  <p className="mt-3 text-2xl font-black leading-tight text-white">Islamabad</p>
-                                  <p className="mt-2 text-sm font-medium text-white/60">IATA Airport, Diplomatic Enclave & hill routes</p>
-                                  <span className="mt-auto inline-flex items-center gap-1 text-sm font-black uppercase tracking-[0.12em] text-[#ff6a35]">
-                                    Book <ChevronRight className="h-4 w-4" />
+                                  <p className="mt-3 text-xl font-black leading-tight text-white">Islamabad</p>
+                                  <p className="mt-2 text-xs font-medium leading-relaxed text-white/60">IATA Airport, Diplomatic Enclave & hill routes</p>
+                                  <span className="mt-auto inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.12em] text-[#ff6a35]">
+                                    Book <ChevronRight className="h-3.5 w-3.5" />
                                   </span>
                                 </Link>
 
                                 {/* Card 3 - Murree */}
                                 <Link
                                   href="/areas/murree"
-                                  className="flex min-h-[160px] flex-1 flex-col rounded-2xl bg-[#0f0e0c] p-5 transition-all duration-300 hover:border hover:border-[#ff4500]/40 hover:shadow-[0_18px_36px_rgba(255,69,0,0.18)]"
+                                  className="flex min-h-[160px] flex-1 flex-col rounded-2xl bg-[#0f0e0c] p-5 transition-all duration-300"
                                 >
                                   <p className="text-[9px] font-black uppercase tracking-[0.18em] text-[#ff6a35]">
                                     HILL STATIONS
                                   </p>
-                                  <p className="mt-3 text-2xl font-black leading-tight text-white">Murree</p>
-                                  <p className="mt-2 text-sm font-medium text-white/60">Snow season routes, Mall Road & Kashmir point</p>
-                                  <span className="mt-auto inline-flex items-center gap-1 text-sm font-black uppercase tracking-[0.12em] text-[#ff6a35]">
-                                    Book <ChevronRight className="h-4 w-4" />
+                                  <p className="mt-3 text-xl font-black leading-tight text-white">Murree</p>
+                                  <p className="mt-2 text-xs font-medium leading-relaxed text-white/60">Snow season routes, Mall Road & Kashmir point</p>
+                                  <span className="mt-auto inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.12em] text-[#ff6a35]">
+                                    Book <ChevronRight className="h-3.5 w-3.5" />
                                   </span>
                                 </Link>
                               </div>
@@ -343,6 +343,7 @@ export default function Navbar() {
                                     'bhurban',
                                     'patriata',
                                     'sargodha',
+                                    'sheikhupura',
                                   ].map((slug) => (
                                     <Link
                                       key={slug}
