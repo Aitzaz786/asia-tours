@@ -680,7 +680,7 @@ export default function AreaPage() {
 
         </motion.div>
       </section>
-      <section className="overflow-hidden border-y border-[#eadfd6]  py-5">
+      <section className="overflow-hidden border-y border-[#eadfd6]  py-5 mb-10">
         <style>{`
           @keyframes marquee-scroll {
             from { transform: translateX(0); }

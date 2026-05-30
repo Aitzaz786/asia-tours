@@ -17,18 +17,15 @@ import {
   CarFront,
   Check,
   ChevronDown,
-  Fuel,
   Gem,
   LucideIcon,
   Plane,
   Route,
   Search,
-  Snowflake,
-  Users,
 } from "lucide-react";
 import { fleets, getFleetSlug, type Fleet } from "@/Data/cars";
 import { services } from "./servicesData";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import QuickBookingForm from "@/Components/QuickBookingForm";
 import CtaBannerSection from "@/Components/CtaBannerSection";
 import FaqSection from "@/Components/FaqSection";
@@ -78,11 +75,6 @@ type ContentTab = "fleet" | "services";
 
 const ITEMS_PER_PAGE = 12;
 
-const sortOptions: { label: string; value: SortOption }[] = [
-  { label: "Price: Low to High", value: "price-asc" },
-  { label: "Price: High to Low", value: "price-desc" },
-  { label: "Most Passengers", value: "passengers-desc" },
-];
 
 const serviceIcons: Record<string, LucideIcon> = {
   "airport-transfer": Plane,
@@ -100,11 +92,6 @@ function getHighlightValue(fleet: Fleet, label: string) {
 function getPassengers(fleet: Fleet) {
   const value = getHighlightValue(fleet, "Passengers");
   return typeof value === "number" ? value : Number(value) || 0;
-}
-
-function getFuel(fleet: Fleet) {
-  const value = getHighlightValue(fleet, "Fuel");
-  return typeof value === "string" ? value : "Petrol";
 }
 
 function getVehicleType(fleet: Fleet): VehicleType {
@@ -324,15 +311,19 @@ export default function ServicesClientPage() {
         </div>
       </section>
 
-
-
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={contentTab}
+          initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
       {contentTab === "fleet" ? (
-        <section id="fleet-showcase" className="bg-white px-4 pb-24 pt-16 sm:px-6 lg:px-8">
+        <section id="fleet-showcase" className="bg-white px-4 pb-24 pt-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[1600px]">
-            <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 border-b border-[#efe6dc] pb-10 text-center">
-              <p className="inline-flex rounded-full border border-[#f3d5c6] bg-[#fff7f2] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.28em] text-[#ff4500]">
-                Curated Luxury Fleet
-              </p>
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 pb-10 text-center">
+           
               <h2 className="whitespace-nowrap text-3xl font-black leading-tight tracking-tight text-[#08111f] sm:text-4xl lg:text-5xl">
                 Premium cars.{" "}
                 <span className="text-[#ff4500]">Private chauffeurs.</span>
@@ -342,11 +333,13 @@ export default function ServicesClientPage() {
               </p>
             </div>
 
-            <div className="pt-6">
+            <div className="pt-6 border-t border-[#efe6dc]">
               <div className="min-w-0">
-                <div className="mb-8 flex flex-col gap-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="w-12 shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9ca3af]">Type</span>
+                <div className="mb-8 flex flex-col gap-3 rounded-2xl border border-[#eadfd6] bg-[#fbfaf8] p-4 shadow-[0_18px_48px_rgba(35,27,21,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 border-b border-[#eadfd6] pb-3">
+                    <span className="inline-flex w-16 shrink-0 items-center justify-center rounded-full border border-[#ff6a2a]/25 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-sm">
+                      Type
+                    </span>
                     {(["All", "SUV", "Sedan", "Luxury", "4x4 Pickup", "Van"] as VehicleType[]).map((type) => (
                       <button
                         key={type}
@@ -355,10 +348,10 @@ export default function ServicesClientPage() {
                           setVehicleType(type);
                           resetPage();
                         }}
-                        className={`rounded-full border px-4 py-1.5 text-[13px] transition-all ${
+                        className={`rounded-full border px-4 py-1.5 text-[13px] font-semibold transition-all ${
                           vehicleType === type
-                            ? "border-[#ff4500] bg-[#ff4500] font-medium text-white"
-                            : "border-[#e2e8f0] bg-white text-[#64748b] hover:border-[#ff4500] hover:text-[#ff4500]"
+                            ? "border-[#ff6a2a] bg-[#ff4500] text-white shadow-[0_8px_20px_rgba(255,69,0,0.24)]"
+                            : "border-[#e4d7cc] bg-white text-[#4d443d] shadow-sm hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500]"
                         }`}
                       >
                         {type}
@@ -367,7 +360,9 @@ export default function ServicesClientPage() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="w-12 shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9ca3af]">Price</span>
+                    <span className="inline-flex w-16 shrink-0 items-center justify-center rounded-full border border-[#ff6a2a]/25 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-sm">
+                      Price
+                    </span>
                     {([
                       { label: "Any", value: "all" },
                       { label: "Under 15k", value: "under-15000" },
@@ -382,18 +377,18 @@ export default function ServicesClientPage() {
                           setPriceFilter(opt.value);
                           resetPage();
                         }}
-                        className={`rounded-full border px-4 py-1.5 text-[13px] transition-all ${
+                        className={`rounded-full border px-4 py-1.5 text-[13px] font-semibold transition-all ${
                           priceFilter === opt.value
-                            ? "border-[#ff4500] bg-[#ff4500] font-medium text-white"
-                            : "border-[#e2e8f0] bg-white text-[#64748b] hover:border-[#ff4500] hover:text-[#ff4500]"
+                            ? "border-[#ff6a2a] bg-[#ff4500] text-white shadow-[0_8px_20px_rgba(255,69,0,0.24)]"
+                            : "border-[#e4d7cc] bg-white text-[#4d443d] shadow-sm hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500]"
                         }`}
                       >
                         {opt.label}
                       </button>
                     ))}
 
-                    <div className="relative ml-auto">
-                      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#9ca3af]" />
+                    <div className="relative ml-auto w-full sm:w-auto">
+                      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#ff6a2a]" />
                       <input
                         type="text"
                         value={search}
@@ -402,53 +397,22 @@ export default function ServicesClientPage() {
                           resetPage();
                         }}
                         placeholder="Search vehicles..."
-                        className="w-56 rounded-full border border-[#e2e8f0] bg-white py-1.5 pl-9 pr-4 text-[13px] text-[#0f172a] outline-none placeholder:text-[#9ca3af] focus:border-[#ff4500]"
+                        className="w-full rounded-full border border-[#f0d8c9] bg-[#fffaf6] py-2 pl-9 pr-4 text-[13px] font-bold text-[#18130f] outline-none placeholder:text-[#9d8f84] shadow-[0_10px_26px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all focus:border-[#ff6a2a] focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,69,0,0.16),0_12px_30px_rgba(0,0,0,0.18)] sm:w-60"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm font-semibold text-[#667085]">
+                  <p className="rounded-full border border-[#efe6dc] bg-[#fbfaf8] px-4 py-2 text-sm font-bold text-[#5b554f] shadow-sm">
                     Showing <span className="font-black text-[#ff4500]">{visibleFleets.length}</span> of{" "}
                     <span className="font-black text-[#08111f]">{filteredFleets.length}</span> vehicles
                   </p>
-                  <div className="relative">
-                    <Listbox
-                      value={sortOption}
-                      onChange={(value) => {
-                        setSortOption(value);
-                        resetPage();
-                      }}
-                    >
-                      <ListboxButton className="flex items-center gap-2 rounded-full border border-[#d7dde7] bg-white px-5 py-3 text-sm font-black text-[#08111f] outline-none transition-colors hover:border-[#08111f] focus:border-[#ff4500]">
-                        <span>
-                          {sortOptions.find((o) => o.value === sortOption)?.label}
-                        </span>
-                        <ChevronDown className="h-4 w-4 text-[#667085]" />
-                      </ListboxButton>
-
-                      <ListboxOptions
-                        anchor="bottom end"
-                        className="z-50 mt-2 w-[220px] overflow-hidden rounded-2xl border border-[#d7dde7] bg-white p-1 shadow-[0_18px_45px_rgba(15,23,42,0.12)] focus:outline-none"
-                      >
-                        {sortOptions.map((option) => (
-                          <ListboxOption
-                            key={option.value}
-                            value={option.value}
-                            className="group flex cursor-pointer items-center justify-between rounded-xl px-4 py-3 text-sm font-bold text-[#475467] transition-colors data-[focus]:bg-[#f6f7f9] data-[focus]:text-[#08111f]"
-                          >
-                            <span>{option.label}</span>
-                            <Check className="invisible h-4 w-4 text-[#ff4500] group-data-[selected]:visible" />
-                          </ListboxOption>
-                        ))}
-                      </ListboxOptions>
-                    </Listbox>
-                  </div>
+  
                 </div>
 
                 {visibleFleets.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     {visibleFleets.map((fleet) => (
                       <VehicleCard key={fleet.name} fleet={fleet} />
                     ))}
@@ -489,14 +453,18 @@ export default function ServicesClientPage() {
           </div>
         </section>
       )}
-<CtaBannerSection/>
+        </motion.div>
+      </AnimatePresence>
+
+ <LahoreServiceMap/>
+
      <VideoStatsSection/>
-     <LahoreServiceMap/>
-     <div className="mx-auto mt-16  text-center ">
+    
+     <div className="mx-auto  text-center ">
     <TestimonialsSection testimonialStart={testimonialStart} setTestimonialStart={setTestimonialStart} />  
 
 </div>
-     <div className="mx-auto mt-16  text-center">
+     <div className="mx-auto !mt-16  text-center">
       
 <FaqSection/>
 </div>
@@ -555,55 +523,66 @@ export default function ServicesClientPage() {
 }
 
 function VehicleCard({ fleet }: { fleet: Fleet }) {
-  const passengers = getPassengers(fleet);
-  const fuel = getFuel(fleet);
   const slug = getFleetSlug(fleet.name);
   const type = getVehicleType(fleet);
+  const highlights = fleet.highlights?.slice(0, 3) ?? [];
 
   return (
-    <Link href={`/services/${slug}`} className="block">
-      <div className="group cursor-pointer overflow-hidden rounded-2xl border border-[#e8edf4] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#ff4500]/40 hover:shadow-[0_8px_24px_rgba(255,69,0,0.10)]">
-        <div className="relative h-[200px] overflow-hidden bg-[#f8fafc]">
-          <Image
-            src={fleet.image}
-            alt={fleet.imageAlt}
-            fill
-            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            sizes="(min-width: 1280px) 20vw, (min-width: 640px) 33vw, 50vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-          <span className="absolute left-3 top-3 rounded-full border border-white/60 bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#ff4500] backdrop-blur-sm">
-            {type}
-          </span>
-          <span className="absolute bottom-3 right-3 flex h-8 w-8 translate-y-1 items-center justify-center rounded-full bg-black text-white opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-            <ArrowRight className="h-3.5 w-3.5" />
-          </span>
-        </div>
-
-        <div className="p-4">
-          <p className="mb-3 line-clamp-2 text-[13px] font-semibold leading-snug text-[#0f172a] transition-colors group-hover:text-[#ff4500]">{fleet.name}</p>
-          <div className="mb-3 flex items-baseline justify-between">
-            <span className="text-[17px] font-semibold text-[#0f172a]">{formatPrice(fleet.price)}</span>
-            <span className="text-[10px] uppercase tracking-wide text-[#94a3b8]">PKR/day</span>
-          </div>
-
-          <div className="flex items-center gap-3 border-t border-[#f1f5f9] pt-3">
-            <div className="flex items-center gap-1 text-[11px] text-[#64748b]">
-              <Users className="h-3.5 w-3.5" />
-              {passengers}
-            </div>
-            <div className="flex items-center gap-1 text-[11px] text-[#64748b]">
-              <Fuel className="h-3.5 w-3.5" />
-              {fuel}
-            </div>
-            <div className="flex items-center gap-1 text-[11px] text-[#64748b]">
-              <Snowflake className="h-3.5 w-3.5" />
-              A/C
-            </div>
-          </div>
-        </div>
+    <motion.article
+      className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#eadfd6] bg-white/85 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-2xl transition-shadow duration-300 ease-out hover:shadow-[0_18px_44px_rgba(15,23,42,0.12)]"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.24, ease: "easeOut" }}
+    >
+      <div className="relative h-64 w-full overflow-hidden bg-[#f8fafc]">
+        <Image
+          src={fleet.image}
+          alt={fleet.imageAlt}
+          fill
+          className="object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-[1.04]"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
+        <span className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-[0_8px_18px_rgba(15,23,42,0.12)] backdrop-blur-md">
+          {type}
+        </span>
       </div>
-    </Link>
+
+      <div className="flex flex-1 flex-col p-6">
+        <div className="mb-4">
+          <h3 className="line-clamp-1 text-2xl font-extrabold tracking-tight text-gray-950 transition-colors group-hover:text-[#ff4500]">
+            {fleet.name}
+          </h3>
+          <div className="mt-1 flex items-baseline gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">PKR</span>
+            <span className="text-xl font-black text-gray-950">{formatPrice(fleet.price)}</span>
+            <span className="text-xs font-semibold text-gray-500">/ day</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-2 border-t border-gray-100 pt-4">
+          {highlights.map((highlight) => (
+            <div key={`${fleet.name}-${highlight.label}`} className="flex items-center justify-between gap-4 text-sm">
+              <span className="font-semibold text-gray-500">{highlight.label}</span>
+              <span className="font-bold text-gray-950">
+                {typeof highlight.value === "boolean" ? (highlight.value ? "Yes" : "No") : highlight.value}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <Link
+          href={`/services/${slug}`}
+          className="group/btn relative mt-6 block w-full overflow-hidden rounded-xl bg-[#ff4500] py-3.5 text-center text-sm font-black text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#ff4500]/30 active:scale-[0.98]"
+        >
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            View Details
+            <ArrowRight className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover/btn:rotate-0" />
+          </span>
+        </Link>
+      </div>
+
+      <div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-[#ff4500] transition-transform duration-500 group-hover:scale-x-100" />
+    </motion.article>
   );
 }
 
@@ -654,12 +633,13 @@ function Pagination({
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
-    <div className="mt-8 flex flex-wrap items-center justify-center gap-2 border-t border-[#f0ebe4] pt-6">
+    <div className="mt-8 flex justify-center border-t border-[#efe6dc] pt-6">
+      <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-[#eadfd6] bg-[#fbfaf8] p-2 shadow-[0_14px_34px_rgba(35,27,21,0.08),inset_0_1px_0_rgba(255,255,255,0.8)]">
       <button
         type="button"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="rounded-full border border-[#ded6cd] bg-white px-4 py-2 text-sm font-bold text-[#0f0e0c] transition-colors hover:border-[#0f0e0c] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[#ded6cd]"
+        className="rounded-full border border-[#e4d7cc] bg-white px-4 py-2 text-sm font-bold text-[#4d443d] shadow-sm transition-all hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500] disabled:cursor-not-allowed disabled:text-[#a79a90] disabled:opacity-70 disabled:hover:border-[#e4d7cc] disabled:hover:bg-white disabled:hover:text-[#a79a90]"
       >
         Previous
       </button>
@@ -668,8 +648,10 @@ function Pagination({
           key={page}
           type="button"
           onClick={() => onPageChange(page)}
-          className={`h-10 w-10 rounded-full text-sm font-black transition-colors ${
-            currentPage === page ? "bg-[#0f0e0c] text-white" : "border border-[#ded6cd] bg-white text-[#0f0e0c] hover:border-[#0f0e0c]"
+          className={`h-10 w-10 rounded-full border text-sm font-black transition-all ${
+            currentPage === page
+              ? "border-[#ff6a2a] bg-[#ff4500] text-white shadow-[0_8px_20px_rgba(255,69,0,0.24)]"
+              : "border-[#e4d7cc] bg-white text-[#4d443d] shadow-sm hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500]"
           }`}
         >
           {page}
@@ -679,10 +661,11 @@ function Pagination({
         type="button"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="rounded-full border border-[#ded6cd] bg-white px-4 py-2 text-sm font-bold text-[#0f0e0c] transition-colors hover:border-[#0f0e0c] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[#ded6cd]"
+        className="rounded-full border border-[#e4d7cc] bg-white px-4 py-2 text-sm font-bold text-[#4d443d] shadow-sm transition-all hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500] disabled:cursor-not-allowed disabled:text-[#a79a90] disabled:opacity-70 disabled:hover:border-[#e4d7cc] disabled:hover:bg-white disabled:hover:text-[#a79a90]"
       >
         Next
       </button>
+      </div>
     </div>
   );
 }

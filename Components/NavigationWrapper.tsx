@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import ScrollToTop from "./ScrollToTop";
+import WhatsAppFloatingButton from "./WhatsAppFloatingButton";
 
 export default function NavigationWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -23,6 +24,7 @@ export default function NavigationWrapper({ children }: { children: React.ReactN
       <ScrollToTop />
       <Navbar />
       <div className="pt-28 min-h-screen">{children}</div>
+      <WhatsAppFloatingButton />
       <Footer />
     </>
   );

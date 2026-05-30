@@ -36,7 +36,7 @@ const categories: CategoryCard[] = [
 export default function CategorySection() {
   return (
     <section className="bg-white px-3 pb-14 sm:px-5 sm:pb-16 lg:px-7">
-      <div className="mx-auto max-w-[1900px]">
+      <div className="mx-auto max-w-[1800px]">
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-5">
           {categories.map((category, index) => (

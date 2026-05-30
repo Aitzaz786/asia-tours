@@ -56,7 +56,7 @@ export default function HowItWorksSection() {
 
   return (
     <section className="relative overflow-x-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+      <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -131,24 +131,27 @@ export default function HowItWorksSection() {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: easeCurve }}
-          className="relative flex justify-center lg:justify-end"
-        >
-          <div className="relative w-full max-w-2xl">
-            <div className="relative h-[360px] w-full overflow-hidden rounded-[32px] border border-gray-100 sm:h-[440px] sm:rounded-[42px] lg:h-[520px] lg:rounded-[60px]">
+     <div className="relative mx-auto w-full">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: easeCurve }}
+            className="overflow-hidden rounded-[28px] border border-gray-200 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:rounded-[40px] lg:rounded-[60px]"
+          >
+            <div className="relative aspect-[1.12/1] w-full">
               <Image
                 src="/how-it-work1.webp"
-                alt="Stylish woman with sunglasses and beret sitting in driver seat"
+                alt="Client stepping out of a premium rental vehicle"
                 fill
                 className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
+
+ 
       </div>
     </section>
   );

@@ -1,18 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createAdminAuthClient } from "@/lib/supabase/auth";
 
 export async function POST(request: NextRequest) {
-  const { password } = await request.json();
+  const { email, password } = await request.json();
 
-  if (password !== process.env.ADMIN_SECRET_KEY) {
-    return NextResponse.json({ success: false, error: "Invalid password" }, { status: 401 });
+  if (!email || !password) {
+    return NextResponse.json(
+      { success: false, error: "Email and password are required" },
+      { status: 400 }
+    );
+  }
+
+  const supabase = createAdminAuthClient();
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error || !data.session?.access_token) {
+    return NextResponse.json(
+      { success: false, error: "Invalid email or password" },
+      { status: 401 }
+    );
   }
 
   const response = NextResponse.json({ success: true });
-  response.cookies.set("admin_token", "asia_tours_admin_authenticated", {
+  response.cookies.set("admin_token", data.session.access_token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: data.session.expires_in,
     path: "/",
   });
   return response;

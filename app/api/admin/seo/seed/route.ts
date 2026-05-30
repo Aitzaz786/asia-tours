@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { seedAllPages } from "@/lib/seo";
+import { verifyAdminToken } from "@/lib/supabase/auth";
 
-function verifyAdmin(request: NextRequest) {
-  return request.cookies.get("admin_token")?.value === "asia_tours_admin_authenticated";
+async function verifyAdmin(request: NextRequest) {
+  return verifyAdminToken(request.cookies.get("admin_token")?.value);
 }
 
 export async function POST(request: NextRequest) {
-  if (!verifyAdmin(request)) {
+  if (!(await verifyAdmin(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const result = await seedAllPages();

@@ -40,7 +40,7 @@ export default function OurFleetsSection() {
 
   return (
     <section className="relative overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:pb-12 lg:pt-[4.5rem]">
-      <div className="mx-auto max-w-[1800px]">
+      <div className="mx-auto max-w-[1600px]">
         <motion.div
  
           className="mx-auto max-w-3xl text-center"
@@ -55,7 +55,7 @@ export default function OurFleetsSection() {
           </h2>
         </motion.div>
 
-        <div ref={emblaRef} className="mx-auto mt-8 max-w-[1680px] overflow-hidden pt-8 pb-4">
+        <div ref={emblaRef} className="mx-auto mt-8 max-w-[1600px] overflow-hidden pt-8 pb-4">
           <motion.div
             variants={cardsContainer}
             initial="hidden"

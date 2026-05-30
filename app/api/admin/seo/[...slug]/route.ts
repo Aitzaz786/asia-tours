@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPageSeo, updatePageSeo } from "@/lib/seo";
 import { KNOWN_PAGES } from "@/lib/knownPages";
+import { verifyAdminToken } from "@/lib/supabase/auth";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-function verifyAdmin(request: NextRequest) {
-  const token = request.cookies.get("admin_token")?.value;
-  return token === "asia_tours_admin_authenticated";
+async function verifyAdmin(request: NextRequest) {
+  return verifyAdminToken(request.cookies.get("admin_token")?.value);
 }
 
 type Context = { params: Promise<{ slug: string[] }> };
 
 export async function GET(request: NextRequest, { params }: Context) {
-  if (!verifyAdmin(request)) {
+  if (!(await verifyAdmin(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { slug } = await params;
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 }
 
 export async function PATCH(request: NextRequest, { params }: Context) {
-  if (!verifyAdmin(request)) {
+  if (!(await verifyAdmin(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { slug } = await params;

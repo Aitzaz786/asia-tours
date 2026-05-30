@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Lock } from "lucide-react";
+import { Loader2, Lock, Mail } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,13 +19,13 @@ export default function AdminLoginPage() {
       const res = await fetch("/api/admin/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         router.push("/admin/seo");
       } else {
-        setError(data.error ?? "Invalid password");
+        setError(data.error ?? "Invalid email or password");
       }
     } catch {
       setError("Network error. Try again.");
@@ -51,6 +52,24 @@ export default function AdminLoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="mb-1.5 block text-xs font-bold uppercase tracking-widest text-gray-400">
+                Email
+              </label>
+              <div className="relative">
+                <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoFocus
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder:text-gray-300 focus:border-[#ff4500] focus:bg-white focus:outline-none"
+                  placeholder="admin@example.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-xs font-bold uppercase tracking-widest text-gray-400">
                 Password
               </label>
               <input
@@ -58,7 +77,6 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                autoFocus
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-300 focus:border-[#ff4500] focus:bg-white focus:outline-none"
                 placeholder="Enter admin password"
               />
