@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:safe": "cp -r .next .next-backup 2>/dev/null; next build || (rm -rf .next && mv .next-backup .next && echo 'Build failed, restored backup!')",
     "start": "next start",
     "lint": "eslint"
   },
