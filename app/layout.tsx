@@ -48,8 +48,8 @@ export default function RootLayout({
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 31.5204,
-        "longitude": 74.3587
+        "latitude": 31.4604,
+        "longitude": 74.3681
       },
       "openingHours": "Mo-Su 00:00-23:59",
       "priceRange": "PKR 12,000 - PKR 85,000",

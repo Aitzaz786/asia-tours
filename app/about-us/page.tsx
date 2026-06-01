@@ -122,28 +122,28 @@ const testimonials = [
     text: "Asia Tours made our executive trip effortless. The vehicle arrived immaculate, the chauffeur was punctual, and the whole experience felt first class.",
     name: "Hassan Malik",
     role: "Corporate Client",
-    avatar: "/avatars/avatar-1.jpg",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     rating: "4.5",
     text: "From airport pickup to hotel transfer, everything was handled smoothly. The booking team stayed responsive and proactive throughout the trip.",
     name: "Areeba Khan",
     role: "Frequent Traveler",
-    avatar: "/avatars/avatar-2.jpg",
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     rating: "5.0",
     text: "We booked a luxury SUV for family guests and were genuinely impressed by the comfort, cleanliness, and professionalism of the service.",
     name: "Usman Tariq",
     role: "Event Planner",
-    avatar: "/avatars/avatar-3.jpg",
+    avatar: "https://randomuser.me/api/portraits/men/76.jpg",
   },
   {
     rating: "5.0",
     text: "The team was flexible, organized, and reassuring from the start. It felt like a premium hospitality service rather than just a rental company.",
     name: "Sara Javed",
     role: "Leisure Guest",
-    avatar: "/avatars/avatar-1.jpg",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
   },
 ];
 

@@ -284,12 +284,12 @@ export default function ContactUsPage() {
       Asia Tours Concierge
     </span>
 
-    <h2 className="mt-6 text-4xl font-extrabold leading-tight text-white">
+    <h1 className="mt-6 text-4xl font-extrabold leading-tight text-white">
       Let&apos;s plan your{" "}
       <span className="bg-gradient-to-r from-[#ff4d0a] via-[#ff8a3d] to-[#ffd08a] bg-clip-text text-transparent">
         perfect journey
       </span>
-    </h2>
+    </h1>
 
     <p className="mt-4 text-sm leading-7 text-white/55">
       Every inquiry is handled by a dedicated travel specialist — not a bot.
@@ -326,7 +326,7 @@ export default function ContactUsPage() {
     <div className="overflow-hidden rounded-2xl border border-white/10 shadow-xl">
       <iframe
         title="Asia Tours Location"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.6!2d73.0479!3d33.7294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbfd07891722f%3A0x6789f1c2d7ea0!2sBlue%20Area%2C%20Islamabad%2C%20Islamabad%20Capital%20Territory!5e0!3m2!1sen!2spk!4v1"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6806.636040066094!2d74.36807269729556!3d31.46043684869127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919066888d233a7%3A0x907b9a4ede569120!2sPunjab%20Co-Operative%20Housing%20Society%2C%20Lahore%2C%20Pakistan!5e0!3m2!1sen!2s!4v1780288188150!5m2!1sen!2s"
         width="100%"
         height="170"
         style={{ border: 0, display: "block", pointerEvents: "auto" }}
@@ -338,14 +338,14 @@ export default function ContactUsPage() {
     <div className="mt-4 flex items-center gap-2.5">
       <MapPin className="h-4 w-4 text-[#ff4d0a]" />
       <p className="text-xs text-white/50">
-        Blue Area, Islamabad, Pakistan
+        Punjab Society, Ghazi Road, Lahore, Punjab 54770
       </p>
     </div>
 
     <div className="mt-3 flex items-start gap-2.5">
       <Clock3 className="mt-0.5 h-4 w-4 text-[#c9a96e]" />
       <div className="flex flex-wrap gap-x-3 gap-y-1">
-        {["Mon-Fri 8am-10pm", "Sat 9am-8pm", "Sun Emergency"].map((s) => (
+        {["Mon-Sun 8am-10pm", "24/7 WhatsApp Support", "Emergency Available"].map((s) => (
           <span key={s} className="text-[11px] text-white/40">
             {s}
           </span>
@@ -452,7 +452,7 @@ export default function ContactUsPage() {
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <p className="text-sm text-[#8a837d]">
                     Faster reply?{" "}
-                    <a href="https://wa.me/923000000000" target="_blank" rel="noreferrer"
+                    <a href="https://wa.me/923004591145" target="_blank" rel="noreferrer"
                       className="font-semibold text-[#169c49] underline-offset-2 hover:underline">WhatsApp us</a>
                   </p>
                   <motion.button type="submit" disabled={isSubmitting || !travelDate}
@@ -468,6 +468,24 @@ export default function ContactUsPage() {
           </div>
         </div>
       </section>
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: '0',
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0,0,0,0)',
+          whiteSpace: 'nowrap',
+          border: '0'
+        }}
+      >
+        <h2>Book a Luxury Car in Pakistan</h2>
+        <p>Asia Tours Pakistan offers premium car rental and chauffeur services across 50+ cities including Lahore, Islamabad, Rawalpindi, Multan, Faisalabad, Murree, and Bahawalpur. Our fleet includes Toyota Land Cruiser V8, Range Rover, Mercedes-Benz S-Class, BMW 7 Series, Bentley Continental GT, Audi A6, and Toyota Hiace Wagon. All vehicles are fully insured and available 24/7. Call or WhatsApp +923004591145 or email hello@asiatourpk.com for instant booking support.</p>
+        <p>We provide airport transfers, wedding transport, corporate travel, and long-distance rentals across Pakistan. Punjab Society, Ghazi Road, Lahore, Punjab 54770, Pakistan.</p>
+      </div>
     </main>
   );
 }
