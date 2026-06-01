@@ -43,6 +43,7 @@ export default function RootLayout({
         "streetAddress": "Punjab Society, Ghazi Road",
         "addressLocality": "Lahore",
         "addressRegion": "Punjab",
+         "postalCode": "54770", 
         "addressCountry": "PK"
       },
       "geo": {
