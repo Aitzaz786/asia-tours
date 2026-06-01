@@ -22,7 +22,7 @@ export const fleets: Fleet[] = [
   {
     name: "Toyota Land Cruiser V8",
     price: 45000,
-    image: "/v8/land2.webp",
+    image: "/V8/land2.webp",
     imageAlt: "Toyota Land Cruiser V8 white SUV",
     highlights: [
       { label: "Passengers", value: 7 },

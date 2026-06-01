@@ -152,7 +152,7 @@ const serviceOptions = [
 
 const quickLinks = [
   { icon: Phone, label: "+92 300 4591145", href: "tel:+923004591145", sub: "Call us anytime" },
-  { icon: Mail, label: "hello@asiatours.com", href: "mailto:hello@asiatours.com", sub: "Reply within 2 hrs" },
+  { icon: Mail, label: "hello@asiatourpk.com", href: "mailto:hello@asiatourpk.com", sub: "Reply within 2 hrs" },
   { icon: MessageCircleMore, label: "WhatsApp", href: "https://wa.me/923004591145", sub: "Instant response" },
 ];
 

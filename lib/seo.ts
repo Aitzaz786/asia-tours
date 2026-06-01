@@ -16,7 +16,9 @@ export type PageSeo = {
   updated_at: string;
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://asiatourspakistan.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://asiatourpk.com";
+const CANONICAL_BASE_URL = "https://asiatourpk.com";
+const DEFAULT_OG_IMAGE_URL = "https://asiatourpk.com/og-default.jpg";
 
 function knownToSeo(p: KnownPage): PageSeo {
   return {
@@ -158,11 +160,9 @@ export function buildMetadata(
   const description = seo?.meta_description || defaults.description;
   const ogTitle = seo?.og_title || title;
   const ogDescription = seo?.og_description || description;
-  const ogImage = seo?.og_image || `${SITE_URL}/og-default.jpg`;
+  const ogImage = seo?.og_image || DEFAULT_OG_IMAGE_URL;
 
-  const canonicalUrl = seo?.canonical_url
-    ? seo.canonical_url
-    : `${SITE_URL}${pagePath === "/" ? "" : pagePath}`;
+  const canonicalUrl = `${CANONICAL_BASE_URL}${pagePath}`;
 
   return {
     metadataBase: new URL(SITE_URL),

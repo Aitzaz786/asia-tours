@@ -4,6 +4,10 @@ import NavigationWrapper from "@/Components/NavigationWrapper";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   verification: {
     google: "MFNjOqnto8ESVBliJURloduDlfE9m-ro8QTzpcPSSWM",
   },
@@ -23,6 +27,48 @@ export default function RootLayout({
           as="video"
           type="video/webm"
         />
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Asia Tours Pakistan",
+      "url": "https://asiatourpk.com",
+      "logo": "https://asiatourpk.com/logo.jpeg",
+      "image": "https://asiatourpk.com/og-default.jpg",
+      "telephone": "+923004591145",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Punjab Society, Ghazi Road",
+        "addressLocality": "Lahore",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 31.5204,
+        "longitude": 74.3587
+      },
+      "openingHours": "Mo-Su 00:00-23:59",
+      "priceRange": "PKR 12,000 - PKR 85,000",
+      "description": "Asia Tours Pakistan offers premium car rental services including luxury SUVs, chauffeur service, and airport transfers across Pakistan.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Car Rental Services",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Toyota Land Cruiser V8"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Mercedes-Benz S-Class"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Airport Transfer"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Chauffeur Service"}}
+        ]
+      },
+      "sameAs": [
+        "https://wa.me/923004591145"
+      ]
+    })
+  }}
+/>
       </head>
       <body>
         <LenisSmoothScroll />
