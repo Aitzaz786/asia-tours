@@ -152,7 +152,7 @@ const serviceOptions = [
 
 const quickLinks = [
   { icon: Phone, label: "+92 300 4591145", href: "tel:+923004591145", sub: "Call us anytime" },
-  { icon: Mail, label: "hello@asiatourpk.com", href: "mailto:hello@asiatourpk.com", sub: "Reply within 2 hrs" },
+  { icon: Mail, label: "hello@asiatourspk.com", href: "mailto:hello@asiatourspk.com", sub: "Reply within 2 hrs" },
   { icon: MessageCircleMore, label: "WhatsApp", href: "https://wa.me/923004591145", sub: "Instant response" },
 ];
 
@@ -483,7 +483,7 @@ export default function ContactUsPage() {
         }}
       >
         <h2>Book a Luxury Car in Pakistan</h2>
-        <p>Asia Tours Pakistan offers premium car rental and chauffeur services across 50+ cities including Lahore, Islamabad, Rawalpindi, Multan, Faisalabad, Murree, and Bahawalpur. Our fleet includes Toyota Land Cruiser V8, Range Rover, Mercedes-Benz S-Class, BMW 7 Series, Bentley Continental GT, Audi A6, and Toyota Hiace Wagon. All vehicles are fully insured and available 24/7. Call or WhatsApp +923004591145 or email hello@asiatourpk.com for instant booking support.</p>
+        <p>Asia Tours Pakistan offers premium car rental and chauffeur services across 50+ cities including Lahore, Islamabad, Rawalpindi, Multan, Faisalabad, Murree, and Bahawalpur. Our fleet includes Toyota Land Cruiser V8, Range Rover, Mercedes-Benz S-Class, BMW 7 Series, Bentley Continental GT, Audi A6, and Toyota Hiace Wagon. All vehicles are fully insured and available 24/7. Call or WhatsApp +923004591145 or email hello@asiatourspk.com for instant booking support.</p>
         <p>We provide airport transfers, wedding transport, corporate travel, and long-distance rentals across Pakistan. Punjab Society, Ghazi Road, Lahore, Punjab 54770, Pakistan.</p>
       </div>
     </main>

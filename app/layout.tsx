@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   verification: {
-    google: "MFNjOqnto8ESVBliJURloduDlfE9m-ro8QTzpcPSSWM",
+    google: "0wLhdIxhJWvbe83rJLTEI3xFI__jl_9DQbQHNAoKwzY",
   },
 };
 
@@ -34,9 +34,9 @@ export default function RootLayout({
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Asia Tours Pakistan",
-      "url": "https://asiatourpk.com",
-      "logo": "https://asiatourpk.com/logo.jpeg",
-      "image": "https://asiatourpk.com/og-default.jpg",
+      "url": "https://asiatourspk.com",
+      "logo": "https://asiatourspk.com/logo.jpeg",
+      "image": "https://asiatourspk.com/og-default.jpg",
       "telephone": "+923004591145",
       "address": {
         "@type": "PostalAddress",

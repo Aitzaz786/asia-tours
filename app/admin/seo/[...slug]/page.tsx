@@ -28,7 +28,7 @@ function CharCounter({ value, max }: { value: string; max: number }) {
 }
 
 function SerpPreview({ title, description, slug }: { title: string; description: string; slug: string }) {
-  const parts = ["asiatourpk.com", ...slug.split("/").filter(Boolean)];
+  const parts = ["asiatourspk.com", ...slug.split("/").filter(Boolean)];
   const breadcrumb = parts.join(" › ");
   const displayTitle = (title || "Page Title").slice(0, 70);
   const isTitleOver = title.length > TITLE_MAX;

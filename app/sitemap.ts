@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-const baseUrl = "https://asiatourpk.com";
+const baseUrl = "https://asiatourspk.com";
 
 const staticRoutes = [
   "/",

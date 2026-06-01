@@ -16,9 +16,9 @@ export type PageSeo = {
   updated_at: string;
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://asiatourpk.com";
-const CANONICAL_BASE_URL = "https://asiatourpk.com";
-const DEFAULT_OG_IMAGE_URL = "https://asiatourpk.com/og-default.jpg";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://asiatourspk.com";
+const CANONICAL_BASE_URL = "https://asiatourspk.com";
+const DEFAULT_OG_IMAGE_URL = "https://asiatourspk.com/og-default.jpg";
 
 function knownToSeo(p: KnownPage): PageSeo {
   return {
