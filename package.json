@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:safe": "mv .next .next-backup && next build",
+    "build:safe": "rm -rf .next-backup && mv .next .next-backup && next build",
     "start": "next start",
     "lint": "eslint"
   },
