@@ -5,9 +5,15 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
+    icon: [
+      { url: "/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon_io/apple-touch-icon.png", sizes: "180x180" },
+    ],
   },
+  manifest: "/favicon_io/site.webmanifest", 
   verification: {
     google: "0wLhdIxhJWvbe83rJLTEI3xFI__jl_9DQbQHNAoKwzY",
   },
