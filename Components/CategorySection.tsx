@@ -8,28 +8,39 @@ type CategoryCard = {
   title: string;
   image: string;
   alt: string;
+  objectPosition?: string;
+  scale?: number;
+  mirror?: boolean; // ← yeh add karo
 };
 
 const categories: CategoryCard[] = [
-  {
-    title: "Sport Car",
-    image: "/black.jpeg",
-    alt: "Black sports car parked in a scenic location",
-  },
-  {
-    title: "Convertible Car",
-    image: "/JDP_2022 Mercedes-AMG G 63 Matte Gray Front Quarter View.webp",
-    alt: "Convertible-style premium car in an urban setting",
-  },
+{
+  title: "SUV / 4x4",
+  image: "/suvan.png",
+  alt: "SUV 4x4",
+  objectPosition: "center center",
+
+},
   {
     title: "Sedan Car",
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
-    alt: "Luxury sedan driving through a mountain road",
+    image: "/Audi a6/audi-a6_100726069_h.jpg",
+    alt: "Sedan Car",
+    objectPosition: "center center",
   },
-  {
-    title: "Luxury car",
-    image: "/range-rover-vogue-01.webp",
-    alt: "Luxury vehicle photographed in warm evening light",
+ {
+  title: "Luxury car",
+  image: "/luxury.png",
+  alt: "Luxury car",
+  objectPosition: "center 100%", 
+  mirror: true, 
+    scale: 1.3,
+},
+    {
+    title: "Wedding Cars",
+    image: "/weeding.png",
+    alt: "Convertible-style premium car in an urban setting",
+    objectPosition: "center 60%",
+    mirror: true,
   },
 ];
 
@@ -47,17 +58,20 @@ export default function CategorySection() {
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.55, delay: index * 0.08 }}
               whileHover={{ y: -8 }}
-              className="group relative min-h-[340px] overflow-hidden rounded-[28px] sm:min-h-[430px] lg:min-h-[520px] xl:min-h-[560px]"
+              className="group relative min-h-[340px] overflow-hidden rounded-[28px] sm:min-h-[430px] lg:min-h-[520px] xl:min-h-[410px]"
             >
-              <Image
-                src={category.image}
-                alt={category.alt}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+            <Image
+  src={category.image}
+  alt={category.alt}
+  fill
+  className="object-cover transition-transform duration-700 group-hover:scale-105"
+style={{ 
+  objectPosition: category.objectPosition || "center center",
+  transform: `${category.mirror ? "scaleX(-1) " : ""}${category.scale ? `scale(${category.scale})` : ""}`
+}}
+/>
 
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.08)_0%,rgba(10,10,10,0.18)_35%,rgba(10,10,10,0.62)_100%)]" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%)]" />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent_0%,rgba(10,10,10,0.58)_100%)]" />
 
               <div className="relative z-10 flex h-full flex-col justify-between p-6 sm:p-8">
                 <h3 className="max-w-[220px] text-3xl font-semibold leading-tight text-white sm:text-4xl">

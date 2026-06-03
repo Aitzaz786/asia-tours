@@ -140,13 +140,14 @@ export default function HowItWorksSection() {
             className="overflow-hidden rounded-[28px] border border-gray-200 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:rounded-[40px] lg:rounded-[60px]"
           >
             <div className="relative aspect-[1.12/1] w-full">
-              <Image
-                src="/how-it-work1.webp"
-                alt="Client stepping out of a premium rental vehicle"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+            <Image
+  src="/how to work.png"
+  alt="Client stepping out of a premium rental vehicle"
+  fill
+  className="object-cover"
+  sizes="(max-width: 1024px) 100vw, 50vw"
+  style={{ transform: "scale(1.3)" }}
+/>
             </div>
           </motion.div>
         </div>

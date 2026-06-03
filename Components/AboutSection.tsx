@@ -32,15 +32,22 @@ export default function AboutSection() {
             transition={{ duration: 0.8, ease: easeCurve }}
             className="overflow-hidden rounded-[28px] border border-gray-200 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:rounded-[40px] lg:rounded-[60px]"
           >
-            <div className="relative aspect-[1.12/1] w-full">
-              <Image
-                src="/about 1.jpg"
-                alt="Client stepping out of a premium rental vehicle"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+        <div className="relative aspect-[1.12/1] w-full">
+  <div className="absolute inset-0 z-10 rounded-[28px] sm:rounded-[40px] lg:rounded-[60px]"
+ style={{
+  background: "radial-gradient(circle at top left, rgba(0,0,0,0.2) 0%, transparent 55%)"
+}}
+  />
+  <Image
+    src="/about-us.png"
+    alt="Client stepping out of a premium rental vehicle"
+    fill
+    className="object-cover object-center "
+    sizes="(max-width: 1024px) 100vw, 50vw"
+    style={{ transform: "scale(1.3)" }}
+  />
+</div>
+            
           </motion.div>
         </div>
 

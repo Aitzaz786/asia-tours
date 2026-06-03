@@ -41,16 +41,12 @@ function formatBoolean(value: string | number | boolean | undefined) {
 }
 
 function buildGallery(fleet: Fleet): GalleryItem[] {
-  const slug = getFleetSlug(fleet.name);
-
-  const specificGallery: Record<string, GalleryItem[]> = {
-    "toyota-land-cruiser-v8": [
-      { src: fleet.image, alt: fleet.imageAlt },
-      { src: "/V8/land1.jpg", alt: "Toyota Land Cruiser V8 front view" },
-      { src: "/V8/land2.webp", alt: "Toyota Land Cruiser V8 side profile" },
-      { src: "/V8/V8-for-Rental-550x500.webp", alt: "Toyota Land Cruiser V8 rental detail" },
-    ],
-  };
+  if (fleet.imagesDetail?.length) {
+    return fleet.imagesDetail.map((image) => ({
+      src: image.src,
+      alt: image.alt,
+    }));
+  }
 
   const fallbackGallery: GalleryItem[] = [
     { src: fleet.image, alt: fleet.imageAlt },
@@ -59,7 +55,7 @@ function buildGallery(fleet: Fleet): GalleryItem[] {
     { src: "/exterior-image-164.avif", alt: "Premium vehicle side angle" },
   ];
 
-  return (specificGallery[slug] ?? fallbackGallery).slice(0, 4);
+  return fallbackGallery;
 }
 
 const fadeUp = {

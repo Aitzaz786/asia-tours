@@ -1,8 +1,16 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
+import {
+  FiArrowLeft,
+  FiArrowRight,
+  FiArrowUpRight,
+  FiDroplet,
+  FiShield,
+  FiUsers,
+  FiWind,
+} from "react-icons/fi";
 import { PiAsteriskSimpleFill } from "react-icons/pi";
 import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
@@ -10,13 +18,16 @@ import { fleets, getFleetSlug } from "@/Data/cars";
 import Link from "next/link";
 
 export default function OurFleetsSection() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
+    align: "center",
     loop: true,
     dragFree: false,
-    containScroll: "trimSnaps",
   });
+
   const formatPrice = (price: number) => new Intl.NumberFormat("en-PK").format(price);
+  const formatHighlightValue = (value: string | number | boolean) =>
+    typeof value === "boolean" ? (value ? "Yes" : "No") : value;
 
   const cardsContainer = {
     hidden: {},
@@ -30,22 +41,29 @@ export default function OurFleetsSection() {
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      emblaApi?.scrollNext();
-    }, 3600);
-
-    return () => window.clearInterval(interval);
+  const updateSelectedIndex = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    updateSelectedIndex();
+    emblaApi.on("select", updateSelectedIndex);
+    emblaApi.on("reInit", updateSelectedIndex);
+
+    return () => {
+      emblaApi.off("select", updateSelectedIndex);
+      emblaApi.off("reInit", updateSelectedIndex);
+    };
+  }, [emblaApi, updateSelectedIndex]);
+
   return (
-    <section className="relative overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:pb-12 lg:pt-[4.5rem]">
-      <div className="mx-auto max-w-[1600px]">
-        <motion.div
- 
-          className="mx-auto max-w-3xl text-center"
-        >
-          <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold tracking-[0.18em] text-[#ff4500] uppercase">
+    <section className="relative bg-white py-14 sm:py-16 lg:pb-12 lg:pt-[4.5rem]">
+      <div className="mx-auto">
+        <motion.div className="mx-auto max-w-3xl text-center">
+          <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#ff4500]">
             <PiAsteriskSimpleFill className="text-xs" aria-hidden="true" />
             <span>Our Fleets</span>
           </p>
@@ -55,7 +73,7 @@ export default function OurFleetsSection() {
           </h2>
         </motion.div>
 
-        <div ref={emblaRef} className="mx-auto mt-8 max-w-[1600px] overflow-hidden pt-8 pb-4">
+        <div ref={emblaRef} className="mx-auto mt-8 overflow-hidden py-10">
           <motion.div
             variants={cardsContainer}
             initial="hidden"
@@ -63,103 +81,111 @@ export default function OurFleetsSection() {
             viewport={{ once: true, amount: 0.2 }}
             className="flex touch-pan-y"
           >
-          {fleets.map((fleet, index) => (
-      <div
-  key={`${fleet.name}-${index}`}
-  data-fleet-card
-  className="mr-5 min-w-0 flex-[0_0_100%] sm:mr-6 sm:flex-[0_0_calc(50%-0.75rem)] lg:flex-[0_0_calc(25%-1.125rem)]"
->
-      <motion.div
-  className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/40 bg-white/75 backdrop-blur-2xl transition-shadow duration-300 ease-out hover:shadow-[0_16px_38px_rgba(15,23,42,0.09)]"
-  whileHover={{ y: -3 }}
-  transition={{ duration: 0.24, ease: "easeOut" }}
->
-  {/* Image Section with a subtle overlay */}
-  <div className="relative h-64 w-full overflow-hidden">
-    <Image
-      src={fleet.image}
-      alt={fleet.imageAlt}
-      fill
-      className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.04]"
-    />
-    {/* Gradient Overlay for a high-end feel */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-    
-    {/* Floating Badge (Optional - adds a premium touch) */}
-    <div className="absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gray-900 backdrop-blur-md">
-      Luxury Class
-    </div>
-  </div>
+            {fleets.map((fleet, index) => {
+              const isCenter = selectedIndex === index;
 
-  <div className="flex flex-col p-6">
-    {/* Header & Price */}
-    <div className="mb-4">
-      <h3 className="text-2xl font-extrabold tracking-tight text-gray-900">
-        {fleet.name}
-      </h3>
-      <div className="mt-1 flex items-baseline gap-1">
-        <span className="text-xs font-medium text-gray-500">PKR</span>
-        <span className="text-xl font-black text-gray-950">{formatPrice(fleet.price)}</span>
-        <span className="text-xs font-medium text-gray-500">/ day</span>
-      </div>
-    </div>
+              return (
+                <div
+                  key={`${fleet.name}-${index}`}
+                  data-fleet-card
+                  className="min-w-0 flex-[0_0_85%] px-2 sm:flex-[0_0_70%] sm:px-3 lg:flex-[0_0_52%] xl:flex-[0_0_46%]"
+                >
+                  <motion.article
+                    className={`group relative h-[560px] rounded-[2rem] transition-all duration-500 ease-out ${
+                      isCenter
+                        ? "scale-100 opacity-100 shadow-[0_28px_70px_rgba(15,23,42,0.24)]"
+                        : "scale-90 opacity-100 shadow-[0_12px_34px_rgba(15,23,42,0.10)]"
+                    }`}
+                    whileHover={isCenter ? { y: -4 } : undefined}
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                  >
+                    <div className="relative h-[480px] overflow-hidden rounded-[2rem] bg-black">
+                      <Image
+                        src={fleet.image}
+                        alt={fleet.imageAlt}
+                        fill
+                        quality={100}
+                        sizes="(min-width: 1280px) 36vw, (min-width: 1024px) 44vw, (min-width: 640px) 64vw, 82vw"
+                        className={`object-cover transition-all duration-700 ease-in-out group-hover:scale-[1.04] ${
+                          isCenter ? "brightness-100" : "brightness-75"
+                        }`}
+                      />
 
-    {/* Highlights - Modern Icon-style list */}
-    <div className="grid grid-cols-1 gap-2 border-t border-gray-100 pt-4">
-      {fleet.highlights?.slice(0, 3).map((h, idx) => (
-        <div
-          key={`${fleet.name}-${idx}`}
-          className="flex items-center justify-between text-sm"
-        >
-          <span className="font-medium text-gray-500">{h.label}</span>
-          <span className="font-semibold text-gray-900">
-            {typeof h.value === "boolean" ? (h.value ? "Yes" : "No") : h.value}
-          </span>
-        </div>
-      ))}
-    </div>
+                      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.62)_100%)]" />
+                    </div>
 
-    {/* Action Button - Simplified & Elegant */}
-    <Link href={`/services/${getFleetSlug(fleet.name)}`} className="mt-6">
-      <button className="relative cursor-pointer w-full group/btn overflow-hidden rounded-xl  py-3.5 text-sm font-bold text-white transition-all duration-300 bg-[#ff4402] hover:shadow-lg hover:shadow-[#ff4402]/30 active:scale-[0.98]">
-        <span className="relative z-10 flex items-center justify-center gap-2">
-          View Details
-          <FiArrowUpRight className="text-lg transition-transform duration-300  group-hover/btn:rotate-45" />
-        </span>
-      </button>
-    </Link>
-  </div>
-  
-  {/* Subtle accent border on hover */}
-  <div className="absolute inset-x-0 bottom-0 h-1 bg-[#ff4402] scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
-</motion.div>
-</div>
-          ))}
+                    {isCenter && (
+                      <>
+                        <button
+                          type="button"
+                          aria-label="Previous fleet"
+                          onClick={scrollPrev}
+                          className="absolute left-4 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/92 text-[#101010] opacity-0 shadow-[0_14px_32px_rgba(0,0,0,0.20)] transition-all duration-300 hover:bg-[#ff4500] hover:text-white group-hover:opacity-100"
+                        >
+                          <FiArrowLeft className="text-xl" aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label="Next fleet"
+                          onClick={scrollNext}
+                          className="absolute right-4 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/92 text-[#101010] opacity-0 shadow-[0_14px_32px_rgba(0,0,0,0.20)] transition-all duration-300 hover:bg-[#ff4500] hover:text-white group-hover:opacity-100"
+                        >
+                          <FiArrowRight className="text-xl" aria-hidden="true" />
+                        </button>
+                      </>
+                    )}
+
+                    <div className="absolute inset-x-0 bottom-5 z-10 px-4 sm:px-6">
+                      <div className="flex min-h-[92px] items-center justify-between gap-3 rounded-[1.2rem] bg-[#1a1a1a] px-4 py-3 shadow-[0_18px_36px_rgba(0,0,0,0.28)] sm:px-5">
+                        <div className="min-w-0 text-white">
+                          <h3 className="line-clamp-1 text-xl font-black leading-tight tracking-[-0.01em] sm:text-2xl">
+                            {fleet.name}
+                          </h3>
+
+                          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-medium text-white/62 sm:text-xs">
+                            {fleet.highlights?.slice(0, 4).map((highlight) => {
+                              const Icon =
+                                highlight.label === "Passengers"
+                                  ? FiUsers
+                                  : highlight.label === "Fuel"
+                                    ? FiDroplet
+                                    : highlight.label === "A/C"
+                                      ? FiWind
+                                      : FiShield;
+
+                              return (
+                                <span key={`${fleet.name}-${highlight.label}`} className="inline-flex items-center gap-1">
+                                  <Icon className="text-xs text-[#ffb13d] sm:text-sm" aria-hidden="true" />
+                                  {formatHighlightValue(highlight.value)} {highlight.label}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div className="flex shrink-0 items-center gap-3">
+                          <Link
+                            href={`/services/${getFleetSlug(fleet.name)}`}
+                            className="group/btn inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[#ffb13d] px-4 text-xs font-bold text-[#171717] shadow-[0_10px_24px_rgba(255,177,61,0.22)] transition-all duration-300 hover:bg-[#ff4500] hover:text-white active:scale-[0.98]"
+                          >
+                            Details
+                            <FiArrowUpRight className="text-sm transition-transform duration-300 group-hover/btn:rotate-45" aria-hidden="true" />
+                          </Link>
+
+                          <div className="text-right">
+                            <div className="text-xl font-black leading-none text-[#ffb13d] sm:text-2xl">
+                              PKR {formatPrice(fleet.price)}
+                            </div>
+                            <div className="mt-1 text-xs font-medium text-white/68">/day</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.article>
+                </div>
+              );
+            })}
           </motion.div>
-        </div>
-
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <motion.button
-            type="button"
-            aria-label="Scroll fleets left"
-            onClick={scrollPrev}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e53d00]"
-          >
-            <FiArrowLeft className="text-lg" aria-hidden="true" />
-          </motion.button>
-
-          <motion.button
-            type="button"
-            aria-label="Scroll fleets right"
-            onClick={scrollNext}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#ff4500] text-white transition-colors hover:bg-[#e53d00]"
-          >
-            <FiArrowRight className="text-lg" aria-hidden="true" />
-          </motion.button>
         </div>
       </div>
     </section>

@@ -538,11 +538,11 @@ function VehicleCard({ fleet }: { fleet: Fleet }) {
           src={fleet.image}
           alt={fleet.imageAlt}
           fill
+          quality={100}
           className="object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-[1.04]"
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
-        <span className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-[0_8px_18px_rgba(15,23,42,0.12)] backdrop-blur-md">
+        <span className="absolute right-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-[0_8px_18px_rgba(15,23,42,0.12)]">
           {type}
         </span>
       </div>

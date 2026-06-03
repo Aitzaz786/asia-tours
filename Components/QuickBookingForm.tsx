@@ -217,7 +217,7 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
         className="relative z-30 mx-auto -mt-8 w-[calc(100%-1.5rem)] max-w-[1500px] overflow-visible rounded-[28px] border border-white/75 bg-white/95 px-3 py-3 shadow-[0_24px_70px_rgba(15,23,42,0.18)] backdrop-blur-xl sm:-mt-14 sm:w-[calc(100%-2rem)] sm:px-4 sm:py-3 lg:-mt-16 lg:w-[calc(100%-5rem)] lg:rounded-full lg:px-5 xl:w-[calc(100%-7rem)] 2xl:w-[calc(100%-9rem)]"
       >
       <div className="relative flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-3">
-        <div className="relative flex min-w-0 items-center rounded-[22px] bg-[#111111] px-4 py-2.5 text-white shadow-[0_16px_36px_rgba(17,17,17,0.16)] sm:px-5 lg:w-[23%] lg:bg-transparent lg:text-[#111111] lg:shadow-none lg:px-3 lg:after:absolute lg:after:right-[-6px] lg:after:top-1/2 lg:after:h-10 lg:after:w-px lg:after:-translate-y-1/2 lg:after:bg-[#e8e1dc] xl:px-4">
+        <div className="relative flex min-w-0 items-center rounded-[22px] bg-[#111111] px-4 py-2.5 text-white  sm:px-5 lg:w-[23%] lg:bg-transparent lg:text-[#111111] lg:shadow-none lg:px-3 lg:after:absolute lg:after:right-[-6px] lg:after:top-1/2 lg:after:h-10 lg:after:w-px lg:after:-translate-y-1/2 lg:after:bg-[#e8e1dc] xl:px-4">
           <div className="mr-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ff4500] text-white shadow-[0_12px_24px_rgba(255,69,0,0.28)]">
             <CarFront className="h-[18px] w-[18px]" />
           </div>
@@ -376,7 +376,7 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
               disabled={isSubmitting}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="hero-send-button inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#ff4500] px-8 text-sm font-black text-white shadow-[0_18px_36px_rgba(255,69,0,0.28)] transition-colors hover:bg-[#e53d00] disabled:cursor-not-allowed disabled:opacity-75 lg:w-auto lg:min-w-[132px]"
+              className="hero-send-button inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#ff4500] px-8 text-sm font-black text-white  transition-colors hover:bg-[#e53d00] disabled:cursor-not-allowed disabled:opacity-75 lg:w-auto lg:min-w-[132px]"
             >
               {isSubmitting ? (
                 <>
