@@ -20,7 +20,6 @@ const staticRoutes = [
 const excludePaths = ["/areas/karachi", "/areas/peshawar", "/areas/quetta"];
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
-type SlugRow = { slug: string | null };
 type SeoPageRow = { slug: string | null; no_index: boolean | null };
 
 function getStaticEntry(route: string, lastModified: Date): SitemapEntry {
@@ -29,15 +28,6 @@ function getStaticEntry(route: string, lastModified: Date): SitemapEntry {
     lastModified,
     changeFrequency: "monthly",
     priority: route === "/" ? 1.0 : 0.8,
-  };
-}
-
-function getDynamicEntry(route: string, lastModified: Date): SitemapEntry {
-  return {
-    url: `${baseUrl}${route}`,
-    lastModified,
-    changeFrequency: "weekly",
-    priority: 0.6,
   };
 }
 
@@ -52,26 +42,10 @@ function getSeoEntry(route: string, lastModified: Date): SitemapEntry {
 
 function slugToRoute(slug: string): string {
   const normalizedSlug = slug.trim().replace(/^\/+|\/+$/g, "");
-
   if (!normalizedSlug || normalizedSlug === "home") {
     return "/";
   }
-
   return `/${normalizedSlug}`;
-}
-
-async function getSlugs(table: "services" | "areas"): Promise<string[]> {
-  const supabase = createAdminClient();
-  const { data, error } = await supabase.from(table).select("slug");
-
-  if (error) {
-    console.error(`Failed to fetch ${table} slugs for sitemap:`, error.message);
-    return [];
-  }
-
-  return ((data ?? []) as SlugRow[])
-    .map((row) => row.slug?.trim())
-    .filter((slug): slug is string => Boolean(slug));
 }
 
 async function getSeoPageRoutes(): Promise<string[]> {
@@ -103,24 +77,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     routeMap.set(route, getStaticEntry(route, lastModified));
   });
 
-  const [serviceSlugs, areaSlugs, seoPageRoutes] = await Promise.all([
-    getSlugs("services"),
-    getSlugs("areas"),
-    getSeoPageRoutes(),
-  ]);
+  const seoPageRoutes = await getSeoPageRoutes();
 
   seoPageRoutes.forEach((route) => {
     routeMap.set(route, routeMap.get(route) ?? getSeoEntry(route, lastModified));
-  });
-
-  serviceSlugs.forEach((slug) => {
-    const route = `/services/${slug}`;
-    routeMap.set(route, routeMap.get(route) ?? getDynamicEntry(route, lastModified));
-  });
-
-  areaSlugs.forEach((slug) => {
-    const route = `/areas/${slug}`;
-    routeMap.set(route, routeMap.get(route) ?? getDynamicEntry(route, lastModified));
   });
 
   return Array.from(routeMap.values());

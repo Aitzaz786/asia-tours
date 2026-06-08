@@ -291,7 +291,7 @@ export default function Navbar() {
                                     PUNJAB
                                   </p>
                                   <p className="mt-3 text-xl font-black leading-tight text-white">Lahore</p>
-                                  <p className="mt-2 text-xs font-medium leading-relaxed text-white/60">Pakistan's cultural capital & primary service hub</p>
+                                  <p className="mt-2 text-xs font-medium leading-relaxed text-white/60">Pakistan&apos;s cultural capital & primary service hub</p>
                                   <span className="mt-auto inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.12em] text-[#ff6a35]">
                                     Book <ChevronRight className="h-3.5 w-3.5" />
                                   </span>

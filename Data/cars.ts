@@ -27,35 +27,7 @@ export function getFleetSlug(name: string) {
 }
 
 export const fleets: Fleet[] = [
-  {
-    name: "Toyota Land Cruiser V8",
-    price: 30000,
-    image: "/V8/land1.jpg",
-    imageAlt: "Toyota Land Cruiser V8 white SUV",
-    imageCount: 14,
-    highlights: [
-      { label: "Passengers", value: 7 },
-      { label: "Fuel", value: "Petrol" },
-      { label: "A/C", value: true },
-      { label: "Mileage", value: "7 km/l" },
-    ],
-    imagesDetail: [
-      { src: "/V8/863749b8-f5bc-444f-98b4-c526735832ee.jpg", alt: "Toyota Land Cruiser V8 image", fileName: "863749b8-f5bc-444f-98b4-c526735832ee.jpg" },
-      { src: "/V8/Back_View.jpg", alt: "Toyota Land Cruiser V8 back view", fileName: "Back_View.jpg" },
-      { src: "/V8/Cover.jpg", alt: "Toyota Land Cruiser V8 cover view", fileName: "Cover.jpg" },
-      { src: "/V8/Dashboard.jpg", alt: "Toyota Land Cruiser V8 dashboard", fileName: "Dashboard.jpg" },
-      { src: "/V8/Front_Seats.jpg", alt: "Toyota Land Cruiser V8 front seats", fileName: "Front_Seats.jpg" },
-      { src: "/V8/Front_View.jpg", alt: "Toyota Land Cruiser V8 front view", fileName: "Front_View.jpg" },
-      { src: "/V8/land1.jpg", alt: "Toyota Land Cruiser V8 exterior", fileName: "land1.jpg" },
-      { src: "/V8/land2.webp", alt: "Toyota Land Cruiser V8 side view", fileName: "land2.webp" },
-      { src: "/V8/Left_Side_View.jpg", alt: "Toyota Land Cruiser V8 left side view", fileName: "Left_Side_View.jpg" },
-      { src: "/V8/Rear_Seats.jpg", alt: "Toyota Land Cruiser V8 rear seats", fileName: "Rear_Seats.jpg" },
-      { src: "/V8/Right_Rear_View.jpg", alt: "Toyota Land Cruiser V8 right rear view", fileName: "Right_Rear_View.jpg" },
-      { src: "/V8/Steering_Wheel.jpg", alt: "Toyota Land Cruiser V8 steering wheel", fileName: "Steering_Wheel.jpg" },
-      { src: "/V8/V8-for-Rental-550x500.webp", alt: "Toyota Land Cruiser V8 rental view", fileName: "V8-for-Rental-550x500.webp" },
-      { src: "/V8/White-Land-Cruiser-for-Rent-550x500.webp", alt: "Toyota Land Cruiser V8 white exterior", fileName: "White-Land-Cruiser-for-Rent-550x500.webp" },
-    ],
-  },
+ 
   {
     name: "Audi A6",
     price: 38000,
@@ -168,7 +140,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Toyota Land Cruiser Prado",
-    price: 35000,
+    price: 20000,
     image: "/prado/WhatsApp Image 2026-05-31 at 9.04.47 PM.jpeg",
     imageAlt: "Toyota Land Cruiser Prado SUV",
     imageCount: 9,
@@ -253,6 +225,35 @@ export const fleets: Fleet[] = [
       { src: "/toyota loundra lamosine/596498577_1181155077546227_8503083915286266507_n.jpg", alt: "Toyota Tundra Limousine image", fileName: "596498577_1181155077546227_8503083915286266507_n.jpg" },
       { src: "/toyota loundra lamosine/596558016_1181155177546217_2967413592266109554_n.jpg", alt: "Toyota Tundra Limousine image", fileName: "596558016_1181155177546217_2967413592266109554_n.jpg" },
       { src: "/toyota loundra lamosine/597536698_1181155030879565_7929039320961236561_n.jpg", alt: "Toyota Tundra Limousine image", fileName: "597536698_1181155030879565_7929039320961236561_n.jpg" },
+    ],
+  },
+   {
+    name: "Toyota Land Cruiser V8",
+    price: 30000,
+    image: "/V8/land1.jpg",
+    imageAlt: "Toyota Land Cruiser V8 white SUV",
+    imageCount: 14,
+    highlights: [
+      { label: "Passengers", value: 7 },
+      { label: "Fuel", value: "Petrol" },
+      { label: "A/C", value: true },
+      { label: "Mileage", value: "7 km/l" },
+    ],
+    imagesDetail: [
+      { src: "/V8/863749b8-f5bc-444f-98b4-c526735832ee.jpg", alt: "Toyota Land Cruiser V8 image", fileName: "863749b8-f5bc-444f-98b4-c526735832ee.jpg" },
+      { src: "/V8/Back_View.jpg", alt: "Toyota Land Cruiser V8 back view", fileName: "Back_View.jpg" },
+      { src: "/V8/Cover.jpg", alt: "Toyota Land Cruiser V8 cover view", fileName: "Cover.jpg" },
+      { src: "/V8/Dashboard.jpg", alt: "Toyota Land Cruiser V8 dashboard", fileName: "Dashboard.jpg" },
+      { src: "/V8/Front_Seats.jpg", alt: "Toyota Land Cruiser V8 front seats", fileName: "Front_Seats.jpg" },
+      { src: "/V8/Front_View.jpg", alt: "Toyota Land Cruiser V8 front view", fileName: "Front_View.jpg" },
+      { src: "/V8/land1.jpg", alt: "Toyota Land Cruiser V8 exterior", fileName: "land1.jpg" },
+      { src: "/V8/land2.webp", alt: "Toyota Land Cruiser V8 side view", fileName: "land2.webp" },
+      { src: "/V8/Left_Side_View.jpg", alt: "Toyota Land Cruiser V8 left side view", fileName: "Left_Side_View.jpg" },
+      { src: "/V8/Rear_Seats.jpg", alt: "Toyota Land Cruiser V8 rear seats", fileName: "Rear_Seats.jpg" },
+      { src: "/V8/Right_Rear_View.jpg", alt: "Toyota Land Cruiser V8 right rear view", fileName: "Right_Rear_View.jpg" },
+      { src: "/V8/Steering_Wheel.jpg", alt: "Toyota Land Cruiser V8 steering wheel", fileName: "Steering_Wheel.jpg" },
+      { src: "/V8/V8-for-Rental-550x500.webp", alt: "Toyota Land Cruiser V8 rental view", fileName: "V8-for-Rental-550x500.webp" },
+      { src: "/V8/White-Land-Cruiser-for-Rent-550x500.webp", alt: "Toyota Land Cruiser V8 white exterior", fileName: "White-Land-Cruiser-for-Rent-550x500.webp" },
     ],
   },
 ];

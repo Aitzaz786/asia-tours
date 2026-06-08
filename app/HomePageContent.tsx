@@ -17,6 +17,7 @@ import FaqSection from "@/Components/FaqSection";
 import CtaBannerSection from "@/Components/CtaBannerSection";
 import CategorySection from "@/Components/CategorySection";
 import QuickBookingForm from "@/Components/QuickBookingForm";
+import BrandMarquee from "@/Components/BrandMarquee";
 
 export const LahoreServiceMap = dynamic(() => import("@/Components/LahoreServiceMap"), {
   ssr: false,
@@ -184,6 +185,7 @@ export default function HomePageContent() {
       </main>
 
       <AboutSection />
+      <BrandMarquee/>
       <OurFleetsSection />
       <CategorySection />
          <CtaBannerSection />
