@@ -42,7 +42,6 @@ export default function RootLayout({
       "name": "Asia Tours Pakistan",
       "url": "https://asiatourspk.com",
       "logo": "https://asiatourspk.com/logo.jpeg",
-      "image": "https://asiatourspk.com/og-default.jpg",
       "telephone": "+923004591145",
       "address": {
         "@type": "PostalAddress",

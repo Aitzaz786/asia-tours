@@ -18,7 +18,6 @@ export type PageSeo = {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://asiatourspk.com";
 const CANONICAL_BASE_URL = "https://asiatourspk.com";
-const DEFAULT_OG_IMAGE_URL = "https://asiatourspk.com/og-default.jpg";
 
 function knownToSeo(p: KnownPage): PageSeo {
   return {
@@ -160,7 +159,7 @@ export function buildMetadata(
   const description = seo?.meta_description || defaults.description;
   const ogTitle = seo?.og_title || title;
   const ogDescription = seo?.og_description || description;
-  const ogImage = seo?.og_image || DEFAULT_OG_IMAGE_URL;
+  const ogImage = seo?.og_image;
 
   const canonicalUrl = `${CANONICAL_BASE_URL}${pagePath}`;
 
@@ -178,20 +177,24 @@ export function buildMetadata(
       url: canonicalUrl,
       siteName: "Asia Tours Pakistan",
       type: "website" as const,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: ogTitle,
-        },
-      ],
+      ...(ogImage
+        ? {
+            images: [
+              {
+                url: ogImage,
+                width: 1200,
+                height: 630,
+                alt: ogTitle,
+              },
+            ],
+          }
+        : {}),
     },
     twitter: {
       card: "summary_large_image" as const,
       title: ogTitle,
       description: ogDescription,
-      images: [ogImage],
+      ...(ogImage ? { images: [ogImage] } : {}),
     },
   };
 }
