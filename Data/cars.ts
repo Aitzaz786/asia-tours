@@ -30,7 +30,7 @@ export const fleets: Fleet[] = [
  
   {
     name: "Audi A6",
-    price: 38000,
+    price: 45000,
     image: "/Audi a6/audi-a6_100726069_h.jpg",
     imageAlt: "Audi A6 luxury sedan",
     imageCount: 10,
@@ -55,7 +55,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Mercedes-Benz G-Wagon",
-    price: 58000,
+    price: 150000,
     image: "/g-wagon/6B01F92D-AA91-4EC2-80EA-6CE91DA69972.jpg",
     imageAlt: "Mercedes-Benz G-Wagon luxury SUV",
     imageCount: 5,
@@ -75,7 +75,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "GMC Limousine",
-    price: 70000,
+    price: 150000,
     image: "/gmc lamosine/GMC_Fendi_Limo_Rental.webp",
     imageAlt: "GMC limousine rental vehicle",
     imageCount: 7,
@@ -97,7 +97,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Toyota Hilux 4x4",
-    price: 22000,
+    price: 13000,
     image: "/hilux 4/WhatsApp-Image-2025-09-09-at-03.45.52-1.jpeg",
     imageAlt: "Toyota Hilux 4x4 pickup truck",
     imageCount: 6,
@@ -118,7 +118,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Mercedes-Maybach S580",
-    price: 85000,
+    price: 130000,
     image: "/Mercedes-Maybach S580/2020-Mercedes-S650-Maybach-black-2.webp",
     imageAlt: "Mercedes-Maybach S580 luxury sedan",
     imageCount: 7,
@@ -164,7 +164,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Range Rover",
-    price: 49000,
+    price: 150000,
     image: "/range rover/89a66d1b5c2ca9167c6dccc60b32ffdf.jpg",
     imageAlt: "Range Rover luxury SUV",
     imageCount: 9,
@@ -188,7 +188,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Toyota Fortuner",
-    price: 28000,
+    price: 15000,
     image: "/Toyota Fortuner/WhatsApp-Image-2024-06-23-at-03.20.47.jpeg",
     imageAlt: "Toyota Fortuner SUV",
     imageCount: 7,
@@ -210,7 +210,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Toyota Tundra Limousine",
-    price: 75000,
+    price: 150000,
     image: "/toyota loundra lamosine/597536698_1181155030879565_7929039320961236561_n.jpg",
     imageAlt: "Toyota Tundra limousine",
     imageCount: 4,
