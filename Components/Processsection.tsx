@@ -62,7 +62,7 @@ export default function ProcessSection() {
                   key={`${group}-${item.text}-${i}`}
                   className="inline-flex items-center gap-3 whitespace-nowrap px-6 text-sm font-bold"
                 >
-                  <span className="text-[10px] text-[#ff4500]">{item.symbol}</span>
+                  <span className="text-[10px] text-[#D4AF37]">{item.symbol}</span>
                   <span className="text-[#1c1c1c]">{item.text}</span>
                 </span>
               ))}

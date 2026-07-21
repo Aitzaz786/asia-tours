@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { SECTION_CARD_Y, SECTION_INSET_X, SECTION_Y } from "@/lib/sectionSpacing";
 
 const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
@@ -40,89 +41,138 @@ function CountUpNumber({ value, suffix }: { value: number; suffix?: string }) {
   }, [isInView, value]);
 
   return (
-    <div ref={ref} className="text-[3rem] font-black leading-none tracking-[-0.04em] text-[#ff4402] sm:text-[3.5rem]">
+    <div ref={ref} className="text-[3rem] font-black leading-none tracking-[-0.04em] text-[#D4AF37] sm:text-[3.5rem]">
       {count}{suffix}
     </div>
   );
 }
 
-export default function CtaBannerSection() {
-  return (
-    <main className="px-3 pb-8 sm:px-5 sm:pb-10 lg:px-7">
-      <section className="relative mx-auto max-w-[1800px] overflow-hidden rounded-[36px] bg-[#050505] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
+export default function CtaBannerSection({ compact = false }: { compact?: boolean }) {
+  const [enableRevealAnimations, setEnableRevealAnimations] = useState(false);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateAnimationMode = () => setEnableRevealAnimations(mediaQuery.matches);
+    const frame = window.requestAnimationFrame(updateAnimationMode);
+
+    mediaQuery.addEventListener("change", updateAnimationMode);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      mediaQuery.removeEventListener("change", updateAnimationMode);
+    };
+  }, []);
+
+  const headerContent = (
+    <>
+      <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/08 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#D4AF37]">
+        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#D4AF37]" />
+        Why Choose Us
+      </span>
+
+      <h2 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
+        Trusted by thousands<br />across Pakistan
+      </h2>
+      <p className="mt-4 text-base text-white/45 leading-relaxed">
+        Our streamlined process ensures a premium car rental experience - reliable vehicles, professional service, available 24/7.
+      </p>
+    </>
+  );
+
+  // Equal outer py so gaps match full-bleed sections (no stuck edges).
+  return (
+    <div className={`${SECTION_INSET_X} ${SECTION_Y}`}>
+      <section
+        className={`relative mx-auto max-w-[1800px] overflow-hidden rounded-[36px] px-5 sm:px-8 lg:px-12 ${
+          compact ? SECTION_CARD_Y : "py-14 sm:py-16 lg:py-20"
+        }`}
+        style={{
+          background:
+            "radial-gradient(circle at top left, rgba(212, 175, 55, 0.12) 0%, rgba(10, 10, 10, 1) 45%), radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.08) 0%, transparent 50%), linear-gradient(135deg, #0A0A0A 0%, #1A1508 100%)",
+        }}
+      >
         {/* Grid background */}
         <div
-          className="absolute inset-0 opacity-35"
+          className="absolute inset-0 opacity-30"
           aria-hidden="true"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
             backgroundSize: "44px 44px",
           }}
         />
 
-        {/* Glow accents */}
-        <div className="pointer-events-none absolute -left-20 -top-20 h-[340px] w-[340px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(255,68,2,0.18), transparent 70%)" }} />
-        <div className="pointer-events-none absolute -bottom-16 -right-16 h-[280px] w-[280px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(255,68,2,0.10), transparent 70%)" }} />
+        {/* Soft gold spotlight glows */}
+        <div
+          className="pointer-events-none absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full blur-2xl"
+          style={{ background: "radial-gradient(circle, rgba(212,175,55,0.16), transparent 68%)" }}
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 -right-20 h-[360px] w-[360px] rounded-full blur-2xl"
+          style={{ background: "radial-gradient(circle, rgba(184,134,11,0.12), transparent 70%)" }}
+          aria-hidden="true"
+        />
 
         <div className="relative z-10 mx-auto max-w-6xl">
 
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: easeCurve }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#ff4402]/30 bg-[#ff4402]/08 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#ff4402]">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ff4402]" />
-              Why Choose Us
-            </span>
-
-            <h2 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
-              Trusted by thousands<br />across Pakistan
-            </h2>
-            <p className="mt-4 text-base text-white/45 leading-relaxed">
-              Our streamlined process ensures a premium car rental experience — reliable vehicles, professional service, available 24/7.
-            </p>
-          </motion.div>
+          {enableRevealAnimations ? (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: easeCurve }}
+              className="mx-auto max-w-3xl text-center"
+            >
+              {headerContent}
+            </motion.div>
+          ) : (
+            <div className="mx-auto max-w-3xl text-center">{headerContent}</div>
+          )}
 
           {/* Stats grid */}
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat, index) => (
-              <motion.article
-                key={stat.label}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, delay: index * 0.08, ease: easeCurve }}
-                className="group relative overflow-hidden rounded-[28px] border border-white/8 bg-white/4 px-6 py-8 text-center transition-all duration-300 hover:border-[#ff4402]/40 hover:bg-[#ff4402]/4"
-              >
-                {/* Top shimmer line */}
-                <div className="absolute inset-x-[20%] top-0 h-px bg-gradient-to-r from-transparent via-[#ff4402]/50 to-transparent" />
+            {stats.map((stat, index) => {
+              const cardContent = (
+                <>
+                  {/* Top shimmer line */}
+                  <div className="absolute inset-x-[20%] top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent" />
 
-                <div className="relative z-10">
-                
+                  <div className="relative z-10">
+                    <CountUpNumber value={stat.value} suffix={stat.suffix} />
 
-                  <CountUpNumber value={stat.value} suffix={stat.suffix} />
+                    {/* Divider */}
+                    <div className="mx-auto mt-2.5 h-0.5 w-8 rounded-full bg-[#D4AF37]/40" />
 
-                  {/* Divider */}
-                  <div className="mx-auto mt-2.5 h-0.5 w-8 rounded-full bg-[#ff4402]/40" />
+                    <p className="mt-2.5 text-sm font-medium leading-snug text-white/50">
+                      {stat.label}
+                    </p>
+                  </div>
+                </>
+              );
+              const cardClassName = "group relative overflow-hidden rounded-[28px] border border-[rgba(212,175,55,0.2)] bg-[#0c0c0c]/80 px-6 py-8 text-center shadow-[inset_0_1px_0_rgba(212,175,55,0.08)] transition-all duration-300 hover:border-[rgba(212,175,55,0.45)] hover:bg-[#D4AF37]/[0.06] hover:shadow-[0_0_40px_rgba(212,175,55,0.08),inset_0_1px_0_rgba(212,175,55,0.15)]";
 
-                  <p className="mt-2.5 text-sm font-medium leading-snug text-white/50">
-                    {stat.label}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
+              return enableRevealAnimations ? (
+                <motion.article
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.7, delay: index * 0.08, ease: easeCurve }}
+                  className={cardClassName}
+                >
+                  {cardContent}
+                </motion.article>
+              ) : (
+                <article key={stat.label} className={cardClassName}>
+                  {cardContent}
+                </article>
+              );
+            })}
           </div>
 
         </div>
       </section>
-    </main>
+    </div>
   );
 }

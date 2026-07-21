@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
+import { SECTION_Y } from "@/lib/sectionSpacing";
 
 type CategoryCard = {
   title: string;
@@ -16,20 +16,20 @@ type CategoryCard = {
 const categories: CategoryCard[] = [
 {
   title: "SUV / 4x4",
-  image: "/suvan.png",
+  image: "/suvan.webp",
   alt: "SUV 4x4",
   objectPosition: "center center",
 
 },
   {
     title: "Sedan Car",
-    image: "/Audi a6/audi-a6_100726069_h.jpg",
+    image: "/Audi a6/audi-a6_100726069_h.webp",
     alt: "Sedan Car",
     objectPosition: "center center",
   },
  {
   title: "Luxury car",
-  image: "/luxury.png",
+  image: "/luxury.webp",
   alt: "Luxury car",
   objectPosition: "center 100%", 
   mirror: true, 
@@ -37,7 +37,7 @@ const categories: CategoryCard[] = [
 },
     {
     title: "Wedding Cars",
-    image: "/weeding.png",
+    image: "/weeding.webp",
     alt: "Convertible-style premium car in an urban setting",
     objectPosition: "center 60%",
     mirror: true,
@@ -46,18 +46,13 @@ const categories: CategoryCard[] = [
 
 export default function CategorySection() {
   return (
-    <section className="bg-white px-3 pb-14 sm:px-5 sm:pb-16 lg:px-7">
+    <section className={`bg-white px-3 sm:px-5 lg:px-7 ${SECTION_Y}`}>
       <div className="mx-auto max-w-[1800px]">
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-5">
-          {categories.map((category, index) => (
-            <motion.article
+          {categories.map((category) => (
+            <article
               key={category.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.55, delay: index * 0.08 }}
-              whileHover={{ y: -8 }}
               className="group relative min-h-[340px] overflow-hidden rounded-[28px] sm:min-h-[430px] lg:min-h-[520px] xl:min-h-[410px]"
             >
             <Image
@@ -82,13 +77,14 @@ style={{
                   <button
                     type="button"
                     aria-label={`Open ${category.title}`}
-                    className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#ff4d0a] text-white shadow-[0_18px_40px_rgba(255,77,10,0.3)] transition-all duration-300 group-hover:scale-105 group-hover:rotate-45"
+                    className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#D4AF37] text-[#0A0A0A] transition-all duration-300 md:group-hover:scale-105 md:group-hover:rotate-45"
                   >
-                    <FiArrowUpRight className="text-2xl" />
+                    <FiArrowRight className="text-2xl md:hidden" />
+                    <FiArrowUpRight className="hidden text-2xl md:block" />
                   </button>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

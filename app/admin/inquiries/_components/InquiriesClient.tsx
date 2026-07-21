@@ -55,7 +55,7 @@ function FilterListbox({
   return (
     <Listbox value={value} onChange={onChange}>
       <div className="relative">
-        <ListboxButton className="flex w-40 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm outline-none transition-all hover:border-[#ff4500] hover:text-[#ff4500]">
+        <ListboxButton className="flex w-40 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm outline-none transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]">
           <span>{selected.label}</span>
           <ChevronDown className="h-3.5 w-3.5 text-gray-400" />
         </ListboxButton>
@@ -72,9 +72,9 @@ function FilterListbox({
             {options.map((opt) => (
               <ListboxOption key={opt.value} value={opt.value} as={Fragment}>
                 {({ active, selected: isSelected }) => (
-                  <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors ${active ? "bg-orange-50 text-[#ff4500]" : "text-gray-700"}`}>
+                  <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors ${active ? "bg-brand-muted text-[#D4AF37]" : "text-gray-700"}`}>
                     <span className={isSelected ? "font-semibold" : ""}>{opt.label}</span>
-                    {isSelected && <Check className="h-3.5 w-3.5 text-[#ff4500]" />}
+                    {isSelected && <Check className="h-3.5 w-3.5 text-[#D4AF37]" />}
                   </li>
                 )}
               </ListboxOption>
@@ -97,7 +97,7 @@ function StatusListbox({
 }) {
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
-      <ListboxButton className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 outline-none transition-all hover:border-[#ff4500] hover:text-[#ff4500] disabled:cursor-not-allowed disabled:opacity-50">
+      <ListboxButton className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 outline-none transition-all hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-50">
         <span className="capitalize">{value}</span>
         <ChevronDown className="h-3 w-3 text-gray-400" />
       </ListboxButton>
@@ -108,9 +108,9 @@ function StatusListbox({
         {STATUS_OPTIONS.map((opt) => (
           <ListboxOption key={opt} value={opt} as={Fragment}>
             {({ active, selected: isSelected }) => (
-              <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-xs transition-colors ${active ? "bg-orange-50 text-[#ff4500]" : "text-gray-700"}`}>
+              <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-xs transition-colors ${active ? "bg-brand-muted text-[#D4AF37]" : "text-gray-700"}`}>
                 <span className={`capitalize ${isSelected ? "font-semibold" : ""}`}>{opt}</span>
-                {isSelected && <Check className="h-3 w-3 text-[#ff4500]" />}
+                {isSelected && <Check className="h-3 w-3 text-[#D4AF37]" />}
               </li>
             )}
           </ListboxOption>
@@ -195,7 +195,7 @@ export default function InquiriesClient({ initialData }: { initialData: Inquiry[
           type="button"
           onClick={handleRefresh}
           disabled={refreshing}
-          className="ml-auto flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-600 shadow-sm transition-all hover:border-[#ff4500] hover:text-[#ff4500] disabled:opacity-50"
+          className="ml-auto flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-600 shadow-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-50"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />
           {refreshing ? "Refreshing..." : "Refresh"}
@@ -218,12 +218,12 @@ export default function InquiriesClient({ initialData }: { initialData: Inquiry[
                 <tr><td colSpan={7} className="py-12 text-center text-sm text-gray-300">No inquiries found.</td></tr>
               )}
               {filtered.map((inq) => (
-                <tr key={inq.id} className="cursor-pointer transition-colors hover:bg-orange-50/30" onClick={() => setSelected(inq)}>
+                <tr key={inq.id} className="cursor-pointer transition-colors hover:bg-brand-muted/30" onClick={() => setSelected(inq)}>
                   <td className="px-4 py-3 font-semibold text-gray-900">{inq.full_name}</td>
                   <td className="px-4 py-3 text-gray-600">{inq.phone}</td>
                   <td className="px-4 py-3 text-gray-500">{inq.email ?? "—"}</td>
                   <td className="px-4 py-3">
-                    <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${inq.form_source === "quick_booking" ? "bg-orange-100 text-orange-700" : "bg-purple-100 text-purple-700"}`}>
+                    <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${inq.form_source === "quick_booking" ? "bg-brand-soft text-brand-dark" : "bg-purple-100 text-purple-700"}`}>
                       {inq.form_source === "quick_booking" ? "Quick" : "Contact"}
                     </span>
                   </td>

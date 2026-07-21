@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
 import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -61,13 +62,35 @@ const serviceAreas = [
   { name: "Patriata", lat: 33.8700, lng: 73.4100 },
 ];
 
+const mapOptions: google.maps.MapOptions = {
+  // 1 finger = page scroll, 2 fingers = pan map (mobile), Ctrl+scroll = zoom
+  gestureHandling: "cooperative",
+  disableDefaultUI: false,
+  mapTypeControl: false,
+  streetViewControl: false,
+  fullscreenControl: true,
+};
+
 export default function PunjabServiceMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
+  const [isTouch, setIsTouch] = useState(false);
+  const [showHint, setShowHint] = useState(true);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: apiKey,
   });
+
+  useEffect(() => {
+    const touch =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    setIsTouch(touch);
+  }, []);
+
+  const dismissHint = useCallback(() => {
+    setShowHint(false);
+  }, []);
 
   if (!apiKey) {
     return (
@@ -86,9 +109,18 @@ export default function PunjabServiceMap() {
   }
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={7}>
+    <div
+      className="relative overflow-hidden"
+      onTouchStart={dismissHint}
+      onClick={dismissHint}
+    >
+      <div className="pointer-events-none absolute inset-0 z-10 bg-black/20" />
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={7}
+        options={mapOptions}
+      >
         {serviceAreas.map((area, index) => (
           <MarkerF
             key={`${area.name}-${area.lat}-${area.lng}-${index}`}
@@ -97,6 +129,14 @@ export default function PunjabServiceMap() {
           />
         ))}
       </GoogleMap>
+
+      {isTouch && showHint && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 z-20 flex justify-center px-4">
+          <p className="rounded-full bg-[#0f0e0c]/80 px-4 py-2 text-center text-xs font-medium text-white shadow-lg backdrop-blur-sm">
+            Scroll with 1 finger · Move map with 2 fingers
+          </p>
+        </div>
+      )}
     </div>
   );
 }

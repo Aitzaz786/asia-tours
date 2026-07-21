@@ -53,7 +53,7 @@ function DotPattern() {
       {Array.from({ length: 12 }, (_, index) => (
         <span
           key={index}
-          className={filledDots.has(index) ? "h-3 w-3 rounded-full bg-[#ff4500]" : "h-3 w-3 rounded-full border border-gray-300 bg-transparent"}
+          className={filledDots.has(index) ? "h-3 w-3 rounded-full bg-[#D4AF37]" : "h-3 w-3 rounded-full border border-gray-300 bg-transparent"}
         />
       ))}
     </div>
@@ -108,7 +108,7 @@ function FeatureIcon({ type }: { type: Feature["icon"] }) {
 function FeatureCard({ feature }: { feature: Feature }) {
   const iconBgClass =
     feature.icon === "fleet"
-      ? "bg-orange-50"
+      ? "bg-brand-muted"
       : feature.icon === "support"
         ? "bg-blue-50"
         : feature.icon === "location"
@@ -116,14 +116,14 @@ function FeatureCard({ feature }: { feature: Feature }) {
           : "bg-purple-50";
 
   return (
-    <article className="group relative border-b border-gray-200 pl-0 pb-8 transition-all duration-300 hover:-translate-x-1 hover:border-l-[3px] hover:border-l-[#ff4500] hover:pl-4">
+    <article className="group relative border-b border-gray-200 pl-0 pb-8 transition-all duration-300 hover:-translate-x-1 hover:border-l-[3px] hover:border-l-[#D4AF37] hover:pl-4">
       <div className="flex items-start gap-4">
         <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${iconBgClass} text-[#111111]`}>
           <FeatureIcon type={feature.icon} />
         </div>
 
         <div className="max-w-xs">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#ff4500]">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#D4AF37]">
             {feature.number}
           </p>
           <h3 className="text-lg font-semibold leading-7 text-black">{feature.title}</h3>
@@ -144,7 +144,7 @@ function CurvedConnector() {
       <path
         d="M10 20C120 20 155 95 200 135C235 165 255 175 290 180"
         fill="none"
-        stroke="#ff4500"
+        stroke="#D4AF37"
         strokeWidth="2"
         strokeDasharray="6 8"
         strokeLinecap="round"
@@ -152,7 +152,7 @@ function CurvedConnector() {
       <path
         d="M10 170C125 170 150 145 195 120C228 102 250 98 290 100"
         fill="none"
-        stroke="#ff4500"
+        stroke="#D4AF37"
         strokeWidth="2"
         strokeDasharray="6 8"
         strokeLinecap="round"
@@ -210,12 +210,12 @@ export default function WhyChooseUsSection() {
           transition={{ duration: 0.7, ease: easeCurve }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#ff4500]">
-            <span className="text-xs">{"\u2733"}</span>
+          <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
+            <span className="text-xs leading-none" aria-hidden="true">{"\u2733"}</span>
             <span>Why Choose Us</span>
           </p>
 
-          <h2 className="about-serif-font mx-auto mt-4 max-w-2xl text-4xl font-bold leading-[1.06] text-black sm:text-[2.8rem] lg:text-[3.35rem]">
+          <h2 className="about-serif-font mx-auto mt-4 max-w-2xl text-4xl font-bold leading-[1.06] text-[#0f0e0c] sm:text-[2.85rem] lg:text-[3.35rem]">
             Unmatched quality and service for your needs
           </h2>
         </motion.div>

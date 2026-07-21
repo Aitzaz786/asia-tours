@@ -114,7 +114,7 @@ const services: Service[] = [
 const serviceVisuals: ServiceVisual[] = [
   {
     icon: Plane,
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
     accent: "Airport ready",
     tag: "Premium · Coordinated",
     stat1: "24/7",
@@ -124,7 +124,7 @@ const serviceVisuals: ServiceVisual[] = [
   },
   {
     icon: BriefcaseBusiness,
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
     accent: "Executive class",
     tag: "Business · Reliable",
     stat1: "14+",
@@ -144,7 +144,7 @@ const serviceVisuals: ServiceVisual[] = [
   },
   {
     icon: Route,
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
     accent: "Made to plan",
     tag: "Flexible · Planned",
     stat1: "Any",
@@ -154,7 +154,7 @@ const serviceVisuals: ServiceVisual[] = [
   },
   {
     icon: CalendarHeart,
-    image: "/black.jpeg",
+    image: "/black.webp",
     accent: "Event perfect",
     tag: "VIP · Memorable",
     stat1: "500+",
@@ -197,7 +197,7 @@ export default function ServiceMenuSection() {
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,69,0,0.10) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(212,175,55,0.10) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       /> */}
@@ -212,16 +212,16 @@ export default function ServiceMenuSection() {
           <div className="max-w-3xl">
             {/* Eyebrow */}
             <div className="flex items-center gap-3">
-              <span className="h-0.5 w-6 rounded bg-[#ff4500]" />
+              <span className="h-0.5 w-6 rounded bg-[#D4AF37]" />
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#c24716]">
                 Signature Services
               </p>
-              <span className="h-0.5 w-6 rounded bg-[#ff4500]" />
+              <span className="h-0.5 w-6 rounded bg-[#D4AF37]" />
             </div>
             {/* Heading */}
             <h2 className="mt-4 max-w-full break-words text-4xl font-black leading-tight tracking-tight text-[#0f0e0c] sm:text-5xl lg:text-6xl">
               Choose the travel style.{" "}
-              <em className="not-italic text-[#ff4500]">We handle</em> the rest.
+              <em className="not-italic text-[#D4AF37]">We handle</em> the rest.
             </h2>
           </div>
           {/* Subtext */}
@@ -244,7 +244,7 @@ export default function ServiceMenuSection() {
           className={`relative inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-sm font-bold transition-all duration-200 ${
             isActive
               ? "border-[#111] bg-[#111] text-white shadow-[0_4px_14px_rgba(0,0,0,0.18)]"
-              : "border-[#e8e4de] bg-white text-[#9a9690] hover:border-[#ff4500] hover:text-[#ff4500]"
+              : "border-[#e8e4de] bg-white text-[#9a9690] hover:border-[#D4AF37] hover:text-[#D4AF37]"
           }`}
           aria-pressed={isActive}
         >
@@ -286,8 +286,8 @@ export default function ServiceMenuSection() {
 
                 {/* Top-left accent badge */}
                 <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-2 text-[10px] font-bold text-[#111] shadow-[0_4px_16px_rgba(0,0,0,0.12)] backdrop-blur-sm">
-                  <span className="h-[7px] w-[7px] flex-shrink-0 rounded-full bg-[#ff4500]" />
-                  <ActiveIcon className="h-3.5 w-3.5 text-[#ff4500]" />
+                  <span className="h-[7px] w-[7px] flex-shrink-0 rounded-full bg-[#D4AF37]" />
+                  <ActiveIcon className="h-3.5 w-3.5 text-[#D4AF37]" />
                   {activeVisual.accent}
                 </div>
 
@@ -311,9 +311,9 @@ export default function ServiceMenuSection() {
               <article className="flex min-h-[420px] flex-col justify-between py-1">
 
                 <div>
-                  {/* Title with left orange bar */}
+                  {/* Title with left brand accent bar */}
                   <div className="flex items-stretch gap-4">
-                    <span className="w-[3px] flex-shrink-0 self-stretch rounded-full bg-[#ff4500]" />
+                    <span className="w-[3px] flex-shrink-0 self-stretch rounded-full bg-[#D4AF37]" />
                     <h3 className="text-3xl font-black leading-tight text-[#080b10] sm:text-4xl">
                       {activeService.title}
                     </h3>
@@ -332,7 +332,7 @@ export default function ServiceMenuSection() {
                         className="flex items-center gap-3 border-b border-[#f2ede7] py-3 last:border-b-0"
                       >
                         {/* Number */}
-                        <span className="min-w-[22px] text-[10px] font-black text-[#ff4500]">
+                        <span className="min-w-[22px] text-[10px] font-black text-[#D4AF37]">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         {/* Text */}
@@ -353,7 +353,7 @@ export default function ServiceMenuSection() {
                   {/* Explore button */}
                   <Link
                     href={`/services/${activeService.slug}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#ff4500] px-6 py-3 text-xs font-black uppercase tracking-wide text-white shadow-[0_8px_24px_rgba(255,69,0,0.25)] transition-all hover:-translate-y-0.5 hover:bg-[#d83a00] hover:shadow-[0_12px_32px_rgba(255,69,0,0.30)]"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-6 py-3 text-xs font-black uppercase tracking-wide text-[#0A0A0A] shadow-[0_8px_24px_rgba(212,175,55,0.25)] transition-all hover:-translate-y-0.5 hover:bg-[#B8860B] hover:shadow-[0_12px_32px_rgba(212,175,55,0.30)]"
                   >
                     Explore service
                     <ArrowRight className="h-3.5 w-3.5" />

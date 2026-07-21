@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FiArrowUpRight, FiClipboard, FiMapPin } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight, FiClipboard, FiMapPin } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { SECTION_Y } from "@/lib/sectionSpacing";
 
 const features = [
   {
@@ -22,7 +23,7 @@ export default function AboutSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   return (
-    <section className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+    <section className={`bg-white px-4 sm:px-6 lg:px-8 ${SECTION_Y}`}>
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
         <div className="relative mx-auto w-full">
           <motion.div
@@ -39,7 +40,7 @@ export default function AboutSection() {
 }}
   />
   <Image
-    src="/about-us.png"
+    src="/about-us.webp"
     alt="Client stepping out of a premium rental vehicle"
     fill
     className="object-cover object-center "
@@ -51,15 +52,15 @@ export default function AboutSection() {
           </motion.div>
         </div>
 
-        <div>
+        <div className="text-center lg:text-left">
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, ease: easeCurve }}
-            className="mb-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-[#ff4500]"
+            className="mb-5 inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#D4AF37] lg:justify-start"
           >
-            <span className="text-[19px] font-black leading-none">{"\u2733"}</span>
+            <span className="text-xs leading-none" aria-hidden="true">{"\u2733"}</span>
             <span>About Us</span>
           </motion.p>
 
@@ -68,7 +69,7 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.1, ease: easeCurve }}
-            className="about-serif-font text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl"
+            className="about-serif-font mx-auto max-w-xl text-4xl font-bold leading-[1.06] text-[#0f0e0c] sm:text-[2.85rem] lg:mx-0 lg:text-[3.35rem]"
           >
             Your trusted partner in reliable car rental
           </motion.h2>
@@ -78,12 +79,12 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
-            className="mt-4 max-w-xl text-base leading-7 text-gray-500"
+            className="mx-auto mt-4 max-w-xl text-base leading-7 text-[#6b6560] lg:mx-0"
           >
             Asia Tours brings together premium vehicles, refined service, and dependable travel support for business trips, family journeys, airport transfers, and special occasions.
           </motion.p>
 
-          <div className="mt-8">
+          <div className="mt-8 text-left">
             {features.map(({ Icon, title, desc }, i) => (
               <motion.div
                 key={title}
@@ -93,8 +94,8 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: i * 0.12, ease: easeCurve }}
               >
                 <div className="flex items-start gap-4 py-5">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-50">
-                    <Icon className="text-xl text-[#ff4500]" />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-muted">
+                    <Icon className="text-xl text-[#D4AF37]" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900">{title}</h3>
@@ -111,20 +112,19 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.35, ease: easeCurve }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
           >
-<Link
-  href="/about-us"
-  aria-label="Go to about us"
-  className="group inline-flex items-center gap-2 rounded-full bg-[#ff4500] px-7  text-sm font-semibold text-white transition-all duration-300 hover:bg-[#e53d00]"
->
-  Learn More
-
-  <span className="flex h-11 w-5 items-center justify-center rounded-full  transition-all duration-300 group-hover:rotate-45 group-hover:scale-105">
- <FiArrowUpRight className="text-[19px]" />
-  </span>
-</Link>
-         
+            <Link
+              href="/about-us"
+              aria-label="Go to about us"
+              className="group inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-7 text-sm font-semibold text-[#0A0A0A] transition-all duration-300 hover:bg-[#B8860B]"
+            >
+              Learn More
+              <span className="flex h-11 w-5 items-center justify-center rounded-full transition-transform duration-300 md:group-hover:rotate-45 md:group-hover:scale-105">
+                <FiArrowRight className="text-[19px] md:hidden" />
+                <FiArrowUpRight className="hidden text-[19px] md:block" />
+              </span>
+            </Link>
           </motion.div>
         </div>
       </div>

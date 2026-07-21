@@ -85,7 +85,7 @@ const tabContent: Record<
       "Dedicated coordination for arrivals and departures",
       "Comfort-focused standards from inquiry to drop-off",
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
     imageAlt: "Luxury BMW executive sedan on an open road",
   },
 };
@@ -199,7 +199,7 @@ function AboutHeroSection() {
   return (
     <section className="relative overflow-hidden rounded-[42px] border border-white/8 bg-[#070d15]">
       <div className="absolute inset-0">
-        <Image src="/black.jpeg" alt="Luxury black sedan parked outside an elegant building" fill priority className="object-cover" />
+        <Image src="/black.webp" alt="Luxury black sedan parked outside an elegant building" fill priority className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,10,17,0.96),rgba(5,10,17,0.62),rgba(5,10,17,0.88))]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,169,110,0.22),transparent_34%)]" />
@@ -320,11 +320,11 @@ function AboutStorySection() {
           <div className="absolute inset-y-14 left-10 w-[1px] bg-[linear-gradient(180deg,transparent,rgba(255,69,0,0.42),transparent)]" />
 
           <div className="absolute left-0 top-10 h-72 w-72 overflow-hidden rounded-full border border-white/10 shadow-[0_24px_90px_rgba(0,0,0,0.45)] sm:h-80 sm:w-80">
-            <Image src="/asiatour.jpeg" alt="Luxury vehicle lineup ready for guests" fill className="object-cover" />
+            <Image src="/asiatour.webp" alt="Luxury vehicle lineup ready for guests" fill className="object-cover" />
           </div>
 
           <div className="absolute bottom-0 left-28 h-56 w-56 overflow-hidden rounded-full border-[8px] border-[#0b121c] shadow-[0_24px_90px_rgba(0,0,0,0.45)] sm:h-64 sm:w-64">
-            <Image src="/2023-BMW-i7-exterior-1-scaled.jpg" alt="Executive BMW luxury sedan" fill className="object-cover" />
+            <Image src="/2023-BMW-i7-exterior-1-scaled.webp" alt="Executive BMW luxury sedan" fill className="object-cover" />
           </div>
 
           <div className="absolute right-6 top-28 hidden rounded-[28px] border border-white/8 bg-white/[0.03] p-4 sm:block">
@@ -480,7 +480,7 @@ function VideoStatsSection() {
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         <div className="relative min-h-[340px] overflow-hidden rounded-[32px]">
-          <Image src="/black.jpeg" alt="Luxury black car outside a hotel" fill className="object-cover" />
+          <Image src="/black.webp" alt="Luxury black car outside a hotel" fill className="object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.15),rgba(17,17,17,0.7))]" />
           <div className="relative z-10 flex h-full flex-col justify-end p-7 text-white">
             <p className="text-5xl font-semibold sm:text-6xl">3100+</p>
@@ -505,7 +505,7 @@ function VideoStatsSection() {
         </div>
 
         <div className="relative min-h-[340px] overflow-hidden rounded-[32px]">
-          <Image src="/2023-BMW-i7-exterior-1-scaled.jpg" alt="Luxury executive sedan for promotional video" fill className="object-cover" />
+          <Image src="/2023-BMW-i7-exterior-1-scaled.webp" alt="Luxury executive sedan for promotional video" fill className="object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.22),rgba(17,17,17,0.5))]" />
           <div className="relative z-10 flex h-full items-center justify-center">
             <button
@@ -656,7 +656,7 @@ function AboutHeroSection() {
   return (
     <section className="relative overflow-hidden rounded-[42px] border border-white/8 bg-[#070d15]">
       <div className="absolute inset-0">
-        <Image src="/black.jpeg" alt="Luxury black sedan parked outside an elegant building" fill priority className="object-cover object-center" />
+        <Image src="/black.webp" alt="Luxury black sedan parked outside an elegant building" fill priority className="object-cover object-center" />
       </div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,10,17,0.97),rgba(5,10,17,0.72),rgba(5,10,17,0.78))]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,69,0,0.16),transparent_24%)]" />
@@ -669,7 +669,7 @@ function AboutHeroSection() {
         <div className="flex items-center justify-between rounded-[26px] border border-white/10 bg-[rgba(8,13,20,0.58)] px-4 py-4 backdrop-blur-md sm:px-6">
           <div className="flex items-center gap-4">
             <div className="rounded-[20px] border border-white/10 bg-white px-4 py-2 shadow-[0_12px_28px_rgba(0,0,0,0.18)]">
-              <Image src="/logo.jpeg" alt="Asia Tours logo" width={128} height={44} className="h-auto w-[110px] sm:w-[128px]" />
+              <Image src="/logo.webp" alt="Asia Tours logo" width={128} height={44} className="h-auto w-[110px] sm:w-[128px]" />
             </div>
             <div className="hidden sm:block">
               <p className="text-[11px] uppercase tracking-[0.26em] text-[#c9a96e]">Luxury Mobility</p>
@@ -745,7 +745,7 @@ function AboutHeroSection() {
             <div className="absolute bottom-0 right-0 left-0 lg:left-auto lg:w-[86%]">
               <div className="relative overflow-hidden rounded-[34px] border border-white/10 bg-[rgba(8,13,20,0.5)] p-3 shadow-[0_28px_90px_rgba(0,0,0,0.34)] backdrop-blur-md">
                 <div className="relative h-[340px] overflow-hidden rounded-[28px] sm:h-[420px] lg:h-[470px]">
-                  <Image src="/2023-BMW-i7-exterior-1-scaled.jpg" alt="Luxury BMW sedan in a premium setting" fill className="object-cover" />
+                  <Image src="/2023-BMW-i7-exterior-1-scaled.webp" alt="Luxury BMW sedan in a premium setting" fill className="object-cover" />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,10,17,0.02),rgba(5,10,17,0.22))]" />
                 </div>
 

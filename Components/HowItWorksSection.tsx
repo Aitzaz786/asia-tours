@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 
 const steps = [
   {
@@ -25,7 +24,7 @@ const steps = [
   },
 ];
 
-function Chevron() {
+function Chevron({ open }: { open: boolean }) {
   return (
     <svg
       width="20"
@@ -34,6 +33,7 @@ function Chevron() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
+      className={`how-it-works-chevron ${open ? "is-open" : ""}`}
     >
       <path
         d="M5 7.5L10 12.5L15 7.5"
@@ -48,111 +48,85 @@ function Chevron() {
 
 export default function HowItWorksSection() {
   const [openIndex, setOpenIndex] = useState(0);
-  const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? -1 : index);
+    setOpenIndex((current) => (current === index ? -1 : index));
   };
 
   return (
-    <section className="relative overflow-x-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]">
+    <section className="how-it-works-section relative overflow-x-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]">
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: easeCurve }}
-        >
-          <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#ff4500]">
-            <span className="text-xs">{"\u2733"}</span>
+        <div className="text-center lg:text-left">
+          <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#D4AF37] lg:justify-start">
+            <span className="text-xs leading-none" aria-hidden="true">
+              {"\u2733"}
+            </span>
             <span>How It Work</span>
           </p>
 
-          <h2 className="about-serif-font mt-4 max-w-lg text-4xl font-bold leading-[1.1] text-black sm:text-[2.7rem] lg:text-[3.15rem]">
+          <h2 className="about-serif-font mx-auto mt-4 max-w-xl text-4xl font-bold leading-[1.06] text-[#0f0e0c] sm:text-[2.85rem] lg:mx-0 lg:max-w-lg lg:text-[3.35rem]">
             Streamlined processes for a hassle-free experience
           </h2>
 
-          <p className="mt-5 max-w-lg text-base leading-7 text-gray-500">
-            Our streamlined process ensures a seamless car rental experience
-            from start to finish. With easy online booking, flexible pick-up and
-            drop-off options.
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-[#6b6560] lg:mx-0 lg:max-w-lg">
+            Our streamlined process ensures a seamless car rental experience from start to finish.
+            With easy online booking, flexible pick-up and drop-off options.
           </p>
 
-          <div className="relative mt-10">
+          <div className="relative mt-10 text-left">
             <div
-              className="absolute left-4 top-5 h-[calc(100%-2.5rem)] border-l border-dashed border-[#ff4500]/60"
+              className="absolute left-4 top-5 h-[calc(100%-2.5rem)] border-l border-dashed border-[#D4AF37]/60"
               aria-hidden="true"
             />
-            {steps.map((step, i) => (
-              <div key={step.number} className="border-b border-gray-200">
-                <motion.button
-                  type="button"
-                  onClick={() => toggle(i)}
-                  className="flex w-full items-center gap-4 py-5 text-left"
-                  aria-expanded={openIndex === i}
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="relative z-10 flex h-8 w-8 min-w-8 items-center justify-center rounded-full bg-[#ff4500] text-sm font-bold text-white">
-                    {step.number}
-                  </span>
-                  <span className="flex-1 text-lg font-semibold text-black">
-                    {step.title}
-                  </span>
-                  <motion.span
-                    animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="text-black"
+            {steps.map((step, i) => {
+              const open = openIndex === i;
+              return (
+                <div key={step.number} className="border-b border-gray-200">
+                  <button
+                    type="button"
+                    onClick={() => toggle(i)}
+                    className="flex w-full items-center gap-4 py-5 text-left"
+                    aria-expanded={open}
                   >
-                    <Chevron />
-                  </motion.span>
-                </motion.button>
+                    <span className="relative z-10 flex h-8 w-8 min-w-8 items-center justify-center rounded-full bg-[#D4AF37] text-sm font-bold text-[#0A0A0A]">
+                      {step.number}
+                    </span>
+                    <span className="flex-1 text-lg font-semibold text-black">{step.title}</span>
+                    <span className="text-black">
+                      <Chevron open={open} />
+                    </span>
+                  </button>
 
-                <AnimatePresence initial={false}>
-                  {openIndex === i && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: easeCurve }}
-                      style={{ overflow: "hidden" }}
-                    >
-                      <div className="ml-4 border-l-2 border-[#ff4500] pb-5 pl-7 pr-4 pt-2">
-                        <p className="text-sm leading-6 text-gray-500">
-                          {step.content}
-                        </p>
+                  <div
+                    className={`how-it-works-panel ${open ? "is-open" : ""}`}
+                    aria-hidden={!open}
+                  >
+                    <div className="how-it-works-panel__inner">
+                      <div className="ml-4 border-l-2 border-[#D4AF37] pb-5 pl-7 pr-4 pt-1">
+                        <p className="text-sm leading-6 text-gray-500">{step.content}</p>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </motion.div>
-
-     <div className="relative mx-auto w-full">
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: easeCurve }}
-            className="overflow-hidden rounded-[28px] border border-gray-200 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:rounded-[40px] lg:rounded-[60px]"
-          >
-            <div className="relative aspect-[1.12/1] w-full">
-            <Image
-  src="/how to work.png"
-  alt="Client stepping out of a premium rental vehicle"
-  fill
-  className="object-cover"
-  sizes="(max-width: 1024px) 100vw, 50vw"
-  style={{ transform: "scale(1.3)" }}
-/>
-            </div>
-          </motion.div>
         </div>
 
- 
+        <div className="relative mx-auto w-full">
+          <div className="overflow-hidden rounded-[28px] border border-gray-200 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:rounded-[40px] lg:rounded-[60px]">
+            <div className="relative aspect-[1.12/1] w-full">
+              <Image
+                src="/how to work.webp"
+                alt="Client stepping out of a premium rental vehicle"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                style={{ transform: "scale(1.3)" }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

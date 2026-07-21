@@ -32,7 +32,7 @@ export default function AdminSidebar() {
     <aside className="flex w-56 shrink-0 flex-col border-r border-gray-200 bg-white px-3 py-6">
       {/* Logo */}
       <div className="mb-8 px-3">
-        <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#ff4500]">Asia Tours</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#D4AF37]">Asia Tours</p>
         <p className="mt-0.5 text-base font-black text-gray-900">Admin Panel</p>
       </div>
 
@@ -44,7 +44,7 @@ export default function AdminSidebar() {
             href={link.href}
             className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all ${
               isActive(link.key)
-                ? "bg-orange-50 text-[#ff4500]"
+                ? "bg-brand-muted text-[#D4AF37]"
                 : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
             }`}
           >

@@ -15,6 +15,8 @@ const staticRoutes = [
   "/services/luxury-vehicles",
   "/areas",
   "/contact-us",
+  "/terms-and-conditions",
+  "/privacy-policy",
 ] as const;
 
 const excludePaths = ["/areas/karachi", "/areas/peshawar", "/areas/quetta"];

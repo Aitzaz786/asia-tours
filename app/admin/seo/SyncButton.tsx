@@ -33,7 +33,7 @@ export default function SyncButton() {
       <button
         onClick={handleSync}
         disabled={syncing}
-        className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-600 shadow-sm transition-all hover:border-[#ff4500] hover:text-[#ff4500] disabled:opacity-40"
+        className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-600 shadow-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-40"
       >
         {syncing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
         {syncing ? "Syncing…" : "Sync to DB"}

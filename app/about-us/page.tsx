@@ -4,7 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FiArrowUpRight } from "react-icons/fi";
 import CtaBannerSection from "@/Components/CtaBannerSection";
+import DarkHeroShell, { HOME_HERO_CONTENT_HEIGHT } from "@/Components/DarkHeroShell";
+import QuickBookingForm from "@/Components/QuickBookingForm";
+import { SECTION_Y, SECTION_Y_END } from "@/lib/sectionSpacing";
 
 type TabKey = "vision" | "mission" | "approach";
 
@@ -41,12 +45,6 @@ const partners = [
     name: "Elite Voyage",
     description: "Curated journeys for elite clientele",
   },
-];
-
-const heroStats = [
-  { value: "12+", label: "Years Of Trusted Service" },
-  { value: "85+", label: "Premium Vehicles Available" },
-  { value: "24/7", label: "Dedicated Travel Support" },
 ];
 
 const aboutFeatures = [
@@ -111,7 +109,7 @@ const tabContent: Record<
       "Dedicated coordination for arrivals and departures",
       "Comfort-focused standards from inquiry to drop-off",
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
     imageAlt: "Luxury BMW executive sedan on an open road",
   },
 };
@@ -159,7 +157,7 @@ function SectionLabel({
   return (
     <p
       className={`inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] sm:text-xs sm:tracking-[0.28em] ${
-        tone === "gold" ? "text-[#c9a96e]" : "text-[#ff4500]"
+        tone === "gold" ? "text-[#c9a96e]" : "text-[#D4AF37]"
       } ${className}`}
     >
       <span className="text-sm leading-none sm:text-base">{"\u2733"}</span>
@@ -168,27 +166,9 @@ function SectionLabel({
   );
 }
 
-function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
-      {direction === "left" ? (
-        <>
-          <path d="M15.2 10H4.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          <path d="M8.7 6.2 4.8 10l3.9 3.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </>
-      ) : (
-        <>
-          <path d="M4.8 10h10.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          <path d="M11.3 6.2 15.2 10l-3.9 3.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </>
-      )}
-    </svg>
-  );
-}
-
 function CheckIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" fill="none" className={`h-4 w-4 text-[#ff4500] ${className}`} aria-hidden="true">
+    <svg viewBox="0 0 20 20" fill="none" className={`h-4 w-4 text-[#D4AF37] ${className}`} aria-hidden="true">
       <path d="M4.5 10.5 8 14l7.5-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -197,7 +177,7 @@ function CheckIcon({ className = "" }: { className?: string }) {
 function BookingFeatureIcon({ type, className = "" }: { type: "booking" | "pickup"; className?: string }) {
   if (type === "booking") {
     return (
-      <svg viewBox="0 0 24 24" fill="none" className={`h-6 w-6 text-[#ff4500] ${className}`} aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" className={`h-6 w-6 text-[#D4AF37] ${className}`} aria-hidden="true">
         <rect x="4" y="5" width="16" height="15" rx="3" stroke="currentColor" strokeWidth="1.8" />
         <path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         <path d="M8 14h3M13 14h3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -206,7 +186,7 @@ function BookingFeatureIcon({ type, className = "" }: { type: "booking" | "picku
   }
 
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={`h-6 w-6 text-[#ff4500] ${className}`} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className={`h-6 w-6 text-[#D4AF37] ${className}`} aria-hidden="true">
       <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" stroke="currentColor" strokeWidth="1.8" />
       <circle cx="12" cy="9" r="2.3" stroke="currentColor" strokeWidth="1.8" />
     </svg>
@@ -219,116 +199,78 @@ function StarRating({ rating }: { rating: string }) {
   return (
     <div className="flex flex-wrap items-center gap-1">
       {Array.from({ length: fullStars }).map((_, index) => (
-        <span key={index} className="text-[#ff4500]">
+        <span key={index} className="text-[#D4AF37]">
           {"\u2605"}
         </span>
       ))}
-      {rating === "4.5" && <span className="text-[#ff4500]">{"\u2606"}</span>}
+      {rating === "4.5" && <span className="text-[#D4AF37]">{"\u2606"}</span>}
       <span className="ml-2 text-sm font-semibold text-[#c9a96e]">{rating}</span>
     </div>
   );
 }
 
 function AboutHeroSection() {
+  const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
   return (
-    <section className="relative overflow-hidden rounded-[28px] border border-white/10 sm:rounded-[36px] lg:rounded-[42px]">
-      <div className="absolute inset-0">
-        <Image src="/about.jpeg" alt="Luxury black sedan parked outside an elegant building" fill priority className="object-cover" />
-      </div>
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,10,17,0.94),rgba(5,10,17,0.82),rgba(5,10,17,0.9))] lg:bg-[linear-gradient(90deg,rgba(5,10,17,0.96),rgba(5,10,17,0.62),rgba(5,10,17,0.88))]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,69,0,0.16),transparent_26%)]" />
-
-      <div className="relative grid min-h-[680px] items-end gap-10 px-4 py-8 sm:min-h-[760px] sm:px-6 sm:py-10 md:px-8 lg:min-h-[850px] lg:grid-cols-[1.08fr_0.92fr] lg:px-14 lg:py-12">
-        <div className="max-w-3xl self-center">
-          <div className="inline-flex max-w-full items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#d8cfbe] backdrop-blur-sm sm:text-[11px] sm:tracking-[0.24em]">
-            <span className="h-2 w-2 rounded-full bg-[#ff4500]" />
-            <span>Luxury Mobility Since 2012</span>
-          </div>
-
-          <p className="mt-5 text-sm font-medium text-[#ddd3c7]">
-            <Link href="/" className="transition-colors hover:text-white">
-              Home
-            </Link>
-            <span className="mx-2 text-[#c9a96e]">/</span>
-            <span className="text-white">About Us</span>
-          </p>
-
-          <div className="mt-5">
-            <SectionLabel tone="gold">Asia Tours Story</SectionLabel>
-          </div>
-
-          <h1 className="mt-5 max-w-2xl text-4xl font-semibold leading-[0.95] text-white sm:text-5xl md:text-6xl lg:text-[5.4rem]">
-            Driven by comfort,
-            <span className="mt-2 block bg-[linear-gradient(180deg,#ffffff,#dbc9ad)] bg-clip-text text-transparent">
-              built on trust.
-            </span>
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-base leading-7 text-[#d0d0d0] sm:text-lg sm:leading-8 md:text-xl">
-            Asia Tours curates luxury car rental and executive transport experiences with elegant vehicles, meticulous planning, and service-first hospitality.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
-            <Link
-              href="/services"
-              className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#ff4500] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_45px_rgba(255,69,0,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#e8461c] sm:w-auto"
-            >
-              Explore Services
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#111111]">
-                <ArrowIcon />
+    <section className="home-hero relative z-30 w-full overflow-x-hidden pb-10">
+      <DarkHeroShell>
+        <div className={`relative z-10 flex w-full items-center justify-center px-5 pb-6 pt-28 sm:px-8 sm:pb-20 sm:pt-36 xl:px-[4.5rem] ${HOME_HERO_CONTENT_HEIGHT}`}>
+          <div className="w-full max-w-4xl text-center">
+            <div className="mb-4 inline-flex items-center justify-center gap-3 sm:mb-6">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#D4AF37] sm:w-12" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#D4AF37] sm:text-xs">
+                Asia Tours Story
               </span>
-            </Link>
-            <Link
-              href="/contact-us"
-              className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/18 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/10 sm:w-auto"
-            >
-              Contact Our Team
-            </Link>
-          </div>
+              <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#D4AF37] sm:w-12" />
+            </div>
 
-          <div className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
-            {["Executive Fleet", "Chauffeur Service", "Airport Transfers"].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-white/10 bg-[rgba(255,255,255,0.05)] px-4 py-2 text-xs font-medium text-[#ece3d5] backdrop-blur-sm sm:text-sm"
+            <h1 className="hero-display-font text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.03em] text-white sm:text-5xl lg:text-[3.85rem] xl:text-[4.75rem]">
+              Driven by{" "}
+              <span className="bg-gradient-to-r from-[#E8C766] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
+                comfort
+              </span>
+              <br />
+              built on{" "}
+              <span className="italic font-semibold text-white/95">trust.</span>
+            </h1>
+
+            <p className="mx-auto mt-4 max-w-lg text-[14px] font-light leading-7 tracking-wide text-white/70 sm:mt-6 sm:text-base lg:max-w-xl lg:text-lg lg:leading-8">
+              Asia Tours curates luxury car rental and executive transport with elegant vehicles,
+              meticulous planning, and service-first hospitality.
+            </p>
+
+            <div className="mt-8 hidden items-center justify-center gap-3 md:flex">
+              <Link
+                href="/services"
+                className="shimmer-btn relative inline-flex items-center justify-center overflow-hidden rounded-full bg-[#D4AF37] px-8 py-3.5 text-sm font-bold text-[#0A0A0A] shadow-[0_20px_45px_rgba(212,175,55,0.3)]"
               >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
+                Explore Services
+              </Link>
 
-        <div className="relative self-stretch">
-          <div className="absolute right-0 top-0 hidden w-[78%] rounded-[30px] border border-white/10 bg-[rgba(8,13,20,0.52)] p-4 backdrop-blur-md lg:block">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.22em] text-[#c9a96e]">Premium Standard</p>
-                <p className="mt-2 text-lg font-semibold text-white">Curated fleet, discreet service, polished arrival</p>
-              </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#ff4500] text-white shadow-[0_12px_28px_rgba(255,69,0,0.28)]">
-                <ArrowIcon />
-              </div>
-            </div>
-          </div>
-
-          <div className="relative mx-auto flex h-full min-h-[280px] items-end pt-4 sm:min-h-[320px] lg:justify-end lg:pt-24">
-            <div className="grid w-full gap-4 sm:grid-cols-3 lg:w-[88%] lg:grid-cols-1 xl:grid-cols-3">
-              {heroStats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-[24px] border border-white/10 bg-[rgba(9,15,23,0.68)] p-4 shadow-[0_28px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:rounded-[30px] sm:p-5"
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/contact-us"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-medium text-black shadow-md transition-all hover:bg-white/90"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-[0.22em] text-[#c9a96e] sm:text-[11px]">Asia Tours</span>
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff4500]" />
-                  </div>
-                  <p className="mt-4 text-3xl font-semibold text-white sm:mt-5 sm:text-4xl">{stat.value}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">{stat.label}</p>
-                </div>
-              ))}
+                  Contact Our Team
+                </Link>
+
+                <Link
+                  href="/contact-us"
+                  className="group inline-flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md transition-all hover:bg-white/90"
+                  aria-label="Contact our team"
+                >
+                  <FiArrowUpRight className="text-lg text-black transition-transform duration-300 group-hover:rotate-45" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
+      </DarkHeroShell>
+
+      <div className="relative z-40 px-3 sm:px-5 lg:px-7">
+        <QuickBookingForm easeCurve={easeCurve} />
       </div>
     </section>
   );
@@ -336,111 +278,71 @@ function AboutHeroSection() {
 
 function AboutStorySection() {
   return (
-    <section className="relative overflow-hidden rounded-[28px] px-4 py-14 sm:rounded-[36px] sm:px-6 sm:py-16 md:px-8 lg:rounded-[48px] lg:px-20 lg:py-24">
-      <div className="absolute right-10 top-16 hidden lg:block">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          className="relative h-52 w-52 xl:h-64 xl:w-64"
-        >
-          <div className="absolute inset-0 rounded-full border-[1.5px] border-orange-200/50" />
-          <div className="absolute inset-10 rounded-full border border-orange-300/20 xl:inset-12" />
+    <section className={`relative overflow-hidden px-4 sm:px-6 lg:px-8 ${SECTION_Y}`}>
+      <div className="relative z-10 mx-auto grid max-w-[1600px] gap-10 lg:grid-cols-[1.02fr_1fr] lg:items-center lg:gap-16">
+        {/* Image cluster — sized to stay inside viewport on phone */}
+        <div className="relative mx-auto w-full max-w-[340px] sm:max-w-[480px] lg:max-w-[620px]">
+          <div className="relative aspect-square w-full">
+            {/* Back image */}
+            <div className="absolute bottom-[4%] right-[4%] z-10 aspect-square w-[48%] overflow-hidden rounded-[22px] border-[6px] border-white shadow-xl sm:bottom-0 sm:right-0 sm:w-[56%] sm:rounded-[34px] sm:border-[12px] lg:w-[58%] lg:rounded-[50%] lg:border-[14px]">
+              <Image
+                src="/2023-BMW-i7-exterior-1-scaled.webp"
+                alt="Executive BMW luxury sedan"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 45vw, 280px"
+              />
+            </div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-xl xl:h-24 xl:w-24">
-              <span className="text-4xl text-white drop-shadow-md xl:text-5xl">{"\u2726"}</span>
+            {/* Range Rover on top */}
+            <div className="absolute left-[4%] top-[4%] z-20 aspect-square w-[66%] overflow-hidden rounded-[24px] border-[6px] border-white shadow-xl sm:left-0 sm:top-0 sm:w-[76%] sm:rounded-[40px] sm:border-[10px] lg:w-[78%] lg:rounded-[50%]">
+              <Image
+                src="/Range-Rover.avif"
+                alt="Luxury vehicle lineup ready for guests"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 640px) 60vw, 380px"
+              />
+            </div>
+
+            {/* Stat badge — inset so it never clips on phone */}
+            <div className="absolute right-[6%] top-[10%] z-30 max-w-[42%] rounded-2xl border border-gray-100 bg-white px-3 py-2.5 shadow-xl sm:right-0 sm:top-10 sm:max-w-none sm:rounded-3xl sm:px-8 sm:py-6">
+              <div className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl sm:tracking-[-2px]">
+                500+
+              </div>
+              <p className="mt-1 text-[9px] font-medium uppercase leading-tight tracking-[0.12em] text-brand sm:mt-2 sm:text-sm sm:tracking-[3px]">
+                Premium Journeys
+              </p>
             </div>
           </div>
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-16 left-10 hidden lg:block">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          className="relative h-52 w-52 xl:h-64 xl:w-64"
-        >
-          <div className="absolute inset-0 rounded-full border-[1.5px] border-orange-200/50" />
-          <div className="absolute inset-10 rounded-full border border-orange-300/20 xl:inset-12" />
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-xl xl:h-24 xl:w-24">
-              <span className="text-4xl text-white drop-shadow-md xl:text-5xl">{"\u2726"}</span>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      <div className="relative z-10 grid gap-12 lg:grid-cols-[1.02fr_1fr] lg:items-center lg:gap-16">
-        <div className="relative mx-auto grid w-full max-w-[560px] gap-4 sm:gap-5 lg:min-h-[620px] lg:max-w-[620px]">
-          <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.9 }}
-            className="relative aspect-square w-[82%] overflow-hidden rounded-[32px] border-[8px] border-white shadow-2xl sm:w-[76%] sm:rounded-[40px] sm:border-[10px] lg:absolute lg:left-0 lg:top-0 lg:w-[78%] lg:rounded-[50%]"
-          >
-            <Image
-              src="/Range-Rover.avif"
-              alt="Luxury vehicle lineup ready for guests"
-              fill
-              className="object-cover"
-              priority
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative ml-auto aspect-square w-[62%] overflow-hidden rounded-[28px] border-[10px] border-white shadow-2xl sm:w-[56%] sm:rounded-[34px] sm:border-[12px] lg:absolute lg:bottom-0 lg:right-0 lg:w-[58%] lg:rounded-[50%] lg:border-[14px]"
-          >
-            <Image
-              src="/2023-BMW-i7-exterior-1-scaled.jpg"
-              alt="Executive BMW luxury sedan"
-              fill
-              className="object-cover"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="w-fit rounded-3xl border border-gray-100 bg-white px-6 py-5 shadow-2xl sm:px-8 sm:py-6 lg:absolute lg:right-0 lg:top-10"
-          >
-            <div className="text-4xl font-semibold tracking-[-2px] text-gray-900 sm:text-5xl lg:text-6xl">500+</div>
-            <p className="mt-2 text-xs font-medium uppercase tracking-[2px] text-orange-600 sm:text-sm sm:tracking-[3px]">
-              Premium Journeys
-            </p>
-          </motion.div>
         </div>
 
-        <div className="space-y-8 lg:space-y-10 lg:pl-8">
-          <SectionLabel className="text-orange-600 tracking-widest">About Us</SectionLabel>
+        <div className="space-y-8 text-center lg:space-y-10 lg:pl-8 lg:text-left">
+          <SectionLabel className="justify-center text-brand tracking-widest lg:justify-start">
+            About Us
+          </SectionLabel>
 
-          <h2 className="max-w-xl text-3xl font-semibold leading-[1.08] tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-[3.3rem]">
+          <h2 className="mx-auto max-w-xl text-3xl font-semibold leading-[1.08] tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:mx-0 lg:text-[3.3rem]">
             Your trusted partner in reliable car rental
           </h2>
 
-          <p className="max-w-xl text-base leading-7 text-gray-600 sm:text-lg sm:leading-relaxed">
+          <p className="mx-auto max-w-xl text-base leading-7 text-gray-600 sm:text-lg sm:leading-relaxed lg:mx-0">
             We combine premium vehicles, discreet hospitality, and dependable travel coordination to create journeys that feel refined, calm, and perfectly handled from inquiry to return.
           </p>
 
-          <div className="space-y-4 pt-2 sm:space-y-6 sm:pt-4 lg:pt-6">
-            {aboutFeatures.map((feature, index) => (
-              <motion.div
+          <div className="space-y-4 pt-2 text-left sm:space-y-6 sm:pt-4 lg:pt-6">
+            {aboutFeatures.map((feature) => (
+              <div
                 key={feature.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="group rounded-3xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-orange-200 hover:shadow-2xl sm:p-6 lg:p-8"
+                className="group rounded-3xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-brand-soft hover:shadow-2xl sm:p-6 lg:p-8"
               >
-                <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-orange-50 transition-all group-hover:scale-110 group-hover:bg-orange-100 sm:h-16 sm:w-16">
-                    <BookingFeatureIcon type={feature.icon} className="text-orange-600" />
+                <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:gap-6 sm:text-left">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-muted transition-all group-hover:scale-110 group-hover:bg-brand-soft sm:h-16 sm:w-16">
+                    <BookingFeatureIcon type={feature.icon} className="text-brand" />
                   </div>
                   <div className="pt-0.5 sm:pt-1">
-                    <h3 className="text-lg font-semibold text-gray-900 transition-colors group-hover:text-orange-600 sm:text-xl">
+                    <h3 className="text-lg font-semibold text-gray-900 transition-colors group-hover:text-brand sm:text-xl">
                       {feature.title}
                     </h3>
                     <p className="mt-3 text-[15px] leading-7 text-gray-600 sm:text-[15.5px]">
@@ -448,7 +350,7 @@ function AboutStorySection() {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -459,7 +361,7 @@ function AboutStorySection() {
 
 function PartnersSection() {
   return (
-    <section className="bg-[linear-gradient(180deg,#fff4ee,#fef1ea)] px-4 py-12 text-[#111111] sm:px-6 sm:py-14 lg:px-12 lg:py-16">
+    <section className={`bg-[linear-gradient(180deg,#F5E9C8,#F5E9C8)] px-4 text-[#111111] sm:px-6 lg:px-12 ${SECTION_Y}`}>
       <div className="mx-auto w-full max-w-7xl text-center">
         <div>
           <SectionLabel>Executive Partners</SectionLabel>
@@ -476,12 +378,12 @@ function PartnersSection() {
         {partners.map((partner) => (
           <div
             key={partner.name}
-            className="group relative flex min-h-[180px] flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white p-6 text-center shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-orange-200 hover:shadow-2xl sm:p-8"
+            className="group relative flex min-h-[180px] flex-col items-center justify-center rounded-3xl border border-gray-100 bg-white p-6 text-center shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-brand-soft hover:shadow-2xl sm:p-8"
           >
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-muted to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
             <div className="relative z-10">
-              <p className="text-lg font-semibold tracking-wide text-gray-900 transition-colors group-hover:text-orange-600 sm:text-xl">
+              <p className="text-lg font-semibold tracking-wide text-gray-900 transition-colors group-hover:text-brand sm:text-xl">
                 {partner.name}
               </p>
               <p className="mt-3 text-sm leading-relaxed text-gray-500">
@@ -505,15 +407,19 @@ function VisionMissionSection({
   const activeContent = tabContent[activeTab];
 
   return (
-    <section className="relative overflow-hidden rounded-[28px] bg-white px-4 py-12 sm:rounded-[36px] sm:px-6 sm:py-14 lg:px-12 lg:py-16">
+    <section className={`relative overflow-hidden bg-white px-4 sm:px-6 lg:px-12 ${SECTION_Y}`}>
       <div className="mx-auto max-w-7xl">
-        <SectionLabel className="text-[#ff4500]">Vision Mission</SectionLabel>
+        <div className="text-center lg:text-left">
+          <SectionLabel className="justify-center text-[#D4AF37] lg:justify-start">
+            Vision Mission
+          </SectionLabel>
 
-        <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-gray-900 sm:text-4xl lg:text-[3rem]">
-          Driving excellence and innovation in car rental services
-        </h2>
+          <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-semibold leading-tight text-gray-900 sm:text-4xl lg:mx-0 lg:text-[3rem]">
+            Driving excellence and innovation in car rental services
+          </h2>
+        </div>
 
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
           {([
             ["vision", "Our Vision"],
             ["mission", "Our Mission"],
@@ -528,14 +434,14 @@ function VisionMissionSection({
                 whileTap={{ scale: 0.96 }}
                 className={`relative overflow-hidden rounded-full px-5 py-3 text-sm font-semibold transition-all sm:px-6 ${
                   active
-                    ? "border border-[#ff4500] text-white shadow-[0_10px_30px_rgba(255,69,0,0.3)]"
-                    : "border border-gray-300 bg-white text-gray-700 hover:border-[#ff4500] hover:text-[#ff4500]"
+                    ? "border border-[#D4AF37] bg-[#D4AF37] text-white"
+                    : "border border-gray-300 bg-white text-gray-700 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                 }`}
               >
                 {active ? (
                   <motion.span
                     layoutId="vision-mission-active-tab"
-                    className="absolute inset-0 z-0 rounded-full bg-[#ff4500]"
+                    className="absolute inset-0 z-0 rounded-full bg-[#D4AF37]"
                     transition={{ type: "spring", stiffness: 420, damping: 34 }}
                   />
                 ) : null}
@@ -553,53 +459,36 @@ function VisionMissionSection({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="text-center lg:text-left"
             >
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#c9a96e]">
                 {activeContent.eyebrow}
               </p>
-              <h3 className="mt-4 max-w-xl text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">
+              <h3 className="mx-auto mt-4 max-w-xl text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl lg:mx-0">
                 {activeContent.heading}
               </h3>
-              <p className="mt-5 max-w-xl text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
+              <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-gray-600 sm:text-base sm:leading-8 lg:mx-0">
                 {activeContent.description}
               </p>
 
-              <motion.ul
-                className="mt-8 space-y-4"
-                initial="hidden"
-                animate="show"
-                variants={{
-                  hidden: {},
-                  show: {
-                    transition: {
-                      staggerChildren: 0.07,
-                      delayChildren: 0.08,
-                    },
-                  },
-                }}
-              >
+              <ul className="mt-8 space-y-4">
                 {activeContent.bullets.map((bullet) => (
-                  <motion.li
+                  <li
                     key={bullet}
-                    variants={{
-                      hidden: { opacity: 0, x: -10 },
-                      show: { opacity: 1, x: 0 },
-                    }}
-                    transition={{ duration: 0.28, ease: "easeOut" }}
-                    className="flex items-start gap-3 text-sm leading-7 text-gray-700"
+                    className="flex items-start justify-center gap-3 text-sm leading-7 text-gray-700 lg:justify-start"
                   >
-                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ff4500]/10">
-                      <CheckIcon className="h-4 w-4 text-[#ff4500]" />
+                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#D4AF37]/10">
+                      <CheckIcon className="h-4 w-4 text-[#D4AF37]" />
                     </span>
-                    <span>{bullet}</span>
-                  </motion.li>
+                    <span className="text-left">{bullet}</span>
+                  </li>
                 ))}
-              </motion.ul>
+              </ul>
             </motion.div>
           </AnimatePresence>
 
           <div className="relative">
-            <div className="absolute -left-4 top-6 hidden h-[78%] w-[78%] rounded-[30px] border border-[#ff4500]/20 lg:block xl:-left-6 xl:top-8 xl:rounded-[36px]" />
+            <div className="absolute -left-4 top-6 hidden h-[78%] w-[78%] rounded-[30px] border border-[#D4AF37]/20 lg:block xl:-left-6 xl:top-8 xl:rounded-[36px]" />
 
             <div className="relative h-[280px] overflow-hidden rounded-[26px] border border-gray-200 sm:h-[360px] sm:rounded-[30px] lg:h-[450px] lg:rounded-[34px]">
               <AnimatePresence mode="wait">
@@ -630,11 +519,11 @@ function VisionMissionSection({
 
 export function VideoStatsSection() {
   return (
-    <section className="rounded-[28px] bg-white px-4 py-12 text-[#111111] sm:rounded-[36px] sm:px-6 sm:py-14 lg:px-12 lg:py-16">
+    <section className={`bg-white px-4 text-[#111111] sm:px-6 lg:px-12 ${SECTION_Y}`}>
       <div className="mx-auto max-w-[1600px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-          <div className="lg:max-w-lg">
-            <SectionLabel>Watch Our Video</SectionLabel>
+          <div className="text-center lg:max-w-lg lg:text-left">
+            <SectionLabel className="justify-center lg:justify-start">Watch Our Video</SectionLabel>
 
             <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl lg:text-[3rem]">
               Discover what sets us apart in the car rental industry
@@ -666,7 +555,7 @@ export function VideoStatsSection() {
 
 export function ContactGatewaySection() {
   return (
-    <section className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[28px] bg-white px-4 py-14 sm:min-h-[360px] sm:rounded-[36px] sm:px-6 lg:min-h-[400px] lg:px-10">
+    <section className={`relative flex w-full items-center justify-center overflow-hidden bg-white px-4 sm:px-6 lg:px-10 ${SECTION_Y_END}`}>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
         <span className="text-[7rem] font-bold tracking-tighter text-slate-900 select-none sm:text-[10rem] lg:text-[20rem]">
           ASIA
@@ -677,13 +566,13 @@ export function ContactGatewaySection() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#ff4500]"
+          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-muted text-[#D4AF37]"
         >
           <span className="text-2xl font-bold">{"\u2726"}</span>
         </motion.div>
 
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Ready to elevate <span className="text-[#ff4500]">your journey?</span>
+          Ready to elevate <span className="text-[#D4AF37]">your journey?</span>
         </h2>
         <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
           Tailored luxury transport services for executive and private travel.
@@ -692,28 +581,28 @@ export function ContactGatewaySection() {
         <div className="group relative mt-8 sm:mt-10">
           <Link
             href="/contact-us"
-            className="relative z-10 block rounded-full bg-[#ff4500] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-white transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
+            className="relative z-10 block rounded-full bg-[#D4AF37] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-[#0A0A0A] transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
           >
             Contact Us
           </Link>
 
-          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#ff4500] transition-all duration-500 group-hover:w-32 sm:block" />
+          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#D4AF37] transition-all duration-500 group-hover:w-32 sm:block" />
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:mt-12 sm:gap-8">
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-soft" />
             24/7 Support
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-soft" />
             Secure Booking
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-orange-100 to-transparent sm:left-10 sm:block" />
-      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-orange-100 to-transparent sm:right-10 sm:block" />
+      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-brand-soft to-transparent sm:left-10 sm:block" />
+      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-brand-soft to-transparent sm:right-10 sm:block" />
     </section>
   );
 }
@@ -728,33 +617,33 @@ export function TestimonialsSection({
   const visibleTestimonials = useMemo(
     () =>
       Array.from(
-        { length: 3 },
+        { length: 4 },
         (_, offset) => testimonials[(testimonialStart + offset) % testimonials.length]
       ),
     [testimonialStart]
   );
 
   return (
-    <section className="relative overflow-hidden rounded-[28px] bg-[#fff5f3] px-4 py-14 sm:rounded-[36px] sm:px-6 sm:py-16 lg:px-10 lg:py-20 xl:px-16 xl:py-24">
-      <div className="relative z-10 mx-auto max-w-7xl">
+    <section className={`relative overflow-hidden rounded-none bg-[#F5E9C8] px-0 ${SECTION_Y}`}>
+      <div className="relative z-10 mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-10 xl:px-16">
         <div className="mb-12 flex flex-col items-center text-center sm:mb-16">
-          <span className="inline-block rounded-full border border-[#ff4402]/20 bg-[#ff4402]/5 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#ff4402]">
+          <span className="inline-block rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#D4AF37]">
             Testimonials
           </span>
           <h2 className="mt-6 max-w-3xl text-3xl font-extrabold tracking-tight text-slate-900 sm:mt-8 sm:text-4xl lg:text-5xl xl:text-6xl">
-            What our clients <span className="text-[#ff4402]">truly think.</span>
+            What our clients <span className="text-[#D4AF37]">truly think.</span>
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {visibleTestimonials.map((testimonial, index) => (
             <motion.article
               key={`${testimonial.name}-${index}`}
               whileHover={{ y: -10 }}
               transition={{ duration: 0.3 }}
-              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-orange-100 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,68,2,0.15)] sm:rounded-[34px] sm:p-8 lg:rounded-[40px] lg:p-10"
+              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-brand-soft bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] sm:rounded-[34px] sm:p-8 lg:rounded-[40px] lg:p-10"
             >
-              <span className="absolute left-1/2 bottom-0 z-0 h-[250%] w-[250%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#ff4402] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100" />
+              <span className="absolute left-1/2 bottom-0 z-0 h-[250%] w-[250%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#D4AF37] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100" />
 
               <div className="relative z-10">
                 <StarRating rating={testimonial.rating} />
@@ -791,7 +680,7 @@ export function TestimonialsSection({
           <button
             type="button"
             onClick={() => setTestimonialStart((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-            className="group flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-all hover:border-[#ff4402] hover:bg-[#ff4402] hover:text-white hover:shadow-lg active:scale-90 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
+            className="group flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-all hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0A0A0A] hover:shadow-lg active:scale-90 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -801,7 +690,7 @@ export function TestimonialsSection({
           <button
             type="button"
             onClick={() => setTestimonialStart((prev) => (prev + 1) % testimonials.length)}
-            className="group flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-all hover:border-[#ff4402] hover:bg-[#ff4402] hover:text-white hover:shadow-lg active:scale-90 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
+            className="group flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-all hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0A0A0A] hover:shadow-lg active:scale-90 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -819,20 +708,17 @@ export default function AboutUsPage() {
 
   return (
     <main className="min-h-screen">
-      <div className="space-y-6 px-4 pb-8 pt-4 text-white sm:space-y-8 sm:px-6 sm:pb-10 sm:pt-6 lg:px-8">
-        <AboutHeroSection />
-        <AboutStorySection />
-      </div>
-
+      <AboutHeroSection />
+      <AboutStorySection />
       <PartnersSection />
-
-      <div className="space-y-6 px-4 pb-8 pt-6 text-white sm:space-y-8 sm:px-6 sm:pb-10 lg:px-8">
-        <VideoStatsSection />
-        <CtaBannerSection />
-        <VisionMissionSection activeTab={activeTab} setActiveTab={setActiveTab} />
-        <TestimonialsSection testimonialStart={testimonialStart} setTestimonialStart={setTestimonialStart} />
-        <ContactGatewaySection />
-      </div>
+      <VideoStatsSection />
+      <CtaBannerSection compact />
+      <VisionMissionSection activeTab={activeTab} setActiveTab={setActiveTab} />
+      <TestimonialsSection
+        testimonialStart={testimonialStart}
+        setTestimonialStart={setTestimonialStart}
+      />
+      <ContactGatewaySection />
     </main>
   );
 }

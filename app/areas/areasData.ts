@@ -32,7 +32,7 @@ export const areas: AreaData[] = [
       { from: "Lahore", to: "Murree", duration: "4 hrs" },
       { from: "Lahore", to: "Faisalabad", duration: "2 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "islamabad",
@@ -55,7 +55,7 @@ export const areas: AreaData[] = [
       { from: "Islamabad", to: "Murree", duration: "1.5 hrs" },
       { from: "Islamabad", to: "Rawalpindi", duration: "30 mins" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "rawalpindi",
@@ -101,7 +101,7 @@ export const areas: AreaData[] = [
       { from: "Faisalabad", to: "Islamabad", duration: "3 hrs" },
       { from: "Faisalabad", to: "Multan", duration: "3 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "multan",
@@ -149,7 +149,7 @@ export const areas: AreaData[] = [
       { from: "Gujranwala", to: "Islamabad", duration: "4 hrs" },
       { from: "Gujranwala", to: "Sialkot", duration: "1.5 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "sialkot",
@@ -172,7 +172,7 @@ export const areas: AreaData[] = [
       { from: "Sialkot", to: "Gujranwala", duration: "1.5 hrs" },
       { from: "Sialkot", to: "Islamabad", duration: "4.5 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "bahawalpur",
@@ -218,7 +218,7 @@ export const areas: AreaData[] = [
       { from: "Sargodha", to: "Faisalabad", duration: "1.5 hrs" },
       { from: "Sargodha", to: "Islamabad", duration: "3 hrs" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
   {
     slug: "sheikhupura",
@@ -241,7 +241,7 @@ export const areas: AreaData[] = [
       { from: "Sheikhupura", to: "Nankana Sahib", duration: "30 mins" },
       { from: "Sheikhupura", to: "Faisalabad", duration: "1.5 hrs" },
     ],
-    image: "/black.jpeg",
+    image: "/black.webp",
   },
   {
     slug: "gujrat",
@@ -287,7 +287,7 @@ export const areas: AreaData[] = [
       { from: "Sahiwal", to: "Multan", duration: "2 hrs" },
       { from: "Sahiwal", to: "Faisalabad", duration: "2 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "okara",
@@ -310,7 +310,7 @@ export const areas: AreaData[] = [
       { from: "Okara", to: "Sahiwal", duration: "1 hr" },
       { from: "Okara", to: "Multan", duration: "2.5 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "rahim-yar-khan",
@@ -356,7 +356,7 @@ export const areas: AreaData[] = [
       { from: "D.G. Khan", to: "Lahore", duration: "5 hrs" },
       { from: "D.G. Khan", to: "Muzaffargarh", duration: "1 hr" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
   {
     slug: "jhelum",
@@ -379,7 +379,7 @@ export const areas: AreaData[] = [
       { from: "Jhelum", to: "Lahore", duration: "3 hrs" },
       { from: "Jhelum", to: "Rawalpindi", duration: "1.5 hrs" },
     ],
-    image: "/black.jpeg",
+    image: "/black.webp",
   },
   {
     slug: "chakwal",
@@ -425,7 +425,7 @@ export const areas: AreaData[] = [
       { from: "Attock", to: "Rawalpindi", duration: "1.5 hrs" },
       { from: "Attock", to: "Peshawar", duration: "2.5 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "taxila",
@@ -448,7 +448,7 @@ export const areas: AreaData[] = [
       { from: "Taxila", to: "Rawalpindi", duration: "40 mins" },
       { from: "Taxila", to: "Haripur", duration: "30 mins" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "mianwali",
@@ -494,7 +494,7 @@ export const areas: AreaData[] = [
       { from: "Khushab", to: "Islamabad", duration: "3 hrs" },
       { from: "Khushab", to: "Mianwali", duration: "1.5 hrs" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
   {
     slug: "narowal",
@@ -517,7 +517,7 @@ export const areas: AreaData[] = [
       { from: "Narowal", to: "Lahore", duration: "2.5 hrs" },
       { from: "Narowal", to: "Gujranwala", duration: "1.5 hrs" },
     ],
-    image: "/black.jpeg",
+    image: "/black.webp",
   },
   {
     slug: "kasur",
@@ -563,7 +563,7 @@ export const areas: AreaData[] = [
       { from: "Nankana Sahib", to: "Sheikhupura", duration: "30 mins" },
       { from: "Nankana Sahib", to: "Faisalabad", duration: "1.5 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "hafizabad",
@@ -586,7 +586,7 @@ export const areas: AreaData[] = [
       { from: "Hafizabad", to: "Lahore", duration: "2 hrs" },
       { from: "Hafizabad", to: "Sargodha", duration: "2 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "mandi-bahauddin",
@@ -632,7 +632,7 @@ export const areas: AreaData[] = [
       { from: "Jhang", to: "Lahore", duration: "3 hrs" },
       { from: "Jhang", to: "Sargodha", duration: "2 hrs" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
   {
     slug: "toba-tek-singh",
@@ -655,7 +655,7 @@ export const areas: AreaData[] = [
       { from: "Toba Tek Singh", to: "Lahore", duration: "3 hrs" },
       { from: "Toba Tek Singh", to: "Jhang", duration: "45 mins" },
     ],
-    image: "/black.jpeg",
+    image: "/black.webp",
   },
   {
     slug: "pakpattan",
@@ -701,7 +701,7 @@ export const areas: AreaData[] = [
       { from: "Vehari", to: "Sahiwal", duration: "2 hrs" },
       { from: "Vehari", to: "Lahore", duration: "4.5 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "khanewal",
@@ -724,7 +724,7 @@ export const areas: AreaData[] = [
       { from: "Khanewal", to: "Sahiwal", duration: "1.5 hrs" },
       { from: "Khanewal", to: "Lahore", duration: "4 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "lodhran",
@@ -770,7 +770,7 @@ export const areas: AreaData[] = [
       { from: "Wazirabad", to: "Sialkot", duration: "1.5 hrs" },
       { from: "Wazirabad", to: "Lahore", duration: "1.5 hrs" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
   {
     slug: "chiniot",
@@ -793,7 +793,7 @@ export const areas: AreaData[] = [
       { from: "Chiniot", to: "Jhang", duration: "45 mins" },
       { from: "Chiniot", to: "Lahore", duration: "2.5 hrs" },
     ],
-    image: "/black.jpeg",
+    image: "/black.webp",
   },
   {
     slug: "muzaffargarh",
@@ -839,7 +839,7 @@ export const areas: AreaData[] = [
       { from: "Layyah", to: "Multan", duration: "2.5 hrs" },
       { from: "Layyah", to: "Mianwali", duration: "2 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "bhakkar",
@@ -862,7 +862,7 @@ export const areas: AreaData[] = [
       { from: "Bhakkar", to: "Layyah", duration: "1 hr" },
       { from: "Bhakkar", to: "Sargodha", duration: "3 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "rajanpur",
@@ -908,7 +908,7 @@ export const areas: AreaData[] = [
       { from: "Burewala", to: "Multan", duration: "2 hrs" },
       { from: "Burewala", to: "Sahiwal", duration: "2 hrs" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
   {
     slug: "hasilpur",
@@ -931,7 +931,7 @@ export const areas: AreaData[] = [
       { from: "Hasilpur", to: "Multan", duration: "2 hrs" },
       { from: "Hasilpur", to: "Lahore", duration: "7 hrs" },
     ],
-    image: "/black.jpeg",
+    image: "/black.webp",
   },
 
   // ─── Hill Stations ─────────────────────────────────────────────────────────
@@ -979,7 +979,7 @@ export const areas: AreaData[] = [
       { from: "Ayubia", to: "Murree", duration: "30 mins" },
       { from: "Ayubia", to: "Islamabad", duration: "2 hrs" },
     ],
-    image: "/hero-bg.jpg",
+    image: "/hero-bg.webp",
   },
   {
     slug: "nathia-gali",
@@ -1002,7 +1002,7 @@ export const areas: AreaData[] = [
       { from: "Nathia Gali", to: "Murree", duration: "45 mins" },
       { from: "Nathia Gali", to: "Islamabad", duration: "2 hrs" },
     ],
-    image: "/2023-BMW-i7-exterior-1-scaled.jpg",
+    image: "/2023-BMW-i7-exterior-1-scaled.webp",
   },
   {
     slug: "bhurban",
@@ -1048,6 +1048,6 @@ export const areas: AreaData[] = [
       { from: "Patriata", to: "Islamabad", duration: "2 hrs" },
       { from: "Patriata", to: "Rawalpindi", duration: "2.5 hrs" },
     ],
-    image: "/Badshahi_Mosque_front_picture.jpg",
+    image: "/Badshahi_Mosque_front_picture.webp",
   },
 ];

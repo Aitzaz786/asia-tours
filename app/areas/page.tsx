@@ -2,13 +2,14 @@
 
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Check, Search, X } from "lucide-react";
+import { ArrowRight, Check, Search, X } from "lucide-react";
+import { FiArrowUpRight } from "react-icons/fi";
 import { areas } from "./areasData";
 import { LahoreServiceMap } from "../HomePageContent";
 import QuickBookingForm from "@/Components/QuickBookingForm";
+import DarkHeroShell, { HOME_HERO_CONTENT_HEIGHT } from "@/Components/DarkHeroShell";
 
 
 const fadeUp = {
@@ -112,13 +113,13 @@ export default function AreasPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#ff4500]"
+          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-muted text-[#D4AF37]"
         >
           <span className="text-2xl font-bold">{"✦"}</span>
         </motion.div>
 
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Ready to elevate <span className="text-[#ff4500]">your journey?</span>
+          Ready to elevate <span className="text-[#D4AF37]">your journey?</span>
         </h2>
         <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
           Tailored luxury transport services for executive and private travel.
@@ -127,28 +128,28 @@ export default function AreasPage() {
         <div className="group relative mt-8 sm:mt-10">
           <Link
             href="/contact-us"
-            className="relative z-10 block rounded-full bg-[#ff4500] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-white transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
+            className="relative z-10 block rounded-full bg-[#D4AF37] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-[#0A0A0A] transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
           >
             Contact Us
           </Link>
 
-          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#ff4500] transition-all duration-500 group-hover:w-32 sm:block" />
+          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#D4AF37] transition-all duration-500 group-hover:w-32 sm:block" />
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:mt-12 sm:gap-8">
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-soft" />
             24/7 Support
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-soft" />
             Secure Booking
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-orange-100 to-transparent sm:left-10 sm:block" />
-      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-orange-100 to-transparent sm:right-10 sm:block" />
+      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-brand-soft to-transparent sm:left-10 sm:block" />
+      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-brand-soft to-transparent sm:right-10 sm:block" />
     </section>
     </main>
   );
@@ -158,92 +159,60 @@ function HeroSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   return (
-    <section className="px-3 pb-6 pt-4 sm:px-5 sm:pb-8 lg:px-7">
-      <div className="relative mx-auto w-full max-w-[1800px]">
-        <div className="relative min-h-[620px] overflow-hidden rounded-[28px] sm:min-h-[700px] sm:rounded-[36px] lg:min-h-[760px] lg:rounded-[46px] xl:min-h-[800px]">
-          <Image
-            src="/hero-bg.jpg"
-            alt="Luxury chauffeur service coverage areas"
-            fill
-            priority
-            className="object-cover object-[72%_center] lg:object-center"
-            sizes="100vw"
-          />
-          <div
-            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.86),rgba(0,0,0,0.72),rgba(0,0,0,0.52))] md:bg-[linear-gradient(115deg,rgba(0,0,0,0.84),rgba(0,0,0,0.68),rgba(0,0,0,0.30))] lg:bg-gradient-to-r lg:from-[rgba(0,0,0,0.86)] lg:via-[rgba(0,0,0,0.52)] lg:to-[rgba(0,0,0,0.14)]"
-            aria-hidden="true"
-          />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
+    <section className="home-hero relative z-30 w-full overflow-x-hidden pb-8 sm:pb-12 lg:pb-14">
+      <DarkHeroShell>
+        <div className={`relative z-10 flex w-full items-center justify-center px-5 pt-28 pb-6 sm:px-8 sm:pt-36 sm:pb-20 lg:px-12 xl:px-[4.5rem] ${HOME_HERO_CONTENT_HEIGHT}`}>
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-4 inline-flex items-center justify-center gap-3 sm:mb-6">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#D4AF37] sm:w-12" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#D4AF37] sm:text-xs">
+                Complete Area Directory
+              </span>
+              <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#D4AF37] sm:w-12" />
+            </div>
 
-          <div className="relative z-10 flex min-h-[620px] w-full items-center justify-center px-5 py-12 sm:min-h-[700px] sm:px-8 sm:py-14 lg:min-h-[760px] lg:px-12 xl:px-[4.5rem]">
-            <div className="grid w-full place-items-center">
-              <div className="mx-auto max-w-4xl text-center">
-                <motion.div
-                  initial={{ opacity: 0, y: -16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1, ease: easeCurve }}
-                  className="mb-5 inline-flex items-center justify-center gap-2"
+            <h1 className="mx-auto max-w-5xl text-[2.45rem] font-black leading-[0.96] tracking-tight text-white sm:text-5xl lg:text-[4.1rem] xl:text-[4.9rem]">
+              <span className="block whitespace-nowrap">
+                Find your <span className="text-[#D4AF37]">pickup</span>
+              </span>
+              <span className="block whitespace-nowrap">or destination city.</span>
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/72 sm:text-base lg:text-lg">
+              Chauffeur-driven cars for airport transfers, business travel, weddings, family tours, and long-distance routes across Pakistan.
+            </p>
+
+            <div className="mt-8 hidden items-center justify-center gap-3 md:flex">
+              <Link
+                href="#coverage-map"
+                className="shimmer-btn relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-[#D4AF37] px-8 py-3.5 text-sm font-bold text-[#0A0A0A] shadow-[0_20px_45px_rgba(212,175,55,0.3)] sm:w-auto"
+              >
+                View Coverage
+              </Link>
+
+              <div className="flex w-full items-center justify-center gap-3 sm:w-auto">
+                <Link
+                  href="#area-directory"
+                  className="inline-flex flex-1 items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-medium text-black shadow-md transition-all hover:bg-white/90 sm:flex-none"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#ff4500]" />
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#ff4500] sm:text-xs sm:tracking-[0.28em]">
-                    Complete Area Directory
-                  </span>
-                </motion.div>
+                  Browse Cities
+                </Link>
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 36 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: easeCurve }}
-                  className="mx-auto max-w-5xl text-[2.45rem] font-black leading-[0.96] tracking-tight text-white sm:text-5xl lg:text-[4.1rem] xl:text-[4.9rem]"
+                <Link
+                  href="#area-directory"
+                  className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white shadow-md transition-all hover:bg-white/90"
+                  aria-label="Browse cities"
                 >
-                  <span className="block whitespace-nowrap">
-                    Find your <span className="text-[#ff4500]">pickup</span>
-                  </span>
-                  <span className="block whitespace-nowrap">or destination city.</span>
-                </motion.h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.35, ease: easeCurve }}
-                  className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/72 sm:text-base lg:text-lg"
-                >
-                  Chauffeur-driven cars for airport transfers, business travel, weddings, family tours, and long-distance routes across Pakistan.
-                </motion.p>
-
-
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.65, ease: easeCurve }}
-                  className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center"
-                >
-                  <Link
-                    href="#coverage-map"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4500] px-8 py-3.5 text-sm font-bold text-white shadow-[0_20px_45px_rgba(255,69,0,0.3)] transition-all hover:-translate-y-0.5 hover:bg-[#e63e00]"
-                  >
-                    View Coverage <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="#area-directory"
-                    className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/8 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/12"
-                  >
-                    Browse Cities
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </Link>
-                </motion.div>
-
-         
+                  <FiArrowUpRight className="text-lg text-black transition-transform duration-300 group-hover:rotate-45" />
+                </Link>
               </div>
-
-     
             </div>
           </div>
         </div>
+      </DarkHeroShell>
+      <div className="relative z-40 px-3 sm:px-5 lg:px-7">
+        <QuickBookingForm easeCurve={easeCurve} />
       </div>
-      <QuickBookingForm easeCurve={easeCurve} />
     </section>
   );
 }
@@ -267,26 +236,26 @@ function AreasDirectory({
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4500]">Complete Area Directory</p>
+            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#D4AF37]">Complete Area Directory</p>
             <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight sm:text-[34px]">
               Select your pickup or destination city.
             </h2>
           </div>
 
           <div className="relative w-full lg:max-w-sm">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ff4500]" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#D4AF37]" />
             <input
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
               placeholder="Search service areas..."
-              className="w-full rounded-2xl border-2 border-[#e8e2da] bg-white py-4 pl-11 pr-11 text-sm font-bold text-[#0f0e0c] shadow-sm outline-none transition-colors focus:border-[#ff4500]"
+              className="w-full rounded-2xl border-2 border-[#e8e2da] bg-white py-4 pl-11 pr-11 text-sm font-bold text-[#0f0e0c] shadow-sm outline-none transition-colors focus:border-[#D4AF37]"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => onSearchChange("")}
                 aria-label="Clear search"
-                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-1 transition-colors hover:bg-[#fff4f0]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-1 transition-colors hover:bg-[#F5E9C8]"
               >
                 <X className="h-4 w-4 text-[#9b9389]" />
               </button>
@@ -312,7 +281,7 @@ function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
   return (
     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
       <div className="mb-4 flex items-center gap-4">
-        <h3 className="text-xs font-black uppercase tracking-[0.28em] text-[#ff4500]">{title}</h3>
+        <h3 className="text-xs font-black uppercase tracking-[0.28em] text-[#D4AF37]">{title}</h3>
         <span className="h-px flex-1 bg-[#e8e2da]" />
         <span className="text-xs font-bold text-[#9b9389]">{cities.length}</span>
       </div>
@@ -324,14 +293,15 @@ function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
               href={`/areas/${area.slug}`}
               className="group relative flex h-full items-center justify-between overflow-hidden border-b border-r border-[#ececec] bg-white px-[26px] py-6 text-inherit no-underline transition-all duration-300 hover:bg-[#fafafa] hover:pl-[34px]"
             >
-              <span className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-[#ff4500] transition-transform duration-300 group-hover:origin-top group-hover:scale-y-100" />
+              <span className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-[#D4AF37] transition-transform duration-300 group-hover:origin-top group-hover:scale-y-100" />
               <div>
-                <p className="font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.015em] text-[#0e0e10] transition-colors duration-300 group-hover:text-[#ff4500]">
+                <p className="font-['Playfair_Display'] text-[26px] font-semibold leading-[1.05] tracking-[-0.015em] text-[#0e0e10] transition-colors duration-300 group-hover:text-[#D4AF37]">
                   {area.name}
                 </p>
                 <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.22em] text-[#6b6b73]">{area.province}</p>
               </div>
-              <ArrowUpRight className="ml-3 h-[18px] w-[18px] flex-shrink-0 text-[#6b6b73] transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#ff4500]" />
+              <ArrowRight className="ml-3 h-[18px] w-[18px] shrink-0 text-[#6b6b73] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#D4AF37] md:hidden" />
+              <FiArrowUpRight className="ml-3 hidden h-[18px] w-[18px] shrink-0 text-[#6b6b73] transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#D4AF37] md:block" />
             </Link>
           </motion.div>
         ))}
@@ -344,7 +314,7 @@ function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
 function BottomCTA() {
   return (
     <section className="relative overflow-hidden bg-[#0f0e0c] px-4 py-24 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,69,0,0.18),transparent_38%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.18),transparent_38%)]" />
       <div
         className="absolute inset-0 opacity-20"
         style={{
@@ -360,7 +330,7 @@ function BottomCTA() {
         variants={stagger}
         className="relative mx-auto max-w-3xl text-center"
       >
-        <motion.p variants={fadeUp} className="text-xs font-black uppercase tracking-[0.28em] text-[#ff7a4d]">
+        <motion.p variants={fadeUp} className="text-xs font-black uppercase tracking-[0.28em] text-[#E8C766]">
           Need Another Destination?
         </motion.p>
         <motion.h2 variants={fadeUp} className="mt-4 text-5xl font-black tracking-tight text-white sm:text-7xl">
@@ -372,7 +342,7 @@ function BottomCTA() {
         <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-2 rounded-full bg-[#ff4500] px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[0_16px_40px_rgba(255,69,0,0.22)] transition-colors hover:bg-[#e63e00]"
+            className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-[#0A0A0A] shadow-[0_16px_40px_rgba(212,175,55,0.22)] transition-colors hover:bg-[#B8860B]"
           >
             Contact Us <ArrowRight className="h-4 w-4" />
           </Link>

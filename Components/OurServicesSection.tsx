@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
+import { SECTION_Y } from "@/lib/sectionSpacing";
 
 type ServiceCard = {
   title: string;
@@ -9,6 +11,7 @@ type ServiceCard = {
   icon: "driver" | "business" | "airport" | "chauffeur";
   category: "Premium" | "Corporate" | "Transfer" | "VIP";
   number: string;
+  href: string;
 };
 
 const cards: ServiceCard[] = [
@@ -18,6 +21,7 @@ const cards: ServiceCard[] = [
     icon: "driver",
     category: "Premium",
     number: "01",
+    href: "/services/chauffeur-service",
   },
   {
     title: "Business Car Rental",
@@ -25,6 +29,7 @@ const cards: ServiceCard[] = [
     icon: "business",
     category: "Corporate",
     number: "02",
+    href: "/services/corporate-tours",
   },
   {
     title: "Airport Transfer",
@@ -32,6 +37,7 @@ const cards: ServiceCard[] = [
     icon: "airport",
     category: "Transfer",
     number: "03",
+    href: "/services/airport-transfer",
   },
   {
     title: "Chauffeur Services",
@@ -39,6 +45,7 @@ const cards: ServiceCard[] = [
     icon: "chauffeur",
     category: "VIP",
     number: "04",
+    href: "/services/chauffeur-service",
   },
 ];
 
@@ -92,13 +99,7 @@ export default function OurServicesSection() {
   const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
   return (
-    <section
-      className="relative overflow-hidden bg-[#FFF5F2] px-4 py-14 sm:px-8 sm:py-16 lg:py-[4.5rem]"
-      style={{
-        backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 69, 0, 0.12) 1px, transparent 0)",
-        backgroundSize: "24px 24px",
-      }}
-    >
+    <section className={`relative overflow-hidden bg-[#EFEBE3] px-4 sm:px-8 ${SECTION_Y}`}>
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -107,12 +108,14 @@ export default function OurServicesSection() {
           transition={{ duration: 0.7, ease: easeCurve }}
           className="text-center"
         >
-          <p className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] text-[#ff4500]">
-            <span className="text-sm">{"\u2733"}</span>
+          <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
+            <span className="text-xs leading-none" aria-hidden="true">
+              {"\u2733"}
+            </span>
             <span>Our Services</span>
           </p>
 
-          <h2 className="about-serif-font mx-auto mt-4 max-w-2xl text-4xl font-bold leading-tight text-black sm:text-5xl">
+          <h2 className="about-serif-font mx-auto mt-4 max-w-2xl text-4xl font-bold leading-[1.06] text-[#0f0e0c] sm:text-[2.85rem] lg:text-[3.35rem]">
             Explore our wide range of rental services
           </h2>
         </motion.div>
@@ -124,45 +127,42 @@ export default function OurServicesSection() {
           className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
         >
           {cards.map((card) => (
-            <motion.article
-              key={card.title}
-              whileHover={{ y: -8 }}
-              transition={{ duration: 0.3 }}
-              className="group relative flex h-96 overflow-hidden rounded-2xl border border-orange-100 bg-white p-6"
-            >
-              <span className="absolute right-4 top-3 z-0 text-[80px] font-black leading-none text-gray-100 transition-colors duration-300 group-hover:text-white/20">
-                {card.number}
-              </span>
-              <span className="absolute left-1/2 bottom-0 z-0 h-[220%] w-[220%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#fe4700] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100" />
-
-              <div className="relative z-10 flex h-full flex-col">
-                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center border border-[#f2d7ca] bg-[#FFF8F4] text-[#111111] transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10 group-hover:text-white">
-                  <ServiceIcon type={card.icon} />
-                </div>
-
-                <div className="mb-6 h-px w-full bg-[#f1ddd4] transition-colors duration-300 group-hover:bg-white/20" />
-
-                <h3 className="text-xl font-bold leading-7 text-black transition-colors duration-300 group-hover:text-white">
-                  {card.title}
-                </h3>
-
-                <span className="mt-3 inline-flex w-fit rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-orange-500 transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white">
-                  {card.category}
+            <Link key={card.title} href={card.href} className="block h-full">
+              <motion.article
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3 }}
+                className="group relative flex h-96 overflow-hidden rounded-2xl border border-brand-soft bg-white p-6"
+              >
+                <span className="absolute right-4 top-3 z-0 text-[80px] font-black leading-none text-gray-100 transition-colors duration-300 group-hover:text-white/20">
+                  {card.number}
                 </span>
+                <span className="absolute left-1/2 bottom-0 z-0 h-[220%] w-[220%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#D4AF37] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100" />
 
-                <p className="mt-4 text-sm leading-6 text-gray-500 transition-colors duration-300 group-hover:text-white">
-                  {card.description}
-                </p>
+                <div className="relative z-10 flex h-full flex-col">
+                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center border border-[#eadfc8] bg-[#FFFBF0] text-[#111111] transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/15 group-hover:text-white">
+                    <ServiceIcon type={card.icon} />
+                  </div>
 
-                <motion.button
-                  aria-label={`${card.title} details`}
-                  whileTap={{ scale: 0.9 }}
-                  className="mt-auto inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#ff4500] text-2xl text-white transition-all duration-300 group-hover:rotate-45 group-hover:bg-black group-hover:text-white"
-                >
-                 <FiArrowUpRight />
-                </motion.button>
-              </div>
-            </motion.article>
+                  <div className="mb-6 h-px w-full bg-[#eadfc8] transition-colors duration-300 group-hover:bg-white/25" />
+
+                  <h3 className="text-xl font-bold leading-7 text-black transition-colors duration-300 group-hover:text-white">
+                    {card.title}
+                  </h3>
+
+                  <span className="mt-3 inline-flex w-fit rounded-full bg-brand-muted px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand transition-colors duration-300 group-hover:bg-white/20 group-hover:text-white">
+                    {card.category}
+                  </span>
+
+                  <p className="mt-4 text-sm leading-6 text-gray-500 transition-colors duration-300 group-hover:text-white/90">
+                    {card.description}
+                  </p>
+
+                  <span className="mt-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#D4AF37] text-2xl text-[#0A0A0A] transition-all duration-300 group-hover:rotate-45 group-hover:bg-[#0A0A0A] group-hover:text-[#D4AF37]">
+                    <FiArrowUpRight />
+                  </span>
+                </div>
+              </motion.article>
+            </Link>
           ))}
         </motion.div>
 
@@ -174,25 +174,19 @@ export default function OurServicesSection() {
           className="mx-auto mt-10 max-w-2xl text-center"
         >
           <p className="text-sm leading-7 text-gray-500 sm:text-base">
-            Discover our range of car rental services designed to meet all your travel needs. From a diverse fleet of vehicles to flexible rental plans.
+            Discover our range of car rental services designed to meet all your travel needs. From a
+            diverse fleet of vehicles to flexible rental plans.
           </p>
 
           <div className="mt-7 inline-flex items-center">
-       <motion.button
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.97 }}
-  className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#ff4500] px-7  text-sm font-semibold text-white transition-all duration-300"
->
-  <span>View All Service</span>
-
-  <motion.span
-    className="flex h-11 w-5 items-center justify-center rounded-full  transition-all duration-300 group-hover:rotate-45"
-    
-  >
-    <FiArrowUpRight className="text-[19px]" />
-  </motion.span>
-</motion.button>
-        
+            <Link
+              href="/services"
+              className="group inline-flex cursor-pointer items-center gap-3 rounded-full bg-[#D4AF37] px-7 py-3.5 text-sm font-semibold text-[#0A0A0A] transition-all duration-300 hover:bg-[#B8860B]"
+            >
+              <span>View All Service</span>
+              <FiArrowRight className="text-[18px] sm:hidden" />
+              <FiArrowUpRight className="hidden text-[18px] transition-transform duration-300 group-hover:rotate-45 sm:block" />
+            </Link>
           </div>
         </motion.div>
       </div>

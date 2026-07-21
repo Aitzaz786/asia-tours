@@ -43,7 +43,7 @@ export default function PremiumExperienceSection() {
         aria-hidden="true"
         style={{
           backgroundImage:
-            "radial-gradient(circle at top left, rgba(255,69,0,0.08), transparent 30%), linear-gradient(135deg, rgba(15,23,42,0.04) 0, rgba(15,23,42,0.04) 1px, transparent 1px, transparent 22px)",
+            "radial-gradient(circle at top left, rgba(212,175,55,0.08), transparent 30%), linear-gradient(135deg, rgba(15,23,42,0.04) 0, rgba(15,23,42,0.04) 1px, transparent 1px, transparent 22px)",
         }}
       />
 
@@ -54,8 +54,8 @@ export default function PremiumExperienceSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: easeCurve }}
         >
-          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#ff4500]">
-            <span className="h-2 w-2 rounded-full bg-[#ff4500]" />
+          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#D4AF37]">
+            <span className="h-2 w-2 rounded-full bg-[#D4AF37]" />
             Premium Experience
           </p>
 
@@ -78,9 +78,9 @@ export default function PremiumExperienceSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.55, delay: index * 0.08, ease: easeCurve }}
-                  className="group rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-[#ffd2c2] hover:shadow-[0_24px_55px_rgba(255,69,0,0.10)]"
+                  className="group rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-[#E8C766] hover:shadow-[0_24px_55px_rgba(212,175,55,0.10)]"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#fff3ee] text-[#ff4500] transition-colors duration-300 group-hover:bg-[#ff4500] group-hover:text-white">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F5E9C8] text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#0A0A0A]">
                     <Icon className="text-lg" />
                   </div>
                   <h3 className="mt-4 text-lg font-semibold text-slate-900">{pillar.title}</h3>
@@ -96,9 +96,9 @@ export default function PremiumExperienceSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.75, ease: easeCurve }}
-          className="relative overflow-hidden rounded-[34px] border border-slate-200 bg-[linear-gradient(160deg,#fff7f2_0%,#ffffff_45%,#f6f7fb_100%)] p-6 shadow-[0_30px_70px_rgba(15,23,42,0.08)] sm:p-8"
+          className="relative overflow-hidden rounded-[34px] border border-slate-200 bg-[linear-gradient(160deg,#F5E9C8_0%,#ffffff_45%,#f6f7fb_100%)] p-6 shadow-[0_30px_70px_rgba(15,23,42,0.08)] sm:p-8"
         >
-          <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-[#ff4500]/10 blur-3xl" aria-hidden="true" />
+          <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-[#D4AF37]/10 blur-3xl" aria-hidden="true" />
 
           <div className="relative">
             <div className="flex items-start justify-between gap-4">
@@ -110,7 +110,7 @@ export default function PremiumExperienceSection() {
                   Premium journeys designed to feel seamless from first contact.
                 </h3>
               </div>
-              <span className="rounded-full border border-[#ffd9cb] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ff4500]">
+              <span className="rounded-full border border-[#E8C766] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
                 White Label Care
               </span>
             </div>
@@ -131,7 +131,7 @@ export default function PremiumExperienceSection() {
                       key={item}
                       className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-medium text-slate-700"
                     >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#fff1eb] text-[#ff4500]">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5E9C8] text-[#D4AF37]">
                         <FiArrowUpRight className="text-sm" />
                       </span>
                       <span>{item}</span>
@@ -148,7 +148,7 @@ export default function PremiumExperienceSection() {
 
                 <Link
                   href="/services"
-                  className=" group inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4500] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#e23d00]"
+                  className=" group inline-flex items-center justify-center gap-2 rounded-full bg-[#D4AF37] px-6 py-3 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-[#B8860B]"
                 >
                   Explore 
                   <FiArrowUpRight className="transition-all duration-300 group-hover:rotate-45" />

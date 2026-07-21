@@ -32,7 +32,7 @@ export default async function AdminDashboardPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2">
-            <LayoutDashboard className="h-5 w-5 text-[#ff4500]" />
+            <LayoutDashboard className="h-5 w-5 text-[#D4AF37]" />
             <h1 className="text-2xl font-black text-gray-900">Dashboard</h1>
           </div>
           <p className="mt-1 text-sm text-gray-400">
@@ -65,7 +65,7 @@ export default async function AdminDashboardPage() {
                 <div key={group} className="flex items-center gap-3">
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray-100">
                     <div
-                      className="h-full rounded-full bg-[#ff4500]"
+                      className="h-full rounded-full bg-[#D4AF37]"
                       style={{ width: `${(count / KNOWN_PAGES.length) * 100}%` }}
                     />
                   </div>
@@ -76,7 +76,7 @@ export default async function AdminDashboardPage() {
             </div>
             <Link
               href="/admin/seo"
-              className="mt-5 flex items-center gap-1.5 text-xs font-bold text-[#ff4500] hover:underline"
+              className="mt-5 flex items-center gap-1.5 text-xs font-bold text-[#D4AF37] hover:underline"
             >
               Manage all pages <ArrowRight className="h-3 w-3" />
             </Link>
@@ -88,10 +88,10 @@ export default async function AdminDashboardPage() {
             <div className="space-y-2">
               <Link
                 href="/admin/seo"
-                className="flex items-center gap-3 rounded-lg border border-gray-100 p-3 transition-all hover:border-[#ff4500]/30 hover:bg-orange-50"
+                className="flex items-center gap-3 rounded-lg border border-gray-100 p-3 transition-all hover:border-[#D4AF37]/30 hover:bg-brand-muted"
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50">
-                  <Globe className="h-4 w-4 text-[#ff4500]" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-muted">
+                  <Globe className="h-4 w-4 text-[#D4AF37]" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-gray-900">SEO Manager</p>
@@ -101,7 +101,7 @@ export default async function AdminDashboardPage() {
               </Link>
               <Link
                 href="/admin/settings"
-                className="flex items-center gap-3 rounded-lg border border-gray-100 p-3 transition-all hover:border-[#ff4500]/30 hover:bg-orange-50"
+                className="flex items-center gap-3 rounded-lg border border-gray-100 p-3 transition-all hover:border-[#D4AF37]/30 hover:bg-brand-muted"
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-50">
                   <Settings className="h-4 w-4 text-gray-500" />
@@ -144,7 +144,7 @@ export default async function AdminDashboardPage() {
                     </div>
                     <Link
                       href={`/admin/seo/${page.slug}`}
-                      className="shrink-0 text-[11px] font-bold text-[#ff4500] hover:underline"
+                      className="shrink-0 text-[11px] font-bold text-[#D4AF37] hover:underline"
                     >
                       Edit →
                     </Link>

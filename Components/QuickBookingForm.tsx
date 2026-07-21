@@ -1,8 +1,8 @@
 "use client";
 
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { format } from "date-fns";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   CalendarDays,
   CarFront,
@@ -21,7 +21,7 @@ import { CalendarMonth, DayPicker, useDayPicker } from "react-day-picker";
 import { submitInquiry } from "@/app/actions/submitInquiry";
 
 type QuickBookingFormProps = {
-  easeCurve: [number, number, number, number];
+  easeCurve?: [number, number, number, number];
 };
 
 type ToastState = { title: string; message: string; tone: "success" | "error" } | null;
@@ -30,7 +30,7 @@ const fieldShell =
   "group relative flex min-w-0 items-center rounded-[22px] px-4 py-2.5 sm:px-5 lg:rounded-none lg:bg-transparent lg:px-3 lg:after:absolute lg:after:right-[-6px] lg:after:top-1/2 lg:after:h-9 lg:after:w-px lg:after:-translate-y-1/2 lg:after:bg-[#e8e1dc] xl:px-4";
 
 const iconShell =
-  "mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ff4500]/10 text-[#ff4500] transition-all group-focus-within:bg-[#ff4500] group-focus-within:text-white";
+  "mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#D4AF37] transition-colors group-focus-within:text-[#B8860B]";
 
 function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
   const { goToMonth, nextMonth, previousMonth } = useDayPicker();
@@ -45,7 +45,7 @@ function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
           type="button"
           onClick={() => previousMonth && goToMonth(previousMonth)}
           disabled={!previousMonth}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#ff4d0a] hover:text-[#ff4d0a] disabled:cursor-not-allowed disabled:opacity-30"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
         </button>
@@ -53,7 +53,7 @@ function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
           type="button"
           onClick={() => nextMonth && goToMonth(nextMonth)}
           disabled={!nextMonth}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#ff4d0a] hover:text-[#ff4d0a] disabled:cursor-not-allowed disabled:opacity-30"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronRight className="h-3.5 w-3.5" />
         </button>
@@ -62,26 +62,41 @@ function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
   );
 }
 
-export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
+export default function QuickBookingForm(_props: QuickBookingFormProps = {}) {
   const [pickupDate, setPickupDate] = useState<Date>();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [calendarPlacement, setCalendarPlacement] = useState<"top" | "bottom">("bottom");
+  const [calendarCoords, setCalendarCoords] = useState({ top: 0, left: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<ToastState>(null);
+  const [mounted, setMounted] = useState(false);
   const dateFieldRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const updateCalendarPlacement = () => {
     const dateField = dateFieldRef.current;
     if (!dateField) return;
 
     const rect = dateField.getBoundingClientRect();
-    const estimatedCalendarHeight = 350;
+    const estimatedCalendarHeight = 360;
+    const gap = 8;
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
+    const place: "top" | "bottom" =
+      spaceBelow < estimatedCalendarHeight && spaceAbove > spaceBelow ? "top" : "bottom";
 
-    setCalendarPlacement(
-      spaceBelow < estimatedCalendarHeight && spaceAbove > spaceBelow ? "top" : "bottom",
-    );
+    setCalendarPlacement(place);
+    setCalendarCoords({
+      top: place === "top" ? rect.top - gap : rect.bottom + gap,
+      left: Math.min(
+        Math.max(rect.left + rect.width / 2, 148),
+        window.innerWidth - 148,
+      ),
+    });
   };
 
   useEffect(() => {
@@ -89,10 +104,10 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
 
     updateCalendarPlacement();
     const closeCalendarOnOutsideClick = (event: MouseEvent) => {
-      if (
-        dateFieldRef.current &&
-        !dateFieldRef.current.contains(event.target as Node)
-      ) {
+      const target = event.target as Node;
+      const inField = dateFieldRef.current?.contains(target);
+      const inCalendar = calendarRef.current?.contains(target);
+      if (!inField && !inCalendar) {
         setCalendarOpen(false);
       }
     };
@@ -166,15 +181,8 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
 
   return (
     <>
-      <AnimatePresence>
         {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: -14, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -14, scale: 0.97 }}
-            transition={{ duration: 0.26 }}
-            className="pointer-events-none fixed right-4 top-4 z-[120] w-[calc(100%-2rem)] max-w-sm"
-          >
+          <div className="pointer-events-none fixed right-4 top-4 z-[120] w-[calc(100%-2rem)] max-w-sm">
             <div
               className={`pointer-events-auto rounded-2xl border bg-white px-5 py-4 shadow-2xl backdrop-blur-xl ${
                 toast.tone === "success" ? "border-green-100" : "border-red-100"
@@ -197,28 +205,24 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
                 <button
                   type="button"
                   onClick={() => setToast(null)}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8a837d] transition-colors hover:bg-[#f0ebe4]"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8a837d] hover:bg-[#f0ebe4]"
                   aria-label="Close notification"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
-      <motion.form
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1, ease: easeCurve }}
+      <form
         onSubmit={handleSubmit}
         autoComplete="off"
-        className="relative z-30 mx-auto -mt-8 w-[calc(100%-1.5rem)] max-w-[1500px] overflow-visible rounded-[28px] border border-white/75 bg-white/95 px-3 py-3 shadow-[0_24px_70px_rgba(15,23,42,0.18)] backdrop-blur-xl sm:-mt-14 sm:w-[calc(100%-2rem)] sm:px-4 sm:py-3 lg:-mt-16 lg:w-[calc(100%-5rem)] lg:rounded-full lg:px-5 xl:w-[calc(100%-7rem)] 2xl:w-[calc(100%-9rem)]"
+        className="relative z-30 mx-auto -mt-12 w-[calc(100%-1.5rem)] max-w-[1500px] overflow-visible rounded-2xl border border-[rgba(212,175,55,0.12)] bg-[linear-gradient(135deg,#FFFFFF_0%,#FAF8F3_100%)] px-3 py-3 shadow-[0_4px_24px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04)] sm:-mt-14 sm:w-[calc(100%-2rem)] sm:rounded-[20px] sm:px-4 sm:py-3.5 lg:-mt-16 lg:w-[calc(100%-5rem)] lg:rounded-[22px] lg:px-5 xl:w-[calc(100%-7rem)] 2xl:w-[calc(100%-9rem)]"
       >
       <div className="relative flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-3">
         <div className="relative flex min-w-0 items-center rounded-[22px] bg-[#111111] px-4 py-2.5 text-white  sm:px-5 lg:w-[23%] lg:bg-transparent lg:text-[#111111] lg:shadow-none lg:px-3 lg:after:absolute lg:after:right-[-6px] lg:after:top-1/2 lg:after:h-10 lg:after:w-px lg:after:-translate-y-1/2 lg:after:bg-[#e8e1dc] xl:px-4">
-          <div className="mr-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ff4500] text-white shadow-[0_12px_24px_rgba(255,69,0,0.28)]">
+          <div className="mr-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D4AF37] text-[#0A0A0A]">
             <CarFront className="h-[18px] w-[18px]" />
           </div>
           <div className="min-w-0">
@@ -226,7 +230,7 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
               Need to Rent a Luxury Car?
             </p>
             <p className="mt-0.5 flex items-center gap-1.5 text-xs font-medium leading-5 text-white/70 lg:text-[#4b5563]">
-              <Sparkles className="h-3.5 w-3.5 text-[#ff8a5c]" />
+              <Sparkles className="h-3.5 w-3.5 text-[#E8C766]" />
               Quick premium booking
             </p>
           </div>
@@ -317,81 +321,85 @@ export default function QuickBookingForm({ easeCurve }: QuickBookingFormProps) {
               </button>
             </div>
 
-            {calendarOpen ? (
-              <motion.div
-                initial={{ opacity: 0, y: 6, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                transition={{ duration: 0.18 }}
-                className={`absolute left-1/2 z-50 w-72 -translate-x-1/2 rounded-2xl border border-[#efe3d8] bg-white text-black shadow-[0_20px_60px_rgba(15,23,42,0.14)] lg:left-auto lg:right-0 lg:translate-x-0 ${
-                  calendarPlacement === "top"
-                    ? "bottom-[calc(100%+8px)]"
-                    : "top-[calc(100%+8px)]"
-                }`}
-              >
-                <DayPicker
-                  mode="single"
-                  selected={pickupDate}
-                  onSelect={(date) => {
-                    setPickupDate(date);
-                    if (date) setCalendarOpen(false);
-                  }}
-                  disabled={{ before: new Date() }}
-                  showOutsideDays
-                  classNames={{
-                    root: "p-4",
-                    months: "flex flex-col",
-                    month: "space-y-3",
-                    month_caption: "hidden",
-                    nav: "hidden",
-                    month_grid: "w-full border-collapse",
-                    weekdays: "flex",
-                    weekday:
-                      "w-9 text-center text-[10px] font-semibold uppercase tracking-wide text-[#b0a89f] pb-2",
-                    week: "flex mt-1",
-                    day: "relative p-0",
-                    day_button:
-                      "h-9 w-9 rounded-xl text-sm font-medium transition-all outline-none hover:bg-[#fff4ef] hover:text-[#ff4d0a] focus-visible:ring-2 focus-visible:ring-[#ff4d0a]/30",
-                    selected:
-                      "[&>button]:!bg-[#ff4d0a] [&>button]:!text-white [&>button]:!font-bold [&>button]:shadow-[0_4px_14px_rgba(255,77,10,0.35)]",
-                    today:
-                      "[&>button]:border [&>button]:border-[#ff4d0a]/40 [&>button]:text-[#ff4d0a] [&>button]:font-semibold",
-                    outside:
-                      "[&>button]:text-[#d0c9c2] [&>button]:hover:bg-transparent [&>button]:hover:text-[#d0c9c2]",
-                    disabled:
-                      "[&>button]:!text-[#ddd8d2] [&>button]:!cursor-not-allowed [&>button]:hover:bg-transparent",
-                    hidden: "invisible",
-                  }}
-                  components={{
-                    MonthCaption: CalendarCaption,
-                  }}
-                />
-              </motion.div>
-            ) : null}
+            {calendarOpen && mounted
+              ? createPortal(
+                  <div
+                    ref={calendarRef}
+                    style={{
+                      position: "fixed",
+                      left: calendarCoords.left,
+                      top: calendarCoords.top,
+                      transform:
+                        calendarPlacement === "top"
+                          ? "translate(-50%, -100%)"
+                          : "translateX(-50%)",
+                      zIndex: 200,
+                    }}
+                    className="w-72 rounded-2xl border border-[#efe3d8] bg-white text-black shadow-[0_20px_60px_rgba(15,23,42,0.22)]"
+                  >
+                    <DayPicker
+                      mode="single"
+                      selected={pickupDate}
+                      onSelect={(date) => {
+                        setPickupDate(date);
+                        if (date) setCalendarOpen(false);
+                      }}
+                      disabled={{ before: new Date() }}
+                      showOutsideDays
+                      classNames={{
+                        root: "p-4",
+                        months: "flex flex-col",
+                        month: "space-y-3",
+                        month_caption: "hidden",
+                        nav: "hidden",
+                        month_grid: "w-full border-collapse",
+                        weekdays: "flex",
+                        weekday:
+                          "w-9 text-center text-[10px] font-semibold uppercase tracking-wide text-[#b0a89f] pb-2",
+                        week: "flex mt-1",
+                        day: "relative p-0",
+                        day_button:
+                          "h-9 w-9 rounded-xl text-sm font-medium outline-none hover:bg-[#F5E9C8] hover:text-[#D4AF37] focus-visible:ring-2 focus-visible:ring-[#D4AF37]/30",
+                        selected:
+                          "[&>button]:!bg-[#D4AF37] [&>button]:!text-[#0A0A0A] [&>button]:!font-bold [&>button]:!shadow-none",
+                        today:
+                          "[&>button]:border [&>button]:border-[#D4AF37]/40 [&>button]:text-[#D4AF37] [&>button]:font-semibold",
+                        outside:
+                          "[&>button]:text-[#d0c9c2] [&>button]:hover:bg-transparent [&>button]:hover:text-[#d0c9c2]",
+                        disabled:
+                          "[&>button]:!text-[#ddd8d2] [&>button]:!cursor-not-allowed [&>button]:hover:bg-transparent",
+                        hidden: "invisible",
+                      }}
+                      components={{
+                        MonthCaption: CalendarCaption,
+                      }}
+                    />
+                  </div>,
+                  document.body,
+                )
+              : null}
           </div>
 
           <div className="flex items-center px-1 py-1 sm:col-span-2 sm:px-0 lg:col-span-1 lg:pl-3 lg:pr-0 xl:pl-4">
-            <motion.button
+            <button
               type="submit"
               disabled={isSubmitting}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="hero-send-button inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#ff4500] px-8 text-sm font-black text-white  transition-colors hover:bg-[#e53d00] disabled:cursor-not-allowed disabled:opacity-75 lg:w-auto lg:min-w-[132px]"
+              className="hero-send-button inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#D4AF37] px-8 text-sm font-black text-[#0A0A0A] hover:bg-[#B8860B] disabled:cursor-not-allowed disabled:opacity-75 lg:w-auto lg:min-w-[132px]"
             >
               {isSubmitting ? (
                 <>
-                  Sending <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending <Loader2 className="h-4 w-4" />
                 </>
               ) : (
                 <>
-                  Send <Send className="h-4 w-4" />
+                  Send <Send className="h-4 w-4 rotate-45 lg:rotate-0" />
                 </>
               )}
-            </motion.button>
+            </button>
           </div>
         </div>
       </div>
-      </motion.form>
+      </form>
     </>
   );
 }

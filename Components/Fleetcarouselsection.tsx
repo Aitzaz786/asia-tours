@@ -43,7 +43,7 @@ export default function FleetCarouselSection() {
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,69,0,0.08) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(212,175,55,0.08) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -54,15 +54,15 @@ export default function FleetCarouselSection() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3">
-              <span className="h-0.5 w-6 rounded bg-[#ff4500]" />
+              <span className="h-0.5 w-6 rounded bg-[#D4AF37]" />
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#c24716]">
                 Fleet Preview
               </p>
-              <span className="h-0.5 w-6 rounded bg-[#ff4500]" />
+              <span className="h-0.5 w-6 rounded bg-[#D4AF37]" />
             </div>
             <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#0f0e0c] sm:text-5xl lg:text-6xl">
               Cars that make the service{" "}
-              <em className="not-italic text-[#ff4500]">feel premium.</em>
+              <em className="not-italic text-[#D4AF37]">feel premium.</em>
             </h2>
           </div>
 
@@ -71,7 +71,7 @@ export default function FleetCarouselSection() {
             <button
               onClick={() => move(-1)}
               disabled={current === 0}
-              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-[#ece8e2] bg-white transition-all hover:border-[#ff4500] hover:bg-[#ff4500] disabled:opacity-30 disabled:cursor-not-allowed [&:not(:disabled):hover_svg]:stroke-white"
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-[#ece8e2] bg-white transition-all hover:border-[#D4AF37] hover:bg-[#D4AF37] disabled:opacity-30 disabled:cursor-not-allowed [&:not(:disabled):hover_svg]:stroke-white"
               aria-label="Previous"
             >
               <svg
@@ -89,7 +89,7 @@ export default function FleetCarouselSection() {
             <button
               onClick={() => move(1)}
               disabled={current === maxSlide}
-              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-[#ece8e2] bg-white transition-all hover:border-[#ff4500] hover:bg-[#ff4500] disabled:opacity-30 disabled:cursor-not-allowed [&:not(:disabled):hover_svg]:stroke-white"
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-[#ece8e2] bg-white transition-all hover:border-[#D4AF37] hover:bg-[#D4AF37] disabled:opacity-30 disabled:cursor-not-allowed [&:not(:disabled):hover_svg]:stroke-white"
               aria-label="Next"
             >
               <svg
@@ -106,7 +106,7 @@ export default function FleetCarouselSection() {
             </button>
             <Link
               href="/contact-us"
-              className="inline-flex items-center gap-2 rounded-full bg-[#0f0e0c] px-5 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#ff4500]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#0f0e0c] px-5 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#D4AF37] hover:text-[#0A0A0A]"
             >
               Ask for availability
               <ArrowRight className="h-4 w-4" />
@@ -162,9 +162,9 @@ export default function FleetCarouselSection() {
                     {fleet.highlights?.slice(0, 4).map((item) => (
                       <span
                         key={`${fleet.name}-${item.label}`}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-[#eee4d9] bg-[#fffaf5] px-2.5 py-1.5 text-[10px] font-semibold text-[#34312d]"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[#eee4d9] bg-[#F5E9C8] px-2.5 py-1.5 text-[10px] font-semibold text-[#34312d]"
                       >
-                        <Check className="h-3 w-3 text-[#ff4500]" />
+                        <Check className="h-3 w-3 text-[#D4AF37]" />
                         {item.label}:{" "}
                         {typeof item.value === "boolean"
                           ? item.value
@@ -197,7 +197,7 @@ export default function FleetCarouselSection() {
                   {/* CTA link */}
                   <Link
                     href={`/services/${getFleetSlug(fleet.name)}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#ff4500] px-5 py-2.5 text-[10px] font-black uppercase tracking-wide text-white shadow-[0_6px_18px_rgba(255,69,0,0.22)] transition-all hover:-translate-y-0.5 hover:bg-[#d83a00]"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-5 py-2.5 text-[10px] font-black uppercase tracking-wide text-[#0A0A0A] shadow-[0_6px_18px_rgba(212,175,55,0.22)] transition-all hover:-translate-y-0.5 hover:bg-[#B8860B]"
                   >
                     Open vehicle page
                     <ArrowRight className="h-3 w-3" />
@@ -218,8 +218,8 @@ export default function FleetCarouselSection() {
                 aria-label={`Go to slide ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   i === current
-                    ? "w-6 bg-[#ff4500]"
-                    : "w-1.5 bg-[#e0dbd5] hover:bg-[#ff4500]/40"
+                    ? "w-6 bg-[#D4AF37]"
+                    : "w-1.5 bg-[#e0dbd5] hover:bg-[#D4AF37]/40"
                 }`}
               />
             ))}

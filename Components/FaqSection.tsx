@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { SECTION_CARD_Y, SECTION_INSET_X, SECTION_Y } from "@/lib/sectionSpacing";
 
 const faqs = [
   "What Do I Need To Rent A Car?",
@@ -12,9 +12,14 @@ const faqs = [
 const answerText =
   "To rent a car, you typically need a valid driving license, CNIC or passport, and a security deposit. Requirements may vary based on the vehicle and rental duration.";
 
-function Chevron() {
+function Chevron({ open }: { open: boolean }) {
   return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5 text-white" fill="none">
+    <svg
+      viewBox="0 0 20 20"
+      className={`how-it-works-chevron h-5 w-5 text-[#D4AF37] ${open ? "is-open" : ""}`}
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M5 7.5L10 12.5L15 7.5"
         stroke="currentColor"
@@ -26,104 +31,80 @@ function Chevron() {
   );
 }
 
-export default function FaqSection() {
+export default function FaqSection({ compact = false }: { compact?: boolean }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const toggle = (index: number) => setOpenIndex(openIndex === index ? null : index);
 
   return (
-    <main className="px-3 sm:px-5 lg:px-7 pb-8 sm:pb-10">
-      <section className="relative mx-auto max-w-[1800px] overflow-hidden rounded-[36px] bg-[#050505] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
-
-        {/* Subtle radial glow */}
+    <div className={`${SECTION_INSET_X} ${SECTION_Y}`}>
+      <section
+        className={`how-it-works-section faq-section relative mx-auto max-w-[1800px] overflow-hidden rounded-[28px] bg-[#0A0A0A] px-5 sm:rounded-[36px] sm:px-8 lg:px-12 ${
+          compact ? SECTION_CARD_Y : "py-14 sm:py-16 lg:py-20"
+        }`}
+      >
+        {/* Soft gold look WITHOUT live blur under accordion (blur was causing open/close lag) */}
         <div
-          className="absolute inset-0 opacity-35"
+          className="pointer-events-none absolute inset-0"
           aria-hidden="true"
           style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-            backgroundSize: "44px 44px",
+            background:
+              "radial-gradient(circle at top left, rgba(212, 175, 55, 0.14) 0%, transparent 42%), radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.10) 0%, transparent 46%), linear-gradient(135deg, #0A0A0A 0%, #1A1508 100%)",
           }}
         />
 
-        {/* Glow accents */}
-        <div className="pointer-events-none absolute -left-20 -top-20 h-[340px] w-[340px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(255,68,2,0.18), transparent 70%)" }} />
-        <div className="pointer-events-none absolute -bottom-16 -right-16 h-[280px] w-[280px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(255,68,2,0.10), transparent 70%)" }} />
-
         <div className="relative z-10 mx-auto max-w-6xl">
-
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7 }}
-            className="text-center mx-auto max-w-3xl"
-          >
-            <p className="text-sm uppercase tracking-[0.2em] text-[#ff4500] font-semibold">
-              ✳ Frequently Asked Questions
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
+              <span className="text-xs leading-none" aria-hidden="true">
+                {"\u2733"}
+              </span>
+              <span>Frequently Asked Questions</span>
             </p>
-            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h2 className="about-serif-font mx-auto mt-4 max-w-xl text-4xl font-bold leading-[1.06] text-white sm:text-[2.85rem] lg:text-[3.35rem]">
               Everything you need to know
             </h2>
-            <p className="mt-4 text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
+            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/45">
               Clear answers to help you rent with confidence and ease.
             </p>
-          </motion.div>
+          </div>
 
-          {/* FAQ Cards */}
-          <div className="mt-14 space-y-4">
+          <div className="mt-14 space-y-3 sm:space-y-4">
             {faqs.map((question, index) => {
               const open = openIndex === index;
               return (
-                <motion.div
+                <div
                   key={question}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="rounded-[28px] border border-white/8 bg-white/4 backdrop-blur-xl hover:border-[#ff4500]/40 transition-all duration-300"
+                  className="faq-item rounded-[28px] border border-[rgba(212,175,55,0.2)] bg-[#12100c] shadow-[inset_0_1px_0_rgba(212,175,55,0.08)] md:hover:border-[rgba(212,175,55,0.45)]"
                 >
-                  {/* Question */}
                   <button
+                    type="button"
                     onClick={() => toggle(index)}
-                    className="flex w-full items-center justify-between px-6 py-5 text-left"
+                    className="flex w-full items-center justify-between px-5 py-4 text-left sm:px-6 sm:py-5"
+                    aria-expanded={open}
                   >
-                    <span className="text-base sm:text-lg font-medium text-white">
-                      {question}
+                    <span className="text-base font-medium text-white sm:text-lg">{question}</span>
+                    <span className="ml-4 shrink-0">
+                      <Chevron open={open} />
                     </span>
-                    <motion.span
-                      animate={{ rotate: open ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="ml-4"
-                    >
-                      <Chevron />
-                    </motion.span>
                   </button>
 
-                  {/* Answer */}
-                  <AnimatePresence>
-                    {open && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="overflow-hidden"
-                      >
-                        <p className="px-6 pb-5 text-gray-400 text-sm sm:text-base leading-relaxed">
-                          {answerText}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+                  {/* Same classes/CSS as How It Works */}
+                  <div
+                    className={`how-it-works-panel ${open ? "is-open" : ""}`}
+                    aria-hidden={!open}
+                  >
+                    <div className="how-it-works-panel__inner">
+                      <p className="px-5 pb-4 text-sm leading-relaxed text-white/50 sm:px-6 sm:pb-5 sm:text-base">
+                        {answerText}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>
-
         </div>
       </section>
-    </main>
+    </div>
   );
 }

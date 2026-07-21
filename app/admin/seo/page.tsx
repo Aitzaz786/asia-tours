@@ -14,7 +14,7 @@ const GROUP_ORDER = ["Core", "Services", "Fleet", "Areas"];
 
 const GROUP_COLORS: Record<string, string> = {
   Core: "bg-blue-50 text-blue-700",
-  Services: "bg-orange-50 text-orange-700",
+  Services: "bg-brand-muted text-brand-dark",
   Fleet: "bg-purple-50 text-purple-700",
   Areas: "bg-emerald-50 text-emerald-700",
 };
@@ -128,7 +128,7 @@ function PageRow({ page, index }: { page: PageSeoRow; index: number }) {
 
       <Link
         href={`/admin/seo/${page.slug}`}
-        className="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-[11px] font-bold text-gray-500 transition-all hover:border-[#ff4500] hover:text-[#ff4500]"
+        className="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-[11px] font-bold text-gray-500 transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
       >
         <Edit3 className="h-3 w-3" />
         Edit

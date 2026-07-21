@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Fragment, FormEvent, useEffect, useRef, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
@@ -34,7 +34,7 @@ function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
           type="button"
           onClick={() => previousMonth && goToMonth(previousMonth)}
           disabled={!previousMonth}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#ff4d0a] hover:text-[#ff4d0a] disabled:cursor-not-allowed disabled:opacity-30"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
         </button>
@@ -42,7 +42,7 @@ function CalendarCaption({ calendarMonth }: { calendarMonth: CalendarMonth }) {
           type="button"
           onClick={() => nextMonth && goToMonth(nextMonth)}
           disabled={!nextMonth}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#ff4d0a] hover:text-[#ff4d0a] disabled:cursor-not-allowed disabled:opacity-30"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[#e8ddd4] text-[#6d655e] transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronRight className="h-3.5 w-3.5" />
         </button>
@@ -77,11 +77,11 @@ function DatePickerField({
         onClick={() => setOpen((p) => !p)}
         className={`flex w-full items-center gap-2.5 rounded-xl border bg-[#fdfaf8] px-4 py-3 text-sm outline-none transition-all ${
           open
-            ? "border-[#ff4d0a] ring-2 ring-[#ff4d0a]/10"
+            ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/10"
             : "border-[#e8ddd4] hover:border-[#cfc5ba]"
         }`}
       >
-        <CalendarDays className={`h-4 w-4 shrink-0 ${value ? "text-[#ff4d0a]" : "text-[#aaa49d]"}`} />
+        <CalendarDays className={`h-4 w-4 shrink-0 ${value ? "text-[#D4AF37]" : "text-[#aaa49d]"}`} />
         <span className={value ? "text-[#111111]" : "text-[#c0b8b0]"}>
           {value ? format(value, "dd MMM yyyy") : "Pick a date"}
         </span>
@@ -118,11 +118,11 @@ function DatePickerField({
                 week: "flex mt-1",
                 day: "relative p-0",
                 day_button:
-                  "h-9 w-9 rounded-xl text-sm font-medium transition-all outline-none hover:bg-[#fff4ef] hover:text-[#ff4d0a] focus-visible:ring-2 focus-visible:ring-[#ff4d0a]/30",
+                  "h-9 w-9 rounded-xl text-sm font-medium transition-all outline-none hover:bg-[#F5E9C8] hover:text-[#D4AF37] focus-visible:ring-2 focus-visible:ring-[#D4AF37]/30",
                 selected:
-                  "[&>button]:!bg-[#ff4d0a] [&>button]:!text-white [&>button]:!font-bold [&>button]:shadow-[0_4px_14px_rgba(255,77,10,0.35)]",
+                  "[&>button]:!bg-[#D4AF37] [&>button]:!text-[#0A0A0A] [&>button]:!font-bold [&>button]:shadow-[0_4px_14px_rgba(212,175,55,0.35)]",
                 today:
-                  "[&>button]:border [&>button]:border-[#ff4d0a]/40 [&>button]:text-[#ff4d0a] [&>button]:font-semibold",
+                  "[&>button]:border [&>button]:border-[#D4AF37]/40 [&>button]:text-[#D4AF37] [&>button]:font-semibold",
                 outside:
                   "[&>button]:text-[#d0c9c2] [&>button]:hover:bg-transparent [&>button]:hover:text-[#d0c9c2]",
                 disabled:
@@ -152,7 +152,7 @@ const serviceOptions = [
 
 const quickLinks = [
   { icon: Phone, label: "+92 300 4591145", href: "tel:+923004591145", sub: "Call us anytime" },
-  { icon: Mail, label: "hello@asiatourspk.com", href: "mailto:hello@asiatourspk.com", sub: "Reply within 2 hrs" },
+  { icon: Mail, label: "contact@asiatourspk.com", href: "mailto:contact@asiatourspk.com", sub: "Reply within 2 hrs" },
   { icon: MessageCircleMore, label: "WhatsApp", href: "https://wa.me/923004591145", sub: "Instant response" },
 ];
 
@@ -272,21 +272,21 @@ export default function ContactUsPage() {
         <div className="mx-auto max-w-6xl">
 
           {/* wrapper: NO overflow-hidden — rounded corners on each child separately */}
-          <div className="shadow-[0_0px_28px_rgba(15,23,42,0.14)] lg:flex lg:items-start rounded-3xl">
+          <div className="rounded-none shadow-none sm:rounded-3xl sm:shadow-[0_0px_28px_rgba(15,23,42,0.14)] lg:flex lg:items-start">
 
        {/* ── Left Panel (Enhanced UI) ── */}
-<div className="relative flex flex-col justify-between rounded-tl-3xl rounded-bl-3xl border border-white/10 bg-gradient-to-b from-[#0f0f0f] to-[#0b0b0b] px-8 py-10 shadow-2xl lg:w-[420px] lg:shrink-0 lg:px-10 lg:py-6 lg:sticky lg:top-6 lg:self-start">
+<div className="relative flex flex-col justify-between rounded-t-3xl border border-white/10 bg-gradient-to-b from-[#0f0f0f] to-[#0b0b0b] px-8 py-10 shadow-none sm:shadow-2xl lg:sticky lg:top-6 lg:w-[440px] lg:shrink-0 lg:self-start lg:rounded-l-3xl lg:rounded-r-none lg:px-10 lg:py-8">
 
   {/* Header */}
   <div className="relative">
     <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c9a96e] backdrop-blur">
-      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ff4d0a]" />
+      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#D4AF37]" />
       Asia Tours Concierge
     </span>
 
     <h1 className="mt-6 text-4xl font-extrabold leading-tight text-white">
       Let&apos;s plan your{" "}
-      <span className="bg-gradient-to-r from-[#ff4d0a] via-[#ff8a3d] to-[#ffd08a] bg-clip-text text-transparent">
+      <span className="bg-gradient-to-r from-[#D4AF37] via-[#E8C766] to-[#E8C766] bg-clip-text text-transparent">
         perfect journey
       </span>
     </h1>
@@ -296,22 +296,48 @@ export default function ContactUsPage() {
       We listen, plan, and deliver unforgettable experiences.
     </p>
 
+    <a
+      href="https://www.google.com/maps/search/?api=1&query=Punjab+Society%2C+Ghazi+Road%2C+Lahore%2C+Punjab+54770%2C+Pakistan"
+      target="_blank"
+      rel="noreferrer"
+      className="group mt-6 block rounded-2xl border border-white/10 bg-white/[0.045] p-5 transition-colors hover:border-[#D4AF37]/35 hover:bg-white/[0.065]"
+    >
+      <div className="flex items-start gap-4">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#D4AF37]/25 bg-[#D4AF37]/10 text-[#D4AF37]">
+          <MapPin className="h-5 w-5" />
+        </span>
+        <span className="min-w-0">
+          <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#E8C766]">
+            Visit Our Office
+          </span>
+          <span className="mt-1.5 block text-base font-bold leading-6 text-white">
+            Punjab Society, Ghazi Road
+          </span>
+          <span className="mt-0.5 block text-sm leading-6 text-white/60">
+            Lahore, Punjab 54770, Pakistan
+          </span>
+          <span className="mt-2 block text-xs font-semibold text-[#D4AF37] transition-colors group-hover:text-[#E8C766]">
+            Open in Google Maps →
+          </span>
+        </span>
+      </div>
+    </a>
     {/* Quick Links */}
-    <div className="mt-8 space-y-3">
+    <div className="mt-5 space-y-2.5">
       {quickLinks.map((link) => (
         <a
           key={link.label}
           href={link.href}
           target={link.href.startsWith("http") ? "_blank" : undefined}
           rel="noreferrer"
-          className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#ff4d0a]/40 hover:bg-white/10 hover:shadow-lg"
+          className="group flex items-center gap-3.5 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37]/40 hover:bg-white/10 sm:hover:shadow-lg"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#ff4d0a]/15 text-[#ff9d75] transition-all group-hover:bg-[#ff4d0a]/25 group-hover:scale-110">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D4AF37]/15 text-[#E8C766] transition-all group-hover:bg-[#D4AF37]/25 group-hover:scale-110">
             <link.icon className="h-4 w-4" />
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-white group-hover:text-[#ffd1b3] transition">
+            <p className="text-sm font-semibold text-white group-hover:text-[#E8C766] transition">
               {link.label}
             </p>
             <p className="text-[11px] text-white/40">{link.sub}</p>
@@ -322,25 +348,19 @@ export default function ContactUsPage() {
   </div>
 
   {/* Map Section */}
-  <div className="relative z-10 mt-10">
-    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-xl">
+  <div className="relative z-10 mt-5">
+    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-none sm:shadow-xl">
       <iframe
         title="Asia Tours Location"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6806.636040066094!2d74.36807269729556!3d31.46043684869127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919066888d233a7%3A0x907b9a4ede569120!2sPunjab%20Co-Operative%20Housing%20Society%2C%20Lahore%2C%20Pakistan!5e0!3m2!1sen!2s!4v1780288188150!5m2!1sen!2s"
         width="100%"
-        height="170"
+        height="130"
         style={{ border: 0, display: "block", pointerEvents: "auto" }}
         allowFullScreen
         referrerPolicy="no-referrer-when-downgrade"
       />
     </div>
 
-    <div className="mt-4 flex items-center gap-2.5">
-      <MapPin className="h-4 w-4 text-[#ff4d0a]" />
-      <p className="text-xs text-white/50">
-        Punjab Society, Ghazi Road, Lahore, Punjab 54770
-      </p>
-    </div>
 
     <div className="mt-3 flex items-start gap-2.5">
       <Clock3 className="mt-0.5 h-4 w-4 text-[#c9a96e]" />
@@ -360,7 +380,7 @@ export default function ContactUsPage() {
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-              className="flex-1 bg-white px-7 py-10 sm:px-10 sm:py-12 rounded-b-[40px] lg:rounded-b-none lg:rounded-r-[40px]"
+              className="flex-1 rounded-b-[40px] bg-white px-7 py-10 shadow-[0_0px_28px_rgba(15,23,42,0.14)] sm:px-10 sm:py-12 sm:shadow-none lg:rounded-b-none lg:rounded-r-[40px]"
             >
               <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c9a96e]">Send Inquiry</p>
               <h3 className="mt-2 text-2xl font-extrabold text-[#111111] sm:text-3xl">Tell us your travel plans</h3>
@@ -373,12 +393,12 @@ export default function ContactUsPage() {
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Full Name</span>
                     <input type="text" name="fullName" autoComplete="name" required placeholder="Your full name"
-                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10" />
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Phone</span>
                     <input type="tel" name="phone" autoComplete="tel" required placeholder="+92 300 0000000"
-                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10" />
                   </label>
                 </div>
 
@@ -386,13 +406,13 @@ export default function ContactUsPage() {
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Email</span>
                     <input type="email" name="email" autoComplete="email" required placeholder="you@email.com"
-                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10" />
                   </label>
                   <div>
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Service Type</span>
                     <Listbox value={selectedService} onChange={setSelectedService}>
                       <div className="relative">
-                        <Listbox.Button className="relative w-full cursor-pointer rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-left text-sm text-[#111111] outline-none transition-all focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10">
+                        <Listbox.Button className="relative w-full cursor-pointer rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-left text-sm text-[#111111] outline-none transition-all focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10">
                           <span className="flex items-center gap-2">
                   
                             <span className="block truncate">{selectedService.label}</span>
@@ -408,9 +428,9 @@ export default function ContactUsPage() {
                             {serviceOptions.map((opt) => (
                               <Listbox.Option key={opt.id} value={opt} as={Fragment}>
                                 {({ active, selected }) => (
-                                  <li className={`flex cursor-pointer items-center gap-3 px-4 py-2.5 text-sm transition-colors ${active ? "bg-[#fff4ef] text-[#ff4d0a]" : "text-[#111111]"}`}>
+                                  <li className={`flex cursor-pointer items-center gap-3 px-4 py-2.5 text-sm transition-colors ${active ? "bg-[#F5E9C8] text-[#D4AF37]" : "text-[#111111]"}`}>
                                     <span className={`flex-1 ${selected ? "font-semibold" : ""}`}>{opt.label}</span>
-                                    {selected && <Check className="h-3.5 w-3.5 text-[#ff4d0a]" />}
+                                    {selected && <Check className="h-3.5 w-3.5 text-[#D4AF37]" />}
                                   </li>
                                 )}
                               </Listbox.Option>
@@ -425,7 +445,7 @@ export default function ContactUsPage() {
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Pickup Location</span>
                   <input type="text" name="pickupLocation" autoComplete="street-address" required placeholder="Where should we pick you up?"
-                    className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                    className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10" />
                 </label>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -436,7 +456,7 @@ export default function ContactUsPage() {
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Passengers</span>
                     <input type="number" name="passengers" min="1" required placeholder="No. of guests"
-                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                      className="w-full rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10" />
                   </label>
                 </div>
 
@@ -444,7 +464,7 @@ export default function ContactUsPage() {
                   <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#444]">Trip Details</span>
                   <textarea name="tripDetails" rows={4} required
                     placeholder="Describe your route, vehicle preference, event type, airport timing, or any special request."
-                    className="w-full resize-none rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#ff4d0a] focus:ring-2 focus:ring-[#ff4d0a]/10" />
+                    className="w-full resize-none rounded-xl border border-[#e8ddd4] bg-[#fdfaf8] px-4 py-3 text-sm text-[#111111] outline-none transition-all placeholder:text-[#c0b8b0] focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/10" />
                 </label>
 
                 <div className="h-px bg-[#f0ebe4]" />
@@ -457,7 +477,7 @@ export default function ContactUsPage() {
                   </p>
                   <motion.button type="submit" disabled={isSubmitting || !travelDate}
                     whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                    className="inline-flex shrink-0 items-center gap-2.5 rounded-full bg-[#ff4d0a] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_10px_36px_rgba(255,77,10,0.30)] transition-colors hover:bg-[#eb4300] disabled:cursor-not-allowed disabled:opacity-55">
+                    className="inline-flex shrink-0 items-center gap-2.5 rounded-full bg-[#D4AF37] px-7 py-3.5 text-sm font-semibold text-[#0A0A0A] shadow-[0_10px_36px_rgba(212,175,55,0.30)] transition-colors hover:bg-[#B8860B] disabled:cursor-not-allowed disabled:opacity-55">
                     <Send className="h-4 w-4" />
                     {isSubmitting ? "Sending..." : "Send Inquiry"}
                   </motion.button>
@@ -483,7 +503,7 @@ export default function ContactUsPage() {
         }}
       >
         <h2>Book a Luxury Car in Pakistan</h2>
-        <p>Asia Tours Pakistan offers premium car rental and chauffeur services across 50+ cities including Lahore, Islamabad, Rawalpindi, Multan, Faisalabad, Murree, and Bahawalpur. Our fleet includes Toyota Land Cruiser V8, Range Rover, Mercedes-Benz S-Class, BMW 7 Series, Bentley Continental GT, Audi A6, and Toyota Hiace Wagon. All vehicles are fully insured and available 24/7. Call or WhatsApp +923004591145 or email hello@asiatourspk.com for instant booking support.</p>
+        <p>Asia Tours Pakistan offers premium car rental and chauffeur services across 50+ cities including Lahore, Islamabad, Rawalpindi, Multan, Faisalabad, Murree, and Bahawalpur. Our fleet includes Toyota Land Cruiser V8, Range Rover, Mercedes-Benz S-Class, BMW 7 Series, Bentley Continental GT, Audi A6, and Toyota Hiace Wagon. All vehicles are fully insured and available 24/7. Call or WhatsApp +923004591145 or email contact@asiatourspk.com for instant booking support.</p>
         <p>We provide airport transfers, wedding transport, corporate travel, and long-distance rentals across Pakistan. Punjab Society, Ghazi Road, Lahore, Punjab 54770, Pakistan.</p>
       </div>
     </main>

@@ -15,7 +15,6 @@ import {
   BriefcaseBusiness,
   CalendarHeart,
   CarFront,
-  Check,
   ChevronDown,
   Gem,
   LucideIcon,
@@ -26,10 +25,12 @@ import {
 import { fleets, getFleetSlug, type Fleet } from "@/Data/cars";
 import { services } from "./servicesData";
 import { AnimatePresence, motion } from "framer-motion";
+import { FiArrowUpRight, FiCheck } from "react-icons/fi";
 import QuickBookingForm from "@/Components/QuickBookingForm";
-import CtaBannerSection from "@/Components/CtaBannerSection";
+import DarkHeroShell, { HOME_HERO_CONTENT_HEIGHT } from "@/Components/DarkHeroShell";
 import FaqSection from "@/Components/FaqSection";
 import { TestimonialsSection, VideoStatsSection } from "../about-us/page";
+import { SECTION_Y, SECTION_Y_END } from "@/lib/sectionSpacing";
 
 const LahoreServiceMap = dynamic(() => import("@/Components/LahoreServiceMap"), { ssr: false });
 
@@ -45,11 +46,11 @@ type ServiceVisual = {
 };
 
 const serviceVisuals: ServiceVisual[] = [
-  { icon: Plane, image: "/hero-bg.jpg", accent: "Airport ready", tag: "Premium Ã‚Â· Coordinated", stat1: "24/7", label1: "Always On", stat2: "0 min", label2: "Wait Time" },
-  { icon: BriefcaseBusiness, image: "/2023-BMW-i7-exterior-1-scaled.jpg", accent: "Executive class", tag: "Business Ã‚Â· Reliable", stat1: "14+", label1: "Fleet Size", stat2: "100%", label2: "On-time Rate" },
+  { icon: Plane, image: "/hero-bg.webp", accent: "Airport ready", tag: "Premium Ã‚Â· Coordinated", stat1: "24/7", label1: "Always On", stat2: "0 min", label2: "Wait Time" },
+  { icon: BriefcaseBusiness, image: "/2023-BMW-i7-exterior-1-scaled.webp", accent: "Executive class", tag: "Business Ã‚Â· Reliable", stat1: "14+", label1: "Fleet Size", stat2: "100%", label2: "On-time Rate" },
   { icon: Gem, image: "/range-rover-vogue-01.webp", accent: "Luxury fleet", tag: "Exclusive Ã‚Â· Premium", stat1: "14+", label1: "Vehicles", stat2: "5Ã¢Ëœâ€¦", label2: "Rated Fleet" },
-  { icon: Route, image: "/Badshahi_Mosque_front_picture.jpg", accent: "Made to plan", tag: "Flexible Ã‚Â· Planned", stat1: "Any", label1: "Destination", stat2: "Full", label2: "Coordination" },
-  { icon: CalendarHeart, image: "/black.jpeg", accent: "Event perfect", tag: "VIP Ã‚Â· Memorable", stat1: "500+", label1: "Events Done", stat2: "VIP", label2: "Treatment" },
+  { icon: Route, image: "/Badshahi_Mosque_front_picture.webp", accent: "Made to plan", tag: "Flexible Ã‚Â· Planned", stat1: "Any", label1: "Destination", stat2: "Full", label2: "Coordination" },
+  { icon: CalendarHeart, image: "/black.webp", accent: "Event perfect", tag: "VIP Ã‚Â· Memorable", stat1: "500+", label1: "Events Done", stat2: "VIP", label2: "Treatment" },
   { icon: CarFront, image: "/Range-Rover.avif", accent: "With chauffeur", tag: "Professional Ã‚Â· Elite", stat1: "100%", label1: "Professional", stat2: "5Ã¢Ëœâ€¦", label2: "Rated Drivers" },
 ];
 
@@ -166,81 +167,21 @@ export default function ServicesClientPage() {
   };
 
   return (
-    <main className="w-full max-w-[100vw] overflow-x-clip text-[#080b10]" 
-    >
-   <div className="px-3 pb-6 sm:px-5 sm:pb-8 lg:px-7">
-      <section className="relative mx-auto w-full max-w-[1800px] pb-5 sm:pb-7 lg:pb-9">
- 
-        {/* Ã¢â€â‚¬Ã¢â€â‚¬ Hero Image Container Ã¢â€â‚¬Ã¢â€â‚¬ */}
-        <div className="relative min-h-[620px] overflow-hidden rounded-[28px] sm:min-h-[700px] sm:rounded-[36px] lg:min-h-[820px] lg:rounded-[46px]">
- 
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <Image
-              src="/2023-BMW-i7-exterior-1-scaled.jpg"
-              alt="Premium car parked on an open road"
-              fill
-              priority
-              className="object-cover object-[62%_center]"
-              sizes="100vw"
-            />
-          </div>
- 
-          {/* Dark overlays */}
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.65)_50%,rgba(0,0,0,0.30)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.05)_50%,rgba(0,0,0,0.80)_100%)]" />
- 
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-           
-              backgroundSize: "60px 60px",
-            }}
-          />
- 
-
-          {/* Orange radial glow */}
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            style={{
-              width: "700px",
-              height: "400px",
-              background: "radial-gradient(ellipse, rgba(255,69,0,0.07) 0%, transparent 70%)",
-            }}
-          />
- 
-
-          {/* Side glow lines */}
-          <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-[linear-gradient(180deg,transparent,rgba(255,69,0,0.2),transparent)]" />
-          <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-[linear-gradient(180deg,transparent,rgba(255,69,0,0.2),transparent)]" />
- 
-          {/* Ã¢â€â‚¬Ã¢â€â‚¬ Main Content Ã¢â‚¬â€ Centered Ã¢â€â‚¬Ã¢â€â‚¬ */}
-          <div className="relative z-10 flex min-h-[620px] w-full flex-col items-center justify-center px-5 py-16 text-center sm:min-h-[700px] sm:px-8 sm:py-14 lg:min-h-[820px] lg:px-12">
- 
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, y: -16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: easeCurve }}
-              className="mb-6 flex items-center gap-3"
-            >
-              <span className="h-px w-7 bg-[#ff4500]" />
-              <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#ff4500]">
+    <main className="w-full max-w-[100vw] overflow-x-clip text-[#080b10]">
+      <section className="home-hero relative z-30 w-full overflow-x-hidden pb-8 sm:pb-12 lg:pb-14">
+        <DarkHeroShell>
+          <div className={`relative z-10 flex w-full flex-col items-center justify-center px-5 pt-28 pb-16 text-center sm:px-8 sm:pt-36 sm:pb-20 lg:px-12 ${HOME_HERO_CONTENT_HEIGHT}`}>
+            <div className="mb-4 inline-flex items-center justify-center gap-3 sm:mb-6">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#D4AF37] sm:w-12" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#D4AF37] sm:text-xs">
                 Asia Tours Services
-              </p>
-              <span className="h-px w-7 bg-[#ff4500]" />
-            </motion.div>
- 
-            {/* Heading */}
-            <motion.h1
-              initial={{ opacity: 0, y: 36 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: easeCurve }}
-              className="max-w-[14ch] text-[2.8rem] font-black leading-[1.04] tracking-[-2px] text-white sm:text-6xl lg:text-[4.8rem]"
-            >
+              </span>
+              <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#D4AF37] sm:w-12" />
+            </div>
+
+            <h1 className="max-w-[14ch] text-[2.8rem] font-black leading-[1.04] tracking-[-2px] text-white sm:text-6xl lg:text-[4.8rem]">
               Premium{" "}
-              <em className="not-italic text-[#ff4500]">mobility</em>{" "}
+              <em className="not-italic text-[#D4AF37]">mobility</em>{" "}
               for every{" "}
               <span
                 className="text-transparent"
@@ -248,49 +189,47 @@ export default function ServicesClientPage() {
               >
                 destination.
               </span>
-            </motion.h1>
- 
-            {/* Subtext */}
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease: easeCurve }}
-              className="mt-6 max-w-xl text-sm leading-7 text-white/50 sm:text-base"
-            >
+            </h1>
+
+            <p className="mt-6 max-w-xl text-sm leading-7 text-white/50 sm:text-base">
               From airport arrivals to executive city travel, wedding movements, and private intercity
               journeys, we deliver a service-first experience with luxury vehicles and meticulous coordination.
-            </motion.p>
- 
-            {/* Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: easeCurve }}
-              className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
+            </p>
+
+            <div className="mt-8 hidden items-center justify-center gap-3 md:flex">
               <Link
                 href="/contact-us"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff4500] px-9 py-4 text-sm font-black uppercase tracking-wide text-white shadow-[0_18px_45px_rgba(255,69,0,0.30)] transition-all hover:-translate-y-0.5 hover:bg-[#d83a00]"
+                className="shimmer-btn relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-[#D4AF37] px-8 py-3.5 text-sm font-bold text-[#0A0A0A] shadow-[0_20px_45px_rgba(212,175,55,0.3)] sm:w-auto"
               >
-               
-                Book a Service <ArrowRight className="h-4 w-4" />
+                Book a Service
               </Link>
-              <Link
-                href="#fleet-showcase"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-black/20 px-9 py-4 text-sm font-black text-white/70 backdrop-blur-md transition-colors hover:bg-white/10 hover:text-white"
-              >
-                Explore Fleet
-              </Link>
-            </motion.div>
- 
-          </div>
-        </div>
-      <QuickBookingForm easeCurve={easeCurve} />
-      </section>
-    </div>
 
-      <section className="bg-white pt-10">
-        <div className="mx-auto flex w-fit items-center justify-center rounded-full border border-[#eadfd6] bg-[#fbfaf8] p-1 shadow-sm">
+              <div className="flex w-full items-center justify-center gap-3 sm:w-auto">
+                <Link
+                  href="#fleet-showcase"
+                  className="inline-flex flex-1 items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-medium text-black shadow-md transition-all hover:bg-white/90 sm:flex-none"
+                >
+                  Explore Fleet
+                </Link>
+
+                <Link
+                  href="#fleet-showcase"
+                  className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white shadow-md transition-all hover:bg-white/90"
+                  aria-label="Explore fleet"
+                >
+                  <FiArrowUpRight className="text-lg text-black transition-transform duration-300 group-hover:rotate-45" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </DarkHeroShell>
+        <div className="relative z-40 px-3 sm:px-5 lg:px-7">
+          <QuickBookingForm easeCurve={easeCurve} />
+        </div>
+      </section>
+
+      <section className="bg-white px-4 pt-8 sm:pt-10">
+        <div className="mx-auto flex w-full max-w-[350px] items-center justify-center rounded-full border border-[#eadfd6] bg-[#fbfaf8] p-1 shadow-sm">
           {[
             { label: "Our Fleet", value: "fleet" as const },
             { label: "Our Services", value: "services" as const },
@@ -299,7 +238,7 @@ export default function ServicesClientPage() {
               key={tab.value}
               type="button"
               onClick={() => setContentTab(tab.value)}
-              className={`rounded-full px-6 py-3 text-xs font-black uppercase tracking-[0.12em] transition-all sm:text-sm ${
+              className={`min-w-0 flex-1 whitespace-nowrap rounded-full px-3 py-3 text-[10px] font-black uppercase tracking-[0.1em] transition-all sm:px-6 sm:text-sm sm:tracking-[0.12em] ${
                 contentTab === tab.value
                   ? "bg-[#0f0e0c] text-white shadow-sm"
                   : "text-[#746b61] hover:bg-white hover:text-[#0f0e0c]"
@@ -320,24 +259,24 @@ export default function ServicesClientPage() {
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
       {contentTab === "fleet" ? (
-        <section id="fleet-showcase" className="bg-white px-4 pb-24 pt-10 sm:px-6 lg:px-8">
+        <section id="fleet-showcase" className="bg-white px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-10 lg:px-8">
           <div className="mx-auto max-w-[1600px]">
-            <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 pb-10 text-center">
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 pb-8 text-center sm:pb-10">
            
-              <h2 className="whitespace-nowrap text-3xl font-black leading-tight tracking-tight text-[#08111f] sm:text-4xl lg:text-5xl">
+              <h2 className="max-w-full break-words text-[clamp(1.75rem,8.5vw,3rem)] font-black leading-[1.08] tracking-tight text-[#08111f]">
                 Premium cars.{" "}
-                <span className="text-[#ff4500]">Private chauffeurs.</span>
+                <span className="block text-[#D4AF37] sm:inline">Private chauffeurs.</span>
               </h2>
-              <p className="max-w-lg text-sm font-medium leading-7 text-[#5f6877]">
+              <p className="max-w-xl px-1 text-[13px] font-medium leading-6 text-[#5f6877] sm:text-sm sm:leading-7">
                 Luxury sedans, SUVs, and vans for airport transfers, business travel, weddings, and city rides.
               </p>
             </div>
 
             <div className="pt-6 border-t border-[#efe6dc]">
               <div className="min-w-0">
-                <div className="mb-8 flex flex-col gap-3 rounded-2xl border border-[#eadfd6] bg-[#fbfaf8] p-4 shadow-[0_18px_48px_rgba(35,27,21,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] sm:p-5">
+                <div className="mb-8 flex flex-col gap-3 rounded-2xl border border-[#eadfd6] bg-[#fbfaf8] p-4 sm:p-5">
                   <div className="flex flex-wrap items-center gap-2 border-b border-[#eadfd6] pb-3">
-                    <span className="inline-flex w-16 shrink-0 items-center justify-center rounded-full border border-[#ff6a2a]/25 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-sm">
+                    <span className="inline-flex w-16 shrink-0 items-center justify-center rounded-full border border-[#B8860B]/25 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#D4AF37]">
                       Type
                     </span>
                     {(["All", "SUV", "Sedan", "Luxury", "4x4 Pickup", "Van"] as VehicleType[]).map((type) => (
@@ -350,8 +289,8 @@ export default function ServicesClientPage() {
                         }}
                         className={`rounded-full border px-4 py-1.5 text-[13px] font-semibold transition-all ${
                           vehicleType === type
-                            ? "border-[#ff6a2a] bg-[#ff4500] text-white shadow-[0_8px_20px_rgba(255,69,0,0.24)]"
-                            : "border-[#e4d7cc] bg-white text-[#4d443d] shadow-sm hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500]"
+                            ? "border-[#D4AF37] bg-[#D4AF37] text-white"
+                            : "border-gray-300 bg-white text-gray-700 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                         }`}
                       >
                         {type}
@@ -360,7 +299,7 @@ export default function ServicesClientPage() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex w-16 shrink-0 items-center justify-center rounded-full border border-[#ff6a2a]/25 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-sm">
+                    <span className="inline-flex w-16 shrink-0 items-center justify-center rounded-full border border-[#B8860B]/25 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#D4AF37]">
                       Price
                     </span>
                     {([
@@ -379,8 +318,8 @@ export default function ServicesClientPage() {
                         }}
                         className={`rounded-full border px-4 py-1.5 text-[13px] font-semibold transition-all ${
                           priceFilter === opt.value
-                            ? "border-[#ff6a2a] bg-[#ff4500] text-white shadow-[0_8px_20px_rgba(255,69,0,0.24)]"
-                            : "border-[#e4d7cc] bg-white text-[#4d443d] shadow-sm hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500]"
+                            ? "border-[#D4AF37] bg-[#D4AF37] text-white"
+                            : "border-gray-300 bg-white text-gray-700 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                         }`}
                       >
                         {opt.label}
@@ -388,7 +327,7 @@ export default function ServicesClientPage() {
                     ))}
 
                     <div className="relative ml-auto w-full sm:w-auto">
-                      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#ff6a2a]" />
+                      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#B8860B]" />
                       <input
                         type="text"
                         value={search}
@@ -397,15 +336,15 @@ export default function ServicesClientPage() {
                           resetPage();
                         }}
                         placeholder="Search vehicles..."
-                        className="w-full rounded-full border border-[#f0d8c9] bg-[#fffaf6] py-2 pl-9 pr-4 text-[13px] font-bold text-[#18130f] outline-none placeholder:text-[#9d8f84] shadow-[0_10px_26px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all focus:border-[#ff6a2a] focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,69,0,0.16),0_12px_30px_rgba(0,0,0,0.18)] sm:w-60"
+                        className="w-full rounded-full border border-[#e4d7cc] bg-white py-2 pl-9 pr-4 text-[13px] font-bold text-[#18130f] outline-none placeholder:text-[#9d8f84] transition-colors focus:border-[#B8860B] sm:w-60"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="rounded-full border border-[#efe6dc] bg-[#fbfaf8] px-4 py-2 text-sm font-bold text-[#5b554f] shadow-sm">
-                    Showing <span className="font-black text-[#ff4500]">{visibleFleets.length}</span> of{" "}
+                  <p className="rounded-full border border-[#efe6dc] bg-[#fbfaf8] px-4 py-2 text-sm font-bold text-[#5b554f]">
+                    Showing <span className="font-black text-[#D4AF37]">{visibleFleets.length}</span> of{" "}
                     <span className="font-black text-[#08111f]">{filteredFleets.length}</span> vehicles
                   </p>
   
@@ -424,7 +363,7 @@ export default function ServicesClientPage() {
                     <button
                       type="button"
                       onClick={clearFilters}
-                      className="mt-6 rounded-full bg-[#ff4500] px-6 py-3 text-sm font-black uppercase tracking-[0.12em] text-white"
+                      className="mt-6 rounded-full bg-[#D4AF37] px-6 py-3 text-sm font-black uppercase tracking-[0.12em] text-[#0A0A0A]"
                     >
                       Clear Filters
                     </button>
@@ -439,11 +378,14 @@ export default function ServicesClientPage() {
           </div>
         </section>
       ) : (
-        <section className="px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto mb-9 max-w-3xl text-center">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#ff4500]">Choose Your Service</p>
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-[#0f0e0c] sm:text-4xl">
-              Simple options for every journey.
+        <section className={`bg-white px-4 sm:px-6 lg:px-8 ${SECTION_Y}`}>
+          <div className="mx-auto mb-8 max-w-3xl text-center sm:mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#D4AF37]">
+              Choose Your Service
+            </p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#0f0e0c] sm:text-4xl">
+              Simple options for{" "}
+              <span className="text-[#D4AF37]">every journey</span>
             </h2>
           </div>
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -464,12 +406,12 @@ export default function ServicesClientPage() {
     <TestimonialsSection testimonialStart={testimonialStart} setTestimonialStart={setTestimonialStart} />  
 
 </div>
-     <div className="mx-auto !mt-16  text-center">
+     <div className="mx-auto text-center">
       
-<FaqSection/>
+<FaqSection compact/>
 </div>
 
- <section className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden rounded-[28px] bg-white px-4 py-14 sm:min-h-[360px] sm:rounded-[36px] sm:px-6 lg:min-h-[400px] lg:px-10">
+ <section className={`relative flex w-full items-center justify-center overflow-hidden bg-white px-4 sm:px-6 lg:px-10 ${SECTION_Y_END}`}>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
         <span className="text-[7rem] font-bold tracking-tighter text-slate-900 select-none sm:text-[10rem] lg:text-[20rem]">
           ASIA
@@ -480,13 +422,13 @@ export default function ServicesClientPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#ff4500]"
+          className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-muted text-[#D4AF37]"
         >
           <span className="text-2xl font-bold">{"✦"}</span>
         </motion.div>
 
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Ready to elevate <span className="text-[#ff4500]">your journey?</span>
+          Ready to elevate <span className="text-[#D4AF37]">your journey?</span>
         </h2>
         <p className="mt-4 max-w-md text-sm leading-7 text-slate-500 sm:text-base">
           Tailored luxury transport services for executive and private travel.
@@ -495,28 +437,28 @@ export default function ServicesClientPage() {
         <div className="group relative mt-8 sm:mt-10">
           <Link
             href="/contact-us"
-            className="relative z-10 block rounded-full bg-[#ff4500] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-white transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
+            className="relative z-10 block rounded-full bg-[#D4AF37] px-8 py-4 text-sm font-bold uppercase tracking-[0.22em] text-[#0A0A0A] transition-transform duration-300 hover:scale-105 active:scale-95 sm:px-10"
           >
             Contact Us
           </Link>
 
-          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#ff4500] transition-all duration-500 group-hover:w-32 sm:block" />
+          <div className="absolute left-1/2 top-full mt-4 hidden h-[1px] w-0 -translate-x-1/2 bg-[#D4AF37] transition-all duration-500 group-hover:w-32 sm:block" />
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:mt-12 sm:gap-8">
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-soft" />
             24/7 Support
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange-200" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-soft" />
             Secure Booking
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-orange-100 to-transparent sm:left-10 sm:block" />
-      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-orange-100 to-transparent sm:right-10 sm:block" />
+      <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-brand-soft to-transparent sm:left-10 sm:block" />
+      <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-brand-soft to-transparent sm:right-10 sm:block" />
     </section>
     </main>
   );
@@ -524,47 +466,44 @@ export default function ServicesClientPage() {
 
 function VehicleCard({ fleet }: { fleet: Fleet }) {
   const slug = getFleetSlug(fleet.name);
-  const type = getVehicleType(fleet);
   const highlights = fleet.highlights?.slice(0, 3) ?? [];
 
   return (
-    <motion.article
-      className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#eadfd6] bg-white/85 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-2xl transition-shadow duration-300 ease-out hover:shadow-[0_18px_44px_rgba(15,23,42,0.12)]"
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.24, ease: "easeOut" }}
-    >
-      <div className="relative h-64 w-full overflow-hidden bg-[#f8fafc]">
+    <article className="fleet-card group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e8e4de] bg-white shadow-none">
+      <div className="relative h-64 w-full overflow-hidden bg-[#f0eeea]">
         <Image
           src={fleet.image}
           alt={fleet.imageAlt}
           fill
           quality={100}
-          className="object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-[1.04]"
+          className="object-cover object-center md:transition-transform md:duration-700 md:group-hover:scale-[1.04]"
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         />
-        <span className="absolute right-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff4500] shadow-[0_8px_18px_rgba(15,23,42,0.12)]">
-          {type}
-        </span>
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/35 to-transparent" />
+        <div className="absolute bottom-3 right-3 rounded-full bg-[#D4AF37] px-3.5 py-1.5 text-[11px] font-bold text-[#0A0A0A] shadow-md">
+          PKR {formatPrice(fleet.price)}
+          <span className="ml-1 font-medium opacity-70">/day</span>
+        </div>
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
-        <div className="mb-4">
-          <h3 className="line-clamp-1 text-2xl font-extrabold tracking-tight text-gray-950 transition-colors group-hover:text-[#ff4500]">
-            {fleet.name}
-          </h3>
-          <div className="mt-1 flex items-baseline gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">PKR</span>
-            <span className="text-xl font-black text-gray-950">{formatPrice(fleet.price)}</span>
-            <span className="text-xs font-semibold text-gray-500">/ day</span>
-          </div>
-        </div>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="line-clamp-1 text-xl font-bold tracking-tight text-[#0f0e0c]">
+          {fleet.name}
+        </h3>
 
-        <div className="grid grid-cols-1 gap-2 border-t border-gray-100 pt-4">
+        <div className="mt-4 space-y-2.5 border-y border-[#efebe6] py-3.5">
           {highlights.map((highlight) => (
-            <div key={`${fleet.name}-${highlight.label}`} className="flex items-center justify-between gap-4 text-sm">
-              <span className="font-semibold text-gray-500">{highlight.label}</span>
-              <span className="font-bold text-gray-950">
-                {typeof highlight.value === "boolean" ? (highlight.value ? "Yes" : "No") : highlight.value}
+            <div
+              key={`${fleet.name}-${highlight.label}`}
+              className="flex items-center justify-between gap-4 text-sm"
+            >
+              <span className="font-medium text-[#9a9188]">{highlight.label}</span>
+              <span className="font-bold text-[#0f0e0c]">
+                {typeof highlight.value === "boolean"
+                  ? highlight.value
+                    ? "Yes"
+                    : "No"
+                  : highlight.value}
               </span>
             </div>
           ))}
@@ -572,17 +511,13 @@ function VehicleCard({ fleet }: { fleet: Fleet }) {
 
         <Link
           href={`/services/${slug}`}
-          className="group/btn relative mt-6 block w-full overflow-hidden rounded-xl bg-[#ff4500] py-3.5 text-center text-sm font-black text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#ff4500]/30 active:scale-[0.98]"
+          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#D4AF37] py-3.5 text-sm font-bold text-[#0A0A0A] md:bg-[#0f0e0c] md:text-white md:hover:bg-[#D4AF37] md:hover:text-[#0A0A0A]"
         >
-          <span className="relative z-10 flex items-center justify-center gap-2">
-            View Details
-            <ArrowRight className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover/btn:rotate-0" />
-          </span>
+          View Details
+          <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-[#ff4500] transition-transform duration-500 group-hover:scale-x-100" />
-    </motion.article>
+    </article>
   );
 }
 
@@ -590,30 +525,30 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
   const Icon = serviceIcons[service.slug] ?? CarFront;
 
   return (
-    <article className="group relative overflow-hidden rounded-[20px] border border-[#eadfd6] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#dacdc2] hover:shadow-[0_16px_40px_rgba(35,27,21,0.08)]">
-      <span className="pointer-events-none absolute right-5 top-5 text-4xl font-black leading-none text-[#f4eee9]">
+    <article className="group relative flex h-full flex-col rounded-2xl border border-[#eadfd6] bg-white p-6 transition-colors hover:border-[#D4AF37]/50">
+      <span className="absolute right-5 top-5 text-3xl font-black leading-none text-[#f0ebe6]">
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <div className="relative z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-[#eadfd6] bg-[#fbfaf8] text-[#ff4500]">
+      <div className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#eadfd6] bg-[#fbfaf8] text-[#D4AF37]">
         <Icon className="h-5 w-5" />
       </div>
 
-      <h2 className="relative z-10 mt-5 text-xl font-black text-[#0f0e0c]">{service.title}</h2>
-      <p className="relative z-10 mt-2 line-clamp-3 text-sm leading-6 text-[#746b61]">{service.summary}</p>
+      <h2 className="relative z-10 mt-5 text-xl font-bold text-[#0f0e0c]">{service.title}</h2>
+      <p className="relative z-10 mt-2 flex-1 text-sm leading-6 text-[#746b61]">{service.summary}</p>
 
       <div className="relative z-10 mt-5 space-y-2 border-t border-[#f0ebe4] pt-4">
         {service.highlights.slice(0, 2).map((highlight) => (
           <div key={highlight} className="flex items-start gap-2">
-            <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#ff4500]" />
-            <span className="text-xs font-semibold text-[#5f574f]">{highlight}</span>
+            <FiCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#D4AF37]" strokeWidth={3} />
+            <span className="text-xs font-medium text-[#5f574f]">{highlight}</span>
           </div>
         ))}
       </div>
 
       <Link
         href={`/services/${service.slug}`}
-        className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-black text-[#0f0e0c] transition-all hover:gap-3 hover:text-[#ff4500]"
+        className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#0f0e0c] transition-all hover:gap-3 hover:text-[#D4AF37]"
       >
         Learn More <ArrowRight className="h-4 w-4" />
       </Link>
@@ -639,7 +574,7 @@ function Pagination({
         type="button"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="rounded-full border border-[#e4d7cc] bg-white px-4 py-2 text-sm font-bold text-[#4d443d] shadow-sm transition-all hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500] disabled:cursor-not-allowed disabled:text-[#a79a90] disabled:opacity-70 disabled:hover:border-[#e4d7cc] disabled:hover:bg-white disabled:hover:text-[#a79a90]"
+        className="rounded-full border border-[#e4d7cc] bg-white px-4 py-2 text-sm font-bold text-[#4d443d] shadow-sm transition-all hover:border-[#B8860B]/50 hover:bg-[#F5E9C8] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:text-[#a79a90] disabled:opacity-70 disabled:hover:border-[#e4d7cc] disabled:hover:bg-white disabled:hover:text-[#a79a90]"
       >
         Previous
       </button>
@@ -650,8 +585,8 @@ function Pagination({
           onClick={() => onPageChange(page)}
           className={`h-10 w-10 rounded-full border text-sm font-black transition-all ${
             currentPage === page
-              ? "border-[#ff6a2a] bg-[#ff4500] text-white shadow-[0_8px_20px_rgba(255,69,0,0.24)]"
-              : "border-[#e4d7cc] bg-white text-[#4d443d] shadow-sm hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500]"
+              ? "border-[#B8860B] bg-[#D4AF37] text-[#0A0A0A]"
+              : "border-[#e4d7cc] bg-white text-[#4d443d] hover:border-[#B8860B]/50 hover:bg-[#F5E9C8] hover:text-[#D4AF37]"
           }`}
         >
           {page}
@@ -661,7 +596,7 @@ function Pagination({
         type="button"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="rounded-full border border-[#e4d7cc] bg-white px-4 py-2 text-sm font-bold text-[#4d443d] shadow-sm transition-all hover:border-[#ff6a2a]/50 hover:bg-[#fff3ed] hover:text-[#ff4500] disabled:cursor-not-allowed disabled:text-[#a79a90] disabled:opacity-70 disabled:hover:border-[#e4d7cc] disabled:hover:bg-white disabled:hover:text-[#a79a90]"
+        className="rounded-full border border-[#e4d7cc] bg-white px-4 py-2 text-sm font-bold text-[#4d443d] shadow-sm transition-all hover:border-[#B8860B]/50 hover:bg-[#F5E9C8] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:text-[#a79a90] disabled:opacity-70 disabled:hover:border-[#e4d7cc] disabled:hover:bg-white disabled:hover:text-[#a79a90]"
       >
         Next
       </button>
