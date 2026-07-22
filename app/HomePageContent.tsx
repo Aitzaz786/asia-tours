@@ -140,7 +140,7 @@ export default function HomePageContent() {
       <CtaBannerSection compact />
 
       {/* Coverage: major city directory */}
-      <CitiesNetworkSection showViewAll limit={16} />
+      <CitiesNetworkSection showViewAll limit={16} balanceResponsiveColumns />
 
       <TestimonialsSection
         testimonialStart={testimonialStart}

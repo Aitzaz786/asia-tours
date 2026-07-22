@@ -9,6 +9,7 @@ type CitiesNetworkSectionProps = {
   columns?: 2 | 3;
   compact?: boolean;
   limit?: number;
+  balanceResponsiveColumns?: boolean;
 };
 
 export default function CitiesNetworkSection({
@@ -17,8 +18,11 @@ export default function CitiesNetworkSection({
   columns = 3,
   compact: _compact = false,
   limit,
+  balanceResponsiveColumns = false,
 }: CitiesNetworkSectionProps) {
   const displayedAreas = typeof limit === "number" ? areas.slice(0, limit) : areas;
+  const hideLastOnThreeColumns =
+    balanceResponsiveColumns && columns === 3 && displayedAreas.length % 3 === 1;
 
   return (
     <section className={`bg-white px-4 sm:px-6 lg:px-8 ${SECTION_Y}`}>
@@ -53,7 +57,11 @@ export default function CitiesNetworkSection({
                 key={serviceArea.slug}
                 href={`/areas/${serviceArea.slug}`}
                 aria-current={isCurrentArea ? "page" : undefined}
-                className={`group flex min-h-[92px] items-center gap-4 border-b border-[#e8e2da] py-5 ${
+                className={`group min-h-[92px] items-center gap-4 border-b border-[#e8e2da] py-5 ${
+                  hideLastOnThreeColumns && index === displayedAreas.length - 1
+                    ? "flex xl:hidden"
+                    : "flex"
+                } ${
                   isCurrentArea
                     ? "border-l-2 border-l-[#D4AF37] pl-4"
                     : "border-l-2 border-l-transparent pl-4"
@@ -86,7 +94,16 @@ export default function CitiesNetworkSection({
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#827a72]">
-          <span>{displayedAreas.length} Service Cities</span>
+          {hideLastOnThreeColumns ? (
+            <>
+              <span className="xl:hidden">{displayedAreas.length} Service Cities</span>
+              <span className="hidden xl:inline">
+                {displayedAreas.length - 1} Service Cities
+              </span>
+            </>
+          ) : (
+            <span>{displayedAreas.length} Service Cities</span>
+          )}
           <span className="h-1 w-1 rounded-full bg-[#D4AF37]" />
           <span>Airport Transfers</span>
           <span className="h-1 w-1 rounded-full bg-[#D4AF37]" />
