@@ -62,7 +62,7 @@ export default function WhatsAppFloatingButton() {
         onClick={toggleContactMenu}
         aria-label={open ? "Close contact options" : "Open contact options"}
         aria-expanded={open}
-        className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#B8860B] bg-[#D4AF37] text-[#0A0A0A]"
+        className="inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-[#B8860B] bg-[#D4AF37] text-[#0A0A0A]"
       >
         {open ? <X className="h-5 w-5" /> : <MessageCircleMore className="h-5 w-5" />}
       </button>

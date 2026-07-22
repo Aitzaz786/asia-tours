@@ -22,6 +22,16 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
+const cityFadeUp = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] as const } },
+};
+
+const cityStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.025 } },
+};
+
 type Province = "Punjab" | "Capital Territory" | "Hill Stations";
 
 const PROVINCES: Province[] = ["Punjab", "Capital Territory", "Hill Stations"];
@@ -279,7 +289,7 @@ function AreasDirectory({
 
 function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
   return (
-    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20px" }} variants={cityStagger}>
       <div className="mb-4 flex items-center gap-4">
         <h3 className="text-xs font-black uppercase tracking-[0.28em] text-[#D4AF37]">{title}</h3>
         <span className="h-px flex-1 bg-[#e8e2da]" />
@@ -288,7 +298,7 @@ function AreaList({ title, cities }: { title: string; cities: typeof areas }) {
 
       <div className="grid grid-cols-1 gap-0 border-l border-t border-[#ececec] sm:grid-cols-2 lg:grid-cols-3">
         {cities.map((area) => (
-          <motion.div key={area.slug} variants={fadeUp}>
+          <motion.div key={area.slug} variants={cityFadeUp}>
             <Link
               href={`/areas/${area.slug}`}
               className="group relative flex h-full items-center justify-between overflow-hidden border-b border-r border-[#ececec] bg-white px-[26px] py-6 text-inherit no-underline transition-all duration-300 hover:bg-[#fafafa] hover:pl-[34px]"
