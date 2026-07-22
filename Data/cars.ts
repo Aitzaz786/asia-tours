@@ -30,7 +30,7 @@ export const fleets: Fleet[] = [
  
   {
     name: "Audi A6",
-    price: 45000,
+    price: 50000,
     image: "/Audi a6/audi-a6_100726069_h.webp",
     imageAlt: "Audi A6 luxury sedan",
     imageCount: 10,
@@ -97,7 +97,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Toyota Hilux 4x4",
-    price: 13000,
+    price: 15000,
     image: "/hilux 4/WhatsApp-Image-2025-09-09-at-03.45.52-1.webp",
     imageAlt: "Toyota Hilux 4x4 pickup truck",
     imageCount: 6,
@@ -118,7 +118,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Mercedes-Maybach S580",
-    price: 130000,
+    price: 170000,
     image: "/Mercedes-Maybach S580/2020-Mercedes-S650-Maybach-black-2.webp",
     imageAlt: "Mercedes-Maybach S580 luxury sedan",
     imageCount: 7,
@@ -188,7 +188,7 @@ export const fleets: Fleet[] = [
   },
   {
     name: "Toyota Fortuner",
-    price: 15000,
+    price: 18000,
     image: "/Toyota Fortuner/WhatsApp-Image-2024-06-23-at-03.20.47.webp",
     imageAlt: "Toyota Fortuner SUV",
     imageCount: 7,
