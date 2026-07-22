@@ -635,13 +635,21 @@ export function TestimonialsSection({
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6">
           {visibleTestimonials.map((testimonial, index) => (
             <motion.article
               key={`${testimonial.name}-${index}`}
               whileHover={{ y: -10 }}
               transition={{ duration: 0.3 }}
-              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-brand-soft bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] sm:rounded-[34px] sm:p-8 lg:rounded-[40px] lg:p-10"
+              className={`group relative h-full flex-col justify-between overflow-hidden rounded-[28px] border border-brand-soft bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] sm:rounded-[34px] sm:p-8 lg:rounded-[40px] lg:p-10 ${
+                index === 0
+                  ? "flex"
+                  : index === 1
+                    ? "hidden md:flex"
+                    : index === 2
+                      ? "hidden lg:flex"
+                      : "hidden xl:flex"
+              }`}
             >
               <span className="absolute left-1/2 bottom-0 z-0 h-[250%] w-[250%] -translate-x-1/2 translate-y-1/2 scale-0 rounded-full bg-[#D4AF37] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100" />
 

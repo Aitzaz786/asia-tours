@@ -185,9 +185,6 @@ export default function ServiceTypePage({ content }: { content: ServiceTypeConte
       <OurFleetsSection />
       <PricingTableSection />
       <CtaBannerSection compact />
-      <section className={SECTION_Y}>
-        <LahoreServiceMap />
-      </section>
       <CitiesNetworkSection showViewAll />
       <FaqSection compact />
 
@@ -225,6 +222,10 @@ export default function ServiceTypePage({ content }: { content: ServiceTypeConte
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className={SECTION_Y}>
+        <LahoreServiceMap />
       </section>
     </main>
   );

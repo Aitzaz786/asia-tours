@@ -771,10 +771,6 @@ export default function AreaPage() {
         </motion.div>
       </section>
 
-      <section className={SECTION_Y}>
-        <LahoreServiceMap />
-      </section>
-
       <CitiesNetworkSection currentSlug={area.slug} columns={2} compact />
 
       <FaqSection compact />
@@ -827,6 +823,10 @@ export default function AreaPage() {
       <div className="absolute bottom-0 left-4 hidden h-20 w-[1px] bg-gradient-to-t from-brand-soft to-transparent sm:left-10 sm:block" />
       <div className="absolute right-4 top-0 hidden h-20 w-[1px] bg-gradient-to-b from-brand-soft to-transparent sm:right-10 sm:block" />
     </section>
+
+      <section className={SECTION_Y}>
+        <LahoreServiceMap />
+      </section>
     </main>
   );
 }

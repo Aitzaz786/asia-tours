@@ -139,11 +139,8 @@ export default function HomePageContent() {
       <OurServicesSection />
       <CtaBannerSection compact />
 
-      {/* Coverage: map then city directory */}
-      <section className={SECTION_Y}>
-        <LahoreServiceMap />
-      </section>
-      <CitiesNetworkSection showViewAll />
+      {/* Coverage: major city directory */}
+      <CitiesNetworkSection showViewAll limit={16} />
 
       <TestimonialsSection
         testimonialStart={testimonialStart}
@@ -195,6 +192,10 @@ export default function HomePageContent() {
 
         <div className="absolute bottom-0 left-4 hidden h-20 w-px bg-gradient-to-t from-brand-soft to-transparent sm:left-10 sm:block" />
         <div className="absolute right-4 top-0 hidden h-20 w-px bg-gradient-to-b from-brand-soft to-transparent sm:right-10 sm:block" />
+      </section>
+
+      <section className={SECTION_Y}>
+        <LahoreServiceMap />
       </section>
     </>
   );

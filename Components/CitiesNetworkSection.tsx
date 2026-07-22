@@ -8,6 +8,7 @@ type CitiesNetworkSectionProps = {
   showViewAll?: boolean;
   columns?: 2 | 3;
   compact?: boolean;
+  limit?: number;
 };
 
 export default function CitiesNetworkSection({
@@ -15,7 +16,10 @@ export default function CitiesNetworkSection({
   showViewAll = false,
   columns = 3,
   compact: _compact = false,
+  limit,
 }: CitiesNetworkSectionProps) {
+  const displayedAreas = typeof limit === "number" ? areas.slice(0, limit) : areas;
+
   return (
     <section className={`bg-white px-4 sm:px-6 lg:px-8 ${SECTION_Y}`}>
       <div className="mx-auto max-w-[1800px]">
@@ -41,7 +45,7 @@ export default function CitiesNetworkSection({
             columns === 2 ? "lg:grid-cols-2" : "lg:grid-cols-2 xl:grid-cols-3"
           }`}
         >
-          {areas.map((serviceArea, index) => {
+          {displayedAreas.map((serviceArea, index) => {
             const isCurrentArea = Boolean(currentSlug && serviceArea.slug === currentSlug);
 
             return (
@@ -82,7 +86,7 @@ export default function CitiesNetworkSection({
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#827a72]">
-          <span>{areas.length} Service Cities</span>
+          <span>{displayedAreas.length} Service Cities</span>
           <span className="h-1 w-1 rounded-full bg-[#D4AF37]" />
           <span>Airport Transfers</span>
           <span className="h-1 w-1 rounded-full bg-[#D4AF37]" />

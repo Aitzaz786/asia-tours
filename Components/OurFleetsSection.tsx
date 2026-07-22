@@ -99,7 +99,7 @@ export default function OurFleetsSection({ compactTop: _compactTop = false }: Ou
               return (
                 <div
                   key={`${fleet.name}-${index}`}
-                  className="mr-4 min-w-0 flex-[0_0_100%] sm:mr-5 sm:flex-[0_0_calc(50%-0.625rem)] lg:mr-5 lg:flex-[0_0_calc(25%-0.9375rem)]"
+                  className="mr-4 min-w-0 flex-[0_0_100%] sm:mr-5 sm:flex-[0_0_calc(50%-0.625rem)] lg:mr-5 lg:flex-[0_0_calc(33.333%-0.833rem)] xl:flex-[0_0_calc(25%-0.9375rem)]"
                 >
                   <article className="fleet-card group flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e8e4de] bg-white shadow-none">
                     <div className="relative h-[220px] w-full overflow-hidden bg-[#f0eeea] sm:h-[240px]">
@@ -108,7 +108,7 @@ export default function OurFleetsSection({ compactTop: _compactTop = false }: Ou
                         alt={fleet.imageAlt}
                         fill
                         className="object-cover md:transition-transform md:duration-700 md:group-hover:scale-[1.04]"
-                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                       />
                       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/35 to-transparent" />
                       <div className="absolute bottom-3 right-3 rounded-full bg-[#D4AF37] px-3.5 py-1.5 text-[11px] font-bold text-[#0A0A0A]">
