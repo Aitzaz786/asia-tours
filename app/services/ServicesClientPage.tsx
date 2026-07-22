@@ -25,12 +25,13 @@ import {
 import { fleets, getFleetSlug, type Fleet } from "@/Data/cars";
 import { services } from "./servicesData";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiArrowUpRight, FiCheck } from "react-icons/fi";
+import { FiArrowUpRight } from "react-icons/fi";
 import QuickBookingForm from "@/Components/QuickBookingForm";
 import DarkHeroShell, { HOME_HERO_CONTENT_HEIGHT } from "@/Components/DarkHeroShell";
 import FaqSection from "@/Components/FaqSection";
 import { TestimonialsSection, VideoStatsSection } from "../about-us/page";
 import { SECTION_Y, SECTION_Y_END } from "@/lib/sectionSpacing";
+import ServiceCardsGrid from "@/Components/ServiceCardsGrid";
 
 const LahoreServiceMap = dynamic(() => import("@/Components/LahoreServiceMap"), { ssr: false });
 
@@ -76,15 +77,6 @@ type ContentTab = "fleet" | "services";
 
 const ITEMS_PER_PAGE = 12;
 
-
-const serviceIcons: Record<string, LucideIcon> = {
-  "airport-transfer": Plane,
-  "corporate-tours": BriefcaseBusiness,
-  "luxury-vehicles": Gem,
-  "custom-itineraries": Route,
-  "events-wedding": CalendarHeart,
-  "chauffeur-service": CarFront,
-};
 
 function getHighlightValue(fleet: Fleet, label: string) {
   return fleet.highlights?.find((highlight) => highlight.label === label)?.value;
@@ -388,11 +380,7 @@ export default function ServicesClientPage() {
               <span className="text-[#D4AF37]">every journey</span>
             </h2>
           </div>
-          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, index) => (
-              <ServiceCard key={service.slug} service={service} index={index} />
-            ))}
-          </div>
+          <ServiceCardsGrid />
         </section>
       )}
         </motion.div>
@@ -517,41 +505,6 @@ function VehicleCard({ fleet }: { fleet: Fleet }) {
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
-    </article>
-  );
-}
-
-function ServiceCard({ service, index }: { service: (typeof services)[number]; index: number }) {
-  const Icon = serviceIcons[service.slug] ?? CarFront;
-
-  return (
-    <article className="group relative flex h-full flex-col rounded-2xl border border-[#eadfd6] bg-white p-6 transition-colors hover:border-[#D4AF37]/50">
-      <span className="absolute right-5 top-5 text-3xl font-black leading-none text-[#f0ebe6]">
-        {String(index + 1).padStart(2, "0")}
-      </span>
-
-      <div className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#eadfd6] bg-[#fbfaf8] text-[#D4AF37]">
-        <Icon className="h-5 w-5" />
-      </div>
-
-      <h2 className="relative z-10 mt-5 text-xl font-bold text-[#0f0e0c]">{service.title}</h2>
-      <p className="relative z-10 mt-2 flex-1 text-sm leading-6 text-[#746b61]">{service.summary}</p>
-
-      <div className="relative z-10 mt-5 space-y-2 border-t border-[#f0ebe4] pt-4">
-        {service.highlights.slice(0, 2).map((highlight) => (
-          <div key={highlight} className="flex items-start gap-2">
-            <FiCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#D4AF37]" strokeWidth={3} />
-            <span className="text-xs font-medium text-[#5f574f]">{highlight}</span>
-          </div>
-        ))}
-      </div>
-
-      <Link
-        href={`/services/${service.slug}`}
-        className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#0f0e0c] transition-all hover:gap-3 hover:text-[#D4AF37]"
-      >
-        Learn More <ArrowRight className="h-4 w-4" />
-      </Link>
     </article>
   );
 }
