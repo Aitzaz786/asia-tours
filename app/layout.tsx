@@ -1,5 +1,5 @@
 import "./globals.css";
-import LenisSmoothScroll from "@/Components/LenisSmoothScroll";
+import "@/Components/gold/gold.css";
 import NavigationWrapper from "@/Components/NavigationWrapper";
 import type { Metadata } from "next";
 
@@ -27,12 +27,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="preload"
-          href="/landv.webm"
-          as="video"
-          type="video/webm"
-        />
         <script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
@@ -77,7 +71,6 @@ export default function RootLayout({
 />
       </head>
       <body>
-        <LenisSmoothScroll />
         <NavigationWrapper>{children}</NavigationWrapper>
       </body>
     </html>

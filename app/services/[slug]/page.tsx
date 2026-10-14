@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{city?:string}>;
 };
 
 export function generateStaticParams() {
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export default async function ServiceCarDetailPage({ params }: PageProps) {
+export default async function ServiceCarDetailPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
   const fleet = fleets.find((item) => getFleetSlug(item.name) === slug);
 
@@ -36,5 +37,6 @@ export default async function ServiceCarDetailPage({ params }: PageProps) {
 
   const similarFleets = fleets.filter((item) => item.name !== fleet.name).slice(0, 4);
 
-  return <ServiceCarDetailView fleet={fleet} similarFleets={similarFleets} />;
+  const {city}=await searchParams;
+  return <ServiceCarDetailView fleet={fleet} similarFleets={similarFleets} city={city} />;
 }
