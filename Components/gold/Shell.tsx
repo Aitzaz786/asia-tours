@@ -1,17 +1,75 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { GoldFooter } from "./Footer";
+import WhatsAppFloatingButton from "../WhatsAppFloatingButton";
+import BackToTopButton from "../BackToTopButton";
 
 const links = [["/","Home"],["/about-us","About us"],["/services","Services"],["/areas","Areas"],["/contact-us","Contact us"]];
 export default function GoldShell({children}:{children: React.ReactNode}) {
   const pathname = usePathname();
+  useEffect(() => {
+    // Start new pages above the sticky header; keep explicit section links intact.
+    if (window.location.hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
   return <ShellContent key={pathname} pathname={pathname}>{children}</ShellContent>;
 }
 function ShellContent({children,pathname}:{children:React.ReactNode;pathname:string}) {
   const [open,setOpen]=useState(false);
-  return <div className={`gold-site ${pathname!=="/"?"inner-page":""} ${pathname.split("/").filter(Boolean).length>1?"detail-page":""}`} onKeyDown={e=>{if(e.key==="Escape")setOpen(false)}}>
+  const root=useRef<HTMLDivElement>(null);
+  useEffect(()=>{
+    const container=root.current;
+    if(!container)return;
+    const running=new Map<HTMLDetailsElement,{animation:Animation;expanded:boolean}>();
+    const setExpanded=(details:HTMLDetailsElement,expanded:boolean)=>{
+      const previous=running.get(details);
+      const current=previous?.expanded??details.open;
+      if(current===expanded)return;
+      const from=details.getBoundingClientRect().height;
+      previous?.animation.cancel();
+      running.delete(details);
+      details.style.height='';
+      details.style.overflow='hidden';
+      details.open=expanded;
+      const to=details.getBoundingClientRect().height;
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        details.style.overflow='';
+        return;
+      }
+      details.open=true;
+      const animation=details.animate([{height:`${from}px`},{height:`${to}px`}],{duration:280,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+      running.set(details,{animation,expanded});
+      animation.onfinish=()=>{
+        details.open=expanded;
+        animation.cancel();
+        details.style.overflow='';
+        running.delete(details);
+      };
+    };
+    const click=(event:MouseEvent)=>{
+      const summary=(event.target as Element).closest('summary');
+      const details=summary?.parentElement;
+      if(!(details instanceof HTMLDetailsElement)||!container.contains(details))return;
+      if((event.target as Element).closest('a,button,input,select'))return;
+      event.preventDefault();
+      const expanded=!(running.get(details)?.expanded??details.open);
+      if(expanded){
+        const group=details.closest('.faqs')??details.parentElement;
+        group?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(item=>{
+          if(item!==details)setExpanded(item,false);
+        });
+        running.forEach((state,item)=>{
+          if(item!==details&&state.expanded&&group?.contains(item))setExpanded(item,false);
+        });
+      }
+      setExpanded(details,expanded);
+    };
+    container.addEventListener('click',click);
+    return()=>{container.removeEventListener('click',click);running.forEach(({animation,expanded},details)=>{animation.cancel();details.open=expanded;details.style.overflow='';});};
+  },[]);
+  return <div ref={root} className={`gold-site ${pathname!=="/"?"inner-page":""} ${pathname.split("/").filter(Boolean).length>1?"detail-page":""}`} onKeyDown={e=>{if(e.key==="Escape")setOpen(false)}}>
     <a className="skip" href="#main">Skip to content</a>
     <div className="topbar"><div className="wrap"><span>Exceptional journeys. Across Pakistan.</span><a href="tel:+923004591145">24/7 assistance <span className="gold">＋92 300 4591145 ↗</span></a></div></div>
     <header><div className="wrap nav"><Link className="brand" href="/" aria-label="Asia Tours home"><img src="/gold/assets/a9b2e9d45dad38e4.webp" alt="Asia Tours" width="132" height="58" /></Link>
@@ -19,6 +77,7 @@ function ShellContent({children,pathname}:{children:React.ReactNode;pathname:str
       <Link className="btn goldbtn navcta" href="/contact-us">Plan your journey <span>↗</span></Link><button type="button" className="menubtn" aria-controls="gold-nav" aria-expanded={open} aria-label="Toggle navigation" onClick={()=>setOpen(!open)}>{open?"×":"☰"}</button></div></header>
     {children}
     <GoldFooter />
-    <a className="whatsapp" href="https://wa.me/923004591145" target="_blank" rel="noopener noreferrer" aria-label="Chat with Asia Tours on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.3-4.7A8.5 8.5 0 1 1 20.5 11.8Z"/><path d="M8 7.5c-1 2.5 3 6.5 5.5 7.5 1.3.4 2.3-.3 2.5-1.5l-2.5-1.2-1 1a10 10 0 0 1-3-3l1-1L9 7Z"/></svg></a>
+    <WhatsAppFloatingButton />
+    <BackToTopButton />
   </div>;
 }

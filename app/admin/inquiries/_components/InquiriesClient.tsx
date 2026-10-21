@@ -68,7 +68,7 @@ function FilterListbox({
           leaveFrom="opacity-100 translate-y-0"
           leaveTo="opacity-0 translate-y-1"
         >
-          <ListboxOptions className="absolute z-30 mt-1.5 w-44 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-xl outline-none">
+          <ListboxOptions modal={false} className="absolute z-30 mt-1.5 w-44 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-xl outline-none">
             {options.map((opt) => (
               <ListboxOption key={opt.value} value={opt.value} as={Fragment}>
                 {({ active, selected: isSelected }) => (
@@ -102,6 +102,7 @@ function StatusListbox({
         <ChevronDown className="h-3 w-3 text-gray-400" />
       </ListboxButton>
       <ListboxOptions
+        modal={false}
         anchor="bottom end"
         className="z-[999] w-36 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-xl outline-none [--anchor-gap:4px]"
       >

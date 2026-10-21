@@ -81,7 +81,7 @@ const sections: LegalSection[] = [
     title: "Policy updates and contact",
     paragraphs: [
       "We may update this policy to reflect changes in our services, technology, or legal requirements. The latest version will be posted on this page with a revised update date.",
-      "For privacy questions or requests, email contact@asiatourspk.com, call +92 300 4591145, or write to Asia Tours, Punjab Society, Ghazi Road, Lahore, Pakistan.",
+      "For privacy questions or requests, email contact@asiatourspk.com, call +92 300 4591145, or write to Asia Tours, 41 F Block, Punjab Society, Shanghai Road, Lahore, Pakistan.",
     ],
   },
 ];

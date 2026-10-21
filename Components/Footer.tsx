@@ -35,7 +35,7 @@ const contactItems = [
     Icon: FiMail,
   },
   {
-    label: "Punjab Society, Ghazi Road, Lahore",
+    label: "41 F Block, Punjab Society, Shanghai Road, Lahore",
     href: "/contact-us",
     Icon: FiMapPin,
   },

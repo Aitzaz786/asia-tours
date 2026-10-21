@@ -39,10 +39,9 @@ export default function RootLayout({
       "telephone": "+923004591145",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Punjab Society, Ghazi Road",
+        "streetAddress": "41 F Block, Punjab Society, Shanghai Road",
         "addressLocality": "Lahore",
         "addressRegion": "Punjab",
-         "postalCode": "54770", 
         "addressCountry": "PK"
       },
       "geo": {

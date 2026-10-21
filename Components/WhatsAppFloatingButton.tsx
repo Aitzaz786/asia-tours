@@ -42,7 +42,7 @@ export default function WhatsAppFloatingButton() {
         <a
           href="tel:+923004591145"
           aria-label="Call Asia Tours"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#D4AF37]/35 bg-white text-[#B8860B]"
+          className="gold-floating-action inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#D2AC2F]/60 bg-[#1F1F1F] text-[#E7C85B] shadow-[0_10px_28px_rgba(0,0,0,0.22)] transition-colors hover:bg-[#D2AC2F] hover:text-[#1F1F1F]"
         >
           <PhoneCall className="h-5 w-5" strokeWidth={2.2} />
         </a>
@@ -51,7 +51,7 @@ export default function WhatsAppFloatingButton() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat with Asia Tours on WhatsApp"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#25D366]/30 bg-white text-[#25D366]"
+          className="gold-floating-action inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#D2AC2F]/60 bg-[#1F1F1F] text-[#E7C85B] shadow-[0_10px_28px_rgba(0,0,0,0.22)] transition-colors hover:bg-[#D2AC2F] hover:text-[#1F1F1F]"
         >
           <WhatsAppIcon />
         </a>
@@ -62,7 +62,7 @@ export default function WhatsAppFloatingButton() {
         onClick={toggleContactMenu}
         aria-label={open ? "Close contact options" : "Open contact options"}
         aria-expanded={open}
-        className="inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-[#B8860B] bg-[#D4AF37] text-[#0A0A0A]"
+        className="gold-floating-trigger inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-[#E7C85B] bg-[#D2AC2F] text-[#1F1F1F] shadow-[0_12px_34px_rgba(0,0,0,0.28)] transition-colors hover:bg-[#E7C85B]"
       >
         {open ? <X className="h-5 w-5" /> : <MessageCircleMore className="h-5 w-5" />}
       </button>
