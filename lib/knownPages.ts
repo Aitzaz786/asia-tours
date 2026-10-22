@@ -43,6 +43,13 @@ export const KNOWN_PAGES: KnownPage[] = [
     meta_title: "Service Areas – Asia Tours Pakistan",
     meta_description: "Asia Tours Pakistan provides premium car rental and chauffeur services in 45+ cities across Pakistan including Lahore, Islamabad and more.",
   },
+  {
+    slug: "blog",
+    page_title: "Travel Journal",
+    group: "Core",
+    meta_title: "Travel Journal & Car Rental Guides | Asia Tours Pakistan",
+    meta_description: "Explore practical travel advice, vehicle guides and journey inspiration from Asia Tours Pakistan.",
+  },
 
   // ── Service Pages ───────────────────────────────────────────────────────────
   {

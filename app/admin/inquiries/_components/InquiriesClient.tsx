@@ -55,7 +55,7 @@ function FilterListbox({
   return (
     <Listbox value={value} onChange={onChange}>
       <div className="relative">
-        <ListboxButton className="flex w-40 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm outline-none transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]">
+        <ListboxButton className="flex w-40 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm outline-none transition-all hover:border-[#D2AC2F] hover:text-[#D2AC2F]">
           <span>{selected.label}</span>
           <ChevronDown className="h-3.5 w-3.5 text-gray-400" />
         </ListboxButton>
@@ -72,9 +72,9 @@ function FilterListbox({
             {options.map((opt) => (
               <ListboxOption key={opt.value} value={opt.value} as={Fragment}>
                 {({ active, selected: isSelected }) => (
-                  <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors ${active ? "bg-brand-muted text-[#D4AF37]" : "text-gray-700"}`}>
+                  <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors ${active ? "bg-brand-muted text-[#D2AC2F]" : "text-gray-700"}`}>
                     <span className={isSelected ? "font-semibold" : ""}>{opt.label}</span>
-                    {isSelected && <Check className="h-3.5 w-3.5 text-[#D4AF37]" />}
+                    {isSelected && <Check className="h-3.5 w-3.5 text-[#D2AC2F]" />}
                   </li>
                 )}
               </ListboxOption>
@@ -97,7 +97,7 @@ function StatusListbox({
 }) {
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
-      <ListboxButton className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 outline-none transition-all hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-50">
+      <ListboxButton className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 outline-none transition-all hover:border-[#D2AC2F] hover:text-[#D2AC2F] disabled:cursor-not-allowed disabled:opacity-50">
         <span className="capitalize">{value}</span>
         <ChevronDown className="h-3 w-3 text-gray-400" />
       </ListboxButton>
@@ -109,9 +109,9 @@ function StatusListbox({
         {STATUS_OPTIONS.map((opt) => (
           <ListboxOption key={opt} value={opt} as={Fragment}>
             {({ active, selected: isSelected }) => (
-              <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-xs transition-colors ${active ? "bg-brand-muted text-[#D4AF37]" : "text-gray-700"}`}>
+              <li className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-xs transition-colors ${active ? "bg-brand-muted text-[#D2AC2F]" : "text-gray-700"}`}>
                 <span className={`capitalize ${isSelected ? "font-semibold" : ""}`}>{opt}</span>
-                {isSelected && <Check className="h-3 w-3 text-[#D4AF37]" />}
+                {isSelected && <Check className="h-3 w-3 text-[#D2AC2F]" />}
               </li>
             )}
           </ListboxOption>
@@ -196,7 +196,7 @@ export default function InquiriesClient({ initialData }: { initialData: Inquiry[
           type="button"
           onClick={handleRefresh}
           disabled={refreshing}
-          className="ml-auto flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-600 shadow-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-50"
+          className="ml-auto flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-600 shadow-sm transition-all hover:border-[#D2AC2F] hover:text-[#D2AC2F] disabled:opacity-50"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />
           {refreshing ? "Refreshing..." : "Refresh"}

@@ -128,7 +128,7 @@ function PageRow({ page, index }: { page: PageSeoRow; index: number }) {
 
       <Link
         href={`/admin/seo/${page.slug}`}
-        className="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-[11px] font-bold text-gray-500 transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
+        className="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-[11px] font-bold text-gray-500 transition-all hover:border-[#D2AC2F] hover:text-[#D2AC2F]"
       >
         <Edit3 className="h-3 w-3" />
         Edit

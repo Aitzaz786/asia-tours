@@ -55,10 +55,10 @@ export default function AdminLoginPage() {
         <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
           <div className="mb-6 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-muted">
-              <Lock className="h-5 w-5 text-[#D4AF37]" />
+              <Lock className="h-5 w-5 text-[#D2AC2F]" />
             </div>
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#D4AF37]">
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#D2AC2F]">
                 Asia Tours
               </p>
               <h1 className="text-lg font-black text-gray-900">
@@ -86,7 +86,7 @@ export default function AdminLoginPage() {
                     }
                     required
                     autoFocus
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-center text-lg font-black tracking-[0.35em] text-gray-900 placeholder:text-gray-300 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-center text-lg font-black tracking-[0.35em] text-gray-900 placeholder:text-gray-300 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="000000"
                   />
                 </div>
@@ -105,7 +105,7 @@ export default function AdminLoginPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       autoFocus
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder:text-gray-300 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder:text-gray-300 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                       placeholder="admin@example.com"
                     />
                   </div>
@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-300 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-300 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="Enter admin password"
                   />
                 </div>
@@ -136,7 +136,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#D4AF37] py-3 text-sm font-black uppercase tracking-wide text-[#0A0A0A] transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#D2AC2F] py-3 text-sm font-black uppercase tracking-wide text-[#0A0A0A] transition-opacity hover:opacity-90 disabled:opacity-50"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading

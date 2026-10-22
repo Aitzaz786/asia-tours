@@ -148,14 +148,14 @@ export default function SeoEditPage() {
 
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5]">
-      <Loader2 className="h-5 w-5 animate-spin text-[#D4AF37]" />
+      <Loader2 className="h-5 w-5 animate-spin text-[#D2AC2F]" />
     </div>
   );
 
   if (!data) return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f5f5] text-center">
       <p className="text-gray-600">{error || "Page not found."}</p>
-      <Link href="/admin/seo" className="mt-4 text-sm font-bold text-[#D4AF37] underline">← Back</Link>
+      <Link href="/admin/seo" className="mt-4 text-sm font-bold text-[#D2AC2F] underline">← Back</Link>
     </div>
   );
 
@@ -176,7 +176,7 @@ export default function SeoEditPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 rounded-lg bg-[#D4AF37] px-5 py-2.5 text-sm font-black text-[#0A0A0A] shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#D2AC2F] px-5 py-2.5 text-sm font-black text-[#0A0A0A] shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : saved ? <Check className="h-3.5 w-3.5" /> : null}
             {saving ? "Saving…" : saved ? "Saved!" : "Save Changes"}
@@ -194,7 +194,7 @@ export default function SeoEditPage() {
               <label className="block">
                 <span className="mb-1.5 block text-xs font-bold uppercase tracking-widest text-gray-500">Page Title (internal label)</span>
                 <input type="text" value={data.page_title} onChange={(e) => update("page_title", e.target.value)}
-                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                   placeholder="e.g. Airport Transfer" />
               </label>
             </div>
@@ -212,7 +212,7 @@ export default function SeoEditPage() {
                     <CharCounter value={data.meta_title} max={TITLE_MAX} />
                   </div>
                   <input type="text" value={data.meta_title} onChange={(e) => update("meta_title", e.target.value)}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="Title shown in Google results (max 60 chars)" />
                 </label>
                 <label className="block">
@@ -221,7 +221,7 @@ export default function SeoEditPage() {
                     <CharCounter value={data.meta_description} max={DESC_MAX} />
                   </div>
                   <textarea rows={3} value={data.meta_description} onChange={(e) => update("meta_description", e.target.value)}
-                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="Description shown under title in Google (max 160 chars)" />
                 </label>
               </div>
@@ -237,7 +237,7 @@ export default function SeoEditPage() {
                     <CharCounter value={data.og_title} max={70} />
                   </div>
                   <input type="text" value={data.og_title} onChange={(e) => update("og_title", e.target.value)}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="Defaults to meta title if empty" />
                 </label>
                 <label className="block">
@@ -246,13 +246,13 @@ export default function SeoEditPage() {
                     <CharCounter value={data.og_description} max={200} />
                   </div>
                   <textarea rows={2} value={data.og_description} onChange={(e) => update("og_description", e.target.value)}
-                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="Defaults to meta description if empty" />
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-bold uppercase tracking-widest text-gray-500">OG Image URL</span>
                   <input type="url" value={data.og_image} onChange={(e) => update("og_image", e.target.value)}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="https://…" />
                 </label>
               </div>
@@ -265,7 +265,7 @@ export default function SeoEditPage() {
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-bold uppercase tracking-widest text-gray-500">Canonical URL</span>
                   <input type="url" value={data.canonical_url} onChange={(e) => update("canonical_url", e.target.value)}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="Leave empty to use default" />
                 </label>
                 <label className="flex cursor-pointer items-center gap-3">

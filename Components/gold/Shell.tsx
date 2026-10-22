@@ -6,7 +6,7 @@ import { GoldFooter } from "./Footer";
 import WhatsAppFloatingButton from "../WhatsAppFloatingButton";
 import BackToTopButton from "../BackToTopButton";
 
-const links = [["/","Home"],["/about-us","About us"],["/services","Services"],["/areas","Areas"],["/contact-us","Contact us"]];
+const links = [["/","Home"],["/about-us","About us"],["/services","Services"],["/areas","Areas"],["/blog","Blog"],["/contact-us","Contact us"]];
 export default function GoldShell({children}:{children: React.ReactNode}) {
   const pathname = usePathname();
   useEffect(() => {
@@ -72,7 +72,7 @@ function ShellContent({children,pathname}:{children:React.ReactNode;pathname:str
   return <div ref={root} className={`gold-site ${pathname!=="/"?"inner-page":""} ${pathname.split("/").filter(Boolean).length>1?"detail-page":""}`} onKeyDown={e=>{if(e.key==="Escape")setOpen(false)}}>
     <a className="skip" href="#main">Skip to content</a>
     <div className="topbar"><div className="wrap"><span>Exceptional journeys. Across Pakistan.</span><a href="tel:+923004591145">24/7 assistance <span className="gold">＋92 300 4591145 ↗</span></a></div></div>
-    <header><div className="wrap nav"><Link className="brand" href="/" aria-label="Asia Tours home"><img src="/gold/assets/a9b2e9d45dad38e4.webp" alt="Asia Tours" width="132" height="58" /></Link>
+    <header className="site-header"><div className="wrap nav"><Link className="brand" href="/" aria-label="Asia Tours home"><img src="/gold/assets/a9b2e9d45dad38e4.webp" alt="Asia Tours" width="132" height="58" /></Link>
       <nav id="gold-nav" aria-label="Main navigation" className={open?"open":""}>{links.map(([href,label])=><Link key={href} href={href} onClick={()=>setOpen(false)} className={pathname===href||(href!=="/"&&pathname.startsWith(href+"/"))?"active":""} aria-current={pathname===href?"page":undefined}>{label}</Link>)}</nav>
       <Link className="btn goldbtn navcta" href="/contact-us">Plan your journey <span>↗</span></Link><button type="button" className="menubtn" aria-controls="gold-nav" aria-expanded={open} aria-label="Toggle navigation" onClick={()=>setOpen(!open)}>{open?"×":"☰"}</button></div></header>
     {children}

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getPublishedBlogs } from "@/lib/blogs";
 
 const baseUrl = "https://asiatourspk.com";
 
@@ -14,6 +15,7 @@ const staticRoutes = [
   "/services/events-wedding",
   "/services/luxury-vehicles",
   "/areas",
+  "/blog",
   "/contact-us",
   "/terms-and-conditions",
   "/privacy-policy",
@@ -83,6 +85,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   seoPageRoutes.forEach((route) => {
     routeMap.set(route, routeMap.get(route) ?? getSeoEntry(route, lastModified));
+  });
+
+  const blogPosts = await getPublishedBlogs();
+  blogPosts.filter(post=>!post.no_index).forEach(post=>{
+    const route=`/blog/${post.slug}`;
+    routeMap.set(route, { url:`${baseUrl}${route}`, lastModified:new Date(post.updated_at), changeFrequency:"monthly", priority:0.65 });
   });
 
   return Array.from(routeMap.values());

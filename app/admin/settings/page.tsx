@@ -155,7 +155,7 @@ export default function AdminSettingsPage() {
 
         <div className="mb-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center gap-2">
-            <DatabaseZap className="h-4 w-4 text-[#D4AF37]" />
+            <DatabaseZap className="h-4 w-4 text-[#D2AC2F]" />
             <h2 className="text-sm font-black text-gray-900">
               Page Inventory
             </h2>
@@ -181,7 +181,7 @@ export default function AdminSettingsPage() {
 
         <div className="mb-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
           <div className="mb-3 flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-[#D4AF37]" />
+            <ShieldCheck className="h-4 w-4 text-[#D2AC2F]" />
             <h2 className="text-sm font-black text-gray-900">
               Two-Factor Authentication
             </h2>
@@ -259,13 +259,13 @@ export default function AdminSettingsPage() {
                     onChange={(e) =>
                       setMfaCode(e.target.value.replace(/\D/g, "").slice(0, 6))
                     }
-                    className="min-w-0 flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-center text-sm font-black tracking-[0.25em] text-gray-900 focus:border-[#D4AF37] focus:bg-white focus:outline-none"
+                    className="min-w-0 flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-center text-sm font-black tracking-[0.25em] text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
                     placeholder="000000"
                   />
                   <button
                     onClick={handleVerifyMfa}
                     disabled={mfaLoading || mfaCode.length !== 6}
-                    className="flex items-center gap-2 rounded-lg bg-[#D4AF37] px-5 py-2.5 text-sm font-black text-[#0A0A0A] shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+                    className="flex items-center gap-2 rounded-lg bg-[#D2AC2F] px-5 py-2.5 text-sm font-black text-[#0A0A0A] shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
                   >
                     {mfaLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                     Verify
@@ -310,7 +310,7 @@ export default function AdminSettingsPage() {
           <button
             onClick={handleSync}
             disabled={syncing}
-            className="flex items-center gap-2 rounded-lg bg-[#D4AF37] px-5 py-2.5 text-sm font-black text-[#0A0A0A] shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#D2AC2F] px-5 py-2.5 text-sm font-black text-[#0A0A0A] shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {syncing ? (
               <Loader2 className="h-4 w-4 animate-spin" />

@@ -4,22 +4,22 @@
 
 /* Primary brand palette — premium gold */
 @theme {
-  --color-brand: #D4AF37;
-  --color-brand-dark: #B8860B;
-  --color-brand-accent: #B8860B;
-  --color-brand-light: #E8C766;
-  --color-brand-soft: #E8C766;
-  --color-brand-muted: #F5E9C8;
+  --color-brand: #D2AC2F;
+  --color-brand-dark: #B38D16;
+  --color-brand-accent: #B38D16;
+  --color-brand-light: #E7C85B;
+  --color-brand-soft: #E7C85B;
+  --color-brand-muted: #F6F0DC;
 }
 
 :root {
-  --primary-color: #D4AF37;
-  --primary-color-dark: #B8860B;
-  --primary-color-accent: #B8860B;
-  --primary-color-light: #E8C766;
-  --primary-color-soft: #E8C766;
-  --primary-color-muted: #F5E9C8;
-  --accent-color: #D4AF37;
+  --primary-color: #D2AC2F;
+  --primary-color-dark: #B38D16;
+  --primary-color-accent: #B38D16;
+  --primary-color-light: #E7C85B;
+  --primary-color-soft: #E7C85B;
+  --primary-color-muted: #F6F0DC;
+  --accent-color: #D2AC2F;
 }
 
 html {
@@ -53,12 +53,12 @@ body {
 }
 
 ::selection {
-  background: #D4AF37;
+  background: #D2AC2F;
   color: #0A0A0A;
 }
 
 ::-moz-selection {
-  background: #D4AF37;
+  background: #D2AC2F;
   color: #0A0A0A;
 }
 
