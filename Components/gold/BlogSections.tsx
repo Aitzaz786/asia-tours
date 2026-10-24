@@ -17,13 +17,15 @@ export function BlogCard({ post, featured = false }: { post: BlogPost; featured?
 }
 
 export async function HomeBlogPreview() {
-  const posts = await getPublishedBlogs();
-  const post = posts[0];
-  if (!post) return null;
+  const posts = (await getPublishedBlogs()).slice(0, 3);
+  if (!posts.length) return null;
   return <section className="blog-preview section">
-    <div className="wrap blog-preview-layout">
-      <div className="blog-preview-intro"><p className="eyebrow">FROM THE ASIA TOURS JOURNAL</p><h2>Ideas for the road.<br/><span>Details for the journey.</span></h2><p>Travel notes, practical advice and considered ways to make every journey feel better.</p><div className="blog-preview-footer"><span>TRAVEL NOTES · VEHICLE GUIDES · DESTINATION IDEAS</span><Link className="textlink dark" href="/blog">Explore all articles <span>↗</span></Link></div></div>
-      <div className="home-blog-card-wrap"><BlogCard post={post} /></div>
+    <div className="wrap">
+      <div className="blog-preview-heading">
+        <div><p className="eyebrow">FROM THE ASIA TOURS JOURNAL</p><h2>Ideas for the road.<br/><span>Details for the journey.</span></h2></div>
+        <div><p>Travel notes, practical advice and considered ways to make every journey feel better.</p><Link className="textlink dark" href="/blog">Explore all articles <span>↗</span></Link></div>
+      </div>
+      <div className={`blog-grid home-blog-grid home-blog-count-${posts.length}`}>{posts.map(post => <BlogCard post={post} key={post.id} />)}</div>
     </div>
   </section>;
 }

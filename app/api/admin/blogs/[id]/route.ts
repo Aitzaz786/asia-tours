@@ -1,3 +1,4 @@
+import { articleHtml } from "@/lib/article-content";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -14,6 +15,8 @@ export async function PUT(request:NextRequest,{params}:Context){
   fields.forEach(field=>{if(field in body)update[field]=body[field]});
   if("slug" in update)update.slug=String(update.slug).trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
   if(!update.slug||!update.title||!update.excerpt||!update.content)return NextResponse.json({error:"Title, slug, excerpt and content are required."},{status:400});
+  update.content=articleHtml(String(update.content));
+  if(!String(update.content).replace(/<[^>]*>/g," ").replace(/&nbsp;/g," ").trim())return NextResponse.json({error:"Add article text before saving."},{status:400});
   update.is_published=Boolean(update.is_published);update.no_index=Boolean(update.no_index);update.published_at=update.is_published?(update.published_at||new Date().toISOString()):(update.published_at||null);
   const supabase=createAdminClient(); const {data:previous}=await supabase.from("blogs").select("slug").eq("id",id).maybeSingle(); const {data,error}=await supabase.from("blogs").update(update).eq("id",id).select("*").single();
   if(error)return NextResponse.json({error:error.message},{status:400});refresh(previous?.slug);refresh(String(update.slug));return NextResponse.json({success:true,post:data});

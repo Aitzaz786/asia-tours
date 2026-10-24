@@ -25,7 +25,7 @@ export type BlogPost = {
 };
 
 export function readingTime(content: string) {
-  return Math.max(1, Math.ceil(content.trim().split(/\s+/).length / 210));
+  return Math.max(1, Math.ceil(content.replace(/<[^>]*>/g, " ").trim().split(/\s+/).filter(Boolean).length / 210));
 }
 
 export function formatBlogDate(value: string | null) {
@@ -49,7 +49,7 @@ export async function getBlogBySlug(slug: string): Promise<BlogPost | null> {
   noStore();
   try {
     const supabase = createAdminClient();
-    const { data, error } = await supabase.from("blogs").select("*").eq("slug", slug).eq("is_published", true).maybeSingle();
+    const { data, error } = await supabase.from("blogs").select("*").eq("slug", slug).eq("is_published", true).lte("published_at", new Date().toISOString()).maybeSingle();
     if (error) throw error;
     return (data as BlogPost | null) ?? null;
   } catch {

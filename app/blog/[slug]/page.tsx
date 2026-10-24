@@ -1,3 +1,4 @@
+import { articleHtml } from "@/lib/article-content";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -39,7 +40,7 @@ export default async function BlogDetailPage({ params }: Props) {
           <div className="blog-hero-marker"><span>ASIA TOURS JOURNAL</span><b>Thoughtful notes<br/>for better journeys.</b></div>
         </div>
       </header>
-      <div className="wrap blog-body-layout"><div className="blog-body"><div className="blog-article-label"><span>{post.category}</span><span>{readingTime(post.content)} minute read</span></div>{post.content.split(/\n\s*\n/).filter(Boolean).map((paragraph,index)=><p className={index===0?"blog-lead-paragraph":undefined} key={index}>{paragraph}</p>)}</div><aside className="blog-aside"><span>PLAN YOUR OWN JOURNEY</span><h2>A route shaped around you.</h2><p>Tell us your date, pickup point and the people travelling. We’ll help you consider the right vehicle.</p><Link className="btn goldbtn" href="/contact-us">Plan your journey <b>↗</b></Link></aside></div>
+      <div className="wrap blog-body-layout"><div className="blog-body"><div className="blog-article-label"><span>{post.category}</span><span>{readingTime(post.content)} minute read</span></div><div className="article-prose" dangerouslySetInnerHTML={{__html:articleHtml(post.content)}}/><div className="article-signoff"><span>Written by</span><strong>{post.author}</strong><Link href="/blog">← Back to the journal</Link></div></div><aside className="blog-aside"><span>PLAN YOUR OWN JOURNEY</span><h2>A route shaped around you.</h2><p>Tell us your date, pickup point and the people travelling. We’ll help you consider the right vehicle.</p><Link className="btn goldbtn" href="/contact-us">Plan your journey <b>↗</b></Link></aside></div>
       {related.length>0&&<section className="wrap blog-related"><p className="eyebrow">CONTINUE READING</p><div className="blog-grid">{related.map(item=><article key={item.id}><Link href={`/blog/${item.slug}`}><img src={item.cover_image} alt={item.cover_alt||item.title}/><h3>{item.title}</h3><span>Read article ↗</span></Link></article>)}</div></section>}
     </article>
     <Closing />
