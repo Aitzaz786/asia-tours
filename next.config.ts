@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
   reactStrictMode: false,
+  // Put database-backed SEO in the initial head for browsers and all crawlers.
+  htmlLimitedBots: /.*/,
   images: {
     remotePatterns: [
       {
@@ -18,7 +23,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "ideogram.ai",  // ← yeh add karo
+        hostname: "ideogram.ai",
       },
     ],
   },

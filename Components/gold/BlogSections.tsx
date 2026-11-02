@@ -25,7 +25,7 @@ export async function HomeBlogPreview() {
         <div><p className="eyebrow">FROM THE ASIA TOURS JOURNAL</p><h2>Ideas for the road.<br/><span>Details for the journey.</span></h2></div>
         <div><p>Travel notes, practical advice and considered ways to make every journey feel better.</p><Link className="textlink dark" href="/blog">Explore all articles <span>↗</span></Link></div>
       </div>
-      <div className={`blog-grid home-blog-grid home-blog-count-${posts.length}`}>{posts.map(post => <BlogCard post={post} key={post.id} />)}</div>
+      <div className={`blog-grid blog-index-grid home-blog-grid home-blog-count-${posts.length}`}>{posts.map(post => <BlogCard post={post} key={post.id} />)}</div>
     </div>
   </section>;
 }

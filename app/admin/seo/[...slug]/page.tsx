@@ -28,7 +28,7 @@ function CharCounter({ value, max }: { value: string; max: number }) {
 }
 
 function SerpPreview({ title, description, slug }: { title: string; description: string; slug: string }) {
-  const parts = ["asiatourspk.com", ...slug.split("/").filter(Boolean)];
+  const parts = ["asiatourspk.com", ...(slug === "home" ? [] : slug.split("/").filter(Boolean))];
   const breadcrumb = parts.join(" › ");
   const displayTitle = (title || "Page Title").slice(0, 70);
   const isTitleOver = title.length > TITLE_MAX;
@@ -42,7 +42,7 @@ function SerpPreview({ title, description, slug }: { title: string; description:
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4285F4]">
           <span className="text-[9px] font-black text-white">G</span>
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Google Preview</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Search preview</p>
         <div className="ml-auto flex gap-1.5">
           <span className={`rounded px-1.5 py-0.5 text-[9px] font-bold tabular-nums ${isTitleOver ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-500"}`}>
             T {title.length}/{TITLE_MAX}
@@ -88,6 +88,10 @@ function SerpPreview({ title, description, slug }: { title: string; description:
           {displayDesc}{description.length > 160 && "…"}
         </p>
       </div>
+
+      <p className="border-t border-gray-100 px-5 py-3 text-xs leading-relaxed text-gray-500">
+        This is an illustrative preview. Google may choose a different title or description for each search. Saved changes appear on your website; search results update after Google recrawls the page.
+      </p>
 
       {/* Mobile preview toggle */}
       <div className="border-t border-gray-100 px-5 py-2.5 flex items-center gap-3">
@@ -171,7 +175,7 @@ export default function SeoEditPage() {
               <ArrowLeft className="h-3 w-3" /> SEO Manager
             </Link>
             <h1 className="text-2xl font-black text-gray-900">{data.page_title || fullSlug}</h1>
-            <p className="mt-0.5 text-sm text-gray-400">/{fullSlug}</p>
+            <a className="mt-0.5 block text-sm text-gray-400 underline" href={fullSlug === "home" ? "/" : `/${fullSlug}`} target="_blank" rel="noopener noreferrer">{fullSlug === "home" ? "/" : `/${fullSlug}`}</a>
           </div>
           <button
             onClick={handleSave}
@@ -213,7 +217,7 @@ export default function SeoEditPage() {
                   </div>
                   <input type="text" value={data.meta_title} onChange={(e) => update("meta_title", e.target.value)}
                     className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
-                    placeholder="Title shown in Google results (max 60 chars)" />
+                    placeholder="Preferred search title (aim for around 60 characters)" />
                 </label>
                 <label className="block">
                   <div className="mb-1.5 flex items-center justify-between">
@@ -222,7 +226,7 @@ export default function SeoEditPage() {
                   </div>
                   <textarea rows={3} value={data.meta_description} onChange={(e) => update("meta_description", e.target.value)}
                     className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 focus:border-[#D2AC2F] focus:bg-white focus:outline-none"
-                    placeholder="Description shown under title in Google (max 160 chars)" />
+                    placeholder="Suggested search description (aim for around 160 characters)" />
                 </label>
               </div>
             </div>

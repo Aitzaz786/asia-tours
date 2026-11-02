@@ -110,7 +110,7 @@ function PageRow({ page, index }: { page: PageSeoRow; index: number }) {
             </span>
           )}
         </div>
-        <p className="mt-0.5 truncate text-[11px] text-gray-400">/{page.slug}</p>
+        <p className="mt-0.5 truncate text-[11px] text-gray-400">{page.slug === "home" ? "/" : `/${page.slug}`}</p>
       </div>
 
       <div className="hidden min-w-0 max-w-sm flex-1 lg:block">

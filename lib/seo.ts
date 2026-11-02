@@ -43,11 +43,12 @@ export async function getPageSeo(slug: string): Promise<PageSeo | null> {
       .from("pages_seo")
       .select("*")
       .eq("slug", slug)
-      .single()
+      .maybeSingle()
       .throwOnError();
     if (!data) return null;
     return data as PageSeo;
-  } catch {
+  } catch (error) {
+    console.error("[SEO] Could not load page metadata", { slug, message: error instanceof Error ? error.message : "Database query failed" });
     return null;
   }
 }
@@ -99,8 +100,11 @@ export async function updatePageSeo(
       { onConflict: "slug" }
     );
     if (error) return { success: false, error: error.message };
+    const pagePath = slug === "home" ? "/" : `/${slug}`;
+    revalidatePath(pagePath);
+    revalidatePath("/sitemap.xml");
     revalidatePath("/admin/seo");
-    revalidatePath("/admin/seo/[slug]", "page");
+    revalidatePath(`/admin/seo/${slug}`);
     revalidatePath("/admin");
     return { success: true };
   } catch (e) {
@@ -161,7 +165,7 @@ export function buildMetadata(
   const ogDescription = seo?.og_description || description;
   const ogImage = seo?.og_image;
 
-  const canonicalUrl = `${CANONICAL_BASE_URL}${pagePath}`;
+  const canonicalUrl = seo?.canonical_url?.trim() || `${CANONICAL_BASE_URL}${pagePath}`;
 
   return {
     metadataBase: new URL(SITE_URL),

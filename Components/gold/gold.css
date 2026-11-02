@@ -5,6 +5,7 @@
   font-display: swap;
   src: url(/gold/assets/b0ae3e89a7d3ef2b.ttf) format('truetype');
 }
+
 @font-face {
   font-family: 'DM Sans';
   font-style: normal;
@@ -686,7 +687,7 @@
 .gold-site .blog-preview{position:relative;overflow:hidden;background:linear-gradient(135deg,#f8f6ef 0%,#ece7d9 100%);border-block:1px solid #ddd6c4}
 .gold-site .blog-preview:before{content:'';position:absolute;width:520px;height:520px;border:1px solid #d2ac2f30;border-radius:50%;left:-240px;top:-250px;box-shadow:0 0 0 80px #d2ac2f08,0 0 0 160px #d2ac2f05}
 .gold-site .blog-preview-heading{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,420px);gap:60px;align-items:end;margin-bottom:55px}.gold-site .blog-preview-heading h2{font-size:clamp(46px,5vw,66px);line-height:1.08;letter-spacing:-3px}.gold-site .blog-preview-heading h2 span{color:#686868}.gold-site .blog-preview-heading>div:last-child{padding-bottom:5px}.gold-site .blog-preview-heading>div:last-child>p{color:#666;font-size:16px;line-height:1.8}.gold-site .blog-preview-heading .textlink{margin-top:24px}
-.gold-site .home-blog-grid{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}.gold-site .home-blog-grid.home-blog-count-1{grid-template-columns:minmax(320px,480px)}.gold-site .home-blog-grid.home-blog-count-2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:990px}.gold-site .home-blog-grid .blog-card{min-width:0;min-height:580px;box-shadow:0 18px 45px #25211612;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}.gold-site .home-blog-grid .blog-card:hover{transform:translateY(-6px);border-color:#d2ac2f80;box-shadow:0 24px 55px #2521161c}.gold-site .home-blog-grid .blog-card-image{height:270px;min-height:270px}.gold-site .home-blog-grid .blog-card-copy{justify-content:flex-start;padding:28px}.gold-site .home-blog-grid .blog-card h3{font-size:27px}.gold-site .home-blog-grid .blog-read{margin-top:auto}
+.gold-site .home-blog-grid{position:relative;align-items:stretch}
 .gold-site .blog-card{background:#fff;border:1px solid #dedbd2;overflow:hidden}
 .gold-site .blog-card.is-featured{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);min-height:460px}
 .gold-site .blog-card-image{position:relative;overflow:hidden;display:block;min-height:280px;background:#222}
@@ -719,7 +720,7 @@
 .gold-site .carpic img{transform:scale(1.26);transform-origin:center;transition:transform .6s cubic-bezier(.22,1,.36,1)}
 .gold-site .car:hover .carpic img{transform:scale(1.32)}
 .gold-site.inner-page .carpic,.gold-site.detail-page .carpic{padding:10px}
-@media(min-width:761px) and (max-width:1100px){.gold-site .blog-index-grid,.gold-site .home-blog-grid{grid-template-columns:repeat(2,1fr)}.gold-site .home-blog-grid.home-blog-count-1{grid-template-columns:minmax(320px,480px)}.gold-site .blog-index-grid .blog-card-image{height:280px;min-height:280px}.gold-site .blog-article-hero-inner{grid-template-columns:minmax(0,1fr) 230px;column-gap:45px}}
+@media(min-width:761px) and (max-width:1100px){.gold-site .blog-index-grid,.gold-site .home-blog-grid{grid-template-columns:repeat(2,1fr)}.gold-site .blog-index-grid .blog-card-image{height:280px;min-height:280px}.gold-site .blog-article-hero-inner{grid-template-columns:minmax(0,1fr) 230px;column-gap:45px}}
 @media(max-width:760px){
  .gold-site .blog-card.is-featured{grid-template-columns:1fr;min-height:0}.gold-site .blog-card.is-featured .blog-card-image{height:260px}
  .gold-site .blog-card-copy{padding:27px 22px}.gold-site .blog-card h3{font-size:30px}.gold-site .blog-card-copy>p:not(.blog-meta){font-size:15px}
@@ -767,16 +768,6 @@
 /* Keep the complete chauffeur and sedan visible in the home care feature. */
 .gold-site .aboutimage{height:auto;aspect-ratio:6/5}
 .gold-site .aboutimage>img{object-position:center;object-fit:cover}
-
-/* Preserve the original portrait feature-card proportions when only one
-   journal article is available; multi-post previews still use columns. */
-@media(min-width:761px){
- .gold-site .home-blog-grid.home-blog-count-1{grid-template-columns:480px;max-width:480px}
- .gold-site .home-blog-grid.home-blog-count-1 .blog-card{min-height:650px}
- .gold-site .home-blog-grid.home-blog-count-1 .blog-card-image{height:330px;min-height:330px}
- .gold-site .home-blog-grid.home-blog-count-1 .blog-card-copy{padding:32px}
- .gold-site .home-blog-grid.home-blog-count-1 .blog-card h3{font-size:33px}
-}
 
 /* Alternating service cards: the selected 02, 04 and 06 cards use the
    black-and-gold treatment while 01, 03 and 05 stay light. */
@@ -860,4 +851,42 @@
  .gold-site .servicecatalog article:nth-child(odd) .textlink{color:#f2f2f2;border-color:#ffffff45}
  .gold-site .servicecatalog article:nth-child(odd) .textlink span{color:#e7c85b}
  .gold-site .servicecatalog article:nth-child(odd):hover{background:linear-gradient(145deg,#292929 0%,#1c1c1c 100%)}
+}
+
+/* Area and service detail campaign heroes. Desktop uses the full panorama;
+   tablet and mobile use a focused crop from the same scene. */
+.gold-site .cityherophoto{position:relative;margin:0;overflow:hidden;border-radius:4px;background:#181818;box-shadow:0 22px 55px #0003}
+.gold-site .cityherophoto img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.gold-site .cityherophoto figcaption{position:absolute;left:18px;bottom:16px;padding:7px 10px;background:#181818d9;color:#e7c85b;font-size:9px;letter-spacing:1.7px}
+
+@media(min-width:1201px){
+ .gold-site .service-detail-hero,.gold-site .cityhero--visual{position:relative;isolation:isolate;display:flex;align-items:center;min-height:590px;overflow:hidden;background-position:center;background-size:cover}
+ .gold-site .service-detail-hero{background-image:var(--detail-hero-image)}
+ .gold-site .cityhero--visual{background-image:var(--city-hero-image);padding:72px 0}
+ .gold-site .service-detail-hero:before,.gold-site .cityhero--visual:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#151515fa 0%,#171717ed 35%,#17171799 57%,#1112 82%),linear-gradient(0deg,#111b 0%,transparent 55%)}
+ .gold-site .service-detail-hero .heroeditorial,.gold-site .cityhero--visual .cityherogrid{display:block}
+ .gold-site .service-detail-hero .heroeditorial>div,.gold-site .cityhero--visual .cityherogrid>div{max-width:650px}
+ .gold-site .service-detail-hero .editorialphoto,.gold-site .cityhero--visual .cityherophoto{display:none}
+ .gold-site .service-detail-hero h1,.gold-site .cityhero--visual h1{text-shadow:0 3px 30px #000b}
+ .gold-site .service-detail-hero .lead,.gold-site .cityhero--visual .lead{color:#e0e0e0;text-shadow:0 2px 18px #000}
+}
+
+@media(min-width:761px) and (max-width:1200px){
+ .gold-site .service-detail-hero,.gold-site .cityhero--visual{background:#222;min-height:0;padding:58px 0}
+ .gold-site .service-detail-hero .heroeditorial,.gold-site .cityhero--visual .cityherogrid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:32px;align-items:center}
+ .gold-site .service-detail-hero .editorialphoto,.gold-site .cityhero--visual .cityherophoto{display:block;height:auto;aspect-ratio:3/2}
+ .gold-site .service-detail-hero .editorialphoto img,.gold-site .cityhero--visual .cityherophoto img{width:100%;height:100%;object-fit:cover;object-position:center}
+}
+
+@media(min-width:761px) and (max-width:900px){
+ .gold-site .service-detail-hero .heroeditorial,.gold-site .cityhero--visual .cityherogrid{grid-template-columns:minmax(0,1fr);gap:32px}
+ .gold-site .service-detail-hero .editorialphoto,.gold-site .cityhero--visual .cityherophoto{max-width:820px}
+}
+
+@media(max-width:760px){
+ .gold-site .service-detail-hero,.gold-site .cityhero--visual{background:#222;padding:36px 0 30px}
+ .gold-site .service-detail-hero .heroeditorial,.gold-site .cityhero--visual .cityherogrid{grid-template-columns:minmax(0,1fr);gap:27px}
+ .gold-site .service-detail-hero .editorialphoto,.gold-site .cityhero--visual .cityherophoto{display:block;height:auto;aspect-ratio:3/2}
+ .gold-site .service-detail-hero .editorialphoto img,.gold-site .cityhero--visual .cityherophoto img{width:100%;height:100%;object-fit:cover;object-position:center}
+ .gold-site .cityherophoto figcaption{left:12px;bottom:12px;padding:6px 8px;font-size:8px;letter-spacing:1px}
 }
