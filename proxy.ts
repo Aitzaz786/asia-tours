@@ -3,6 +3,14 @@ import { verifyAdminToken } from "@/lib/supabase/auth";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  if (pathname === "/contact-us" || pathname.startsWith("/services/") || pathname.startsWith("/areas/")) {
+    const clean = request.nextUrl.clone();
+    let changed = false;
+    for (const key of ["city", "vehicle", "service", "date", "passengers"]) {
+      if (clean.searchParams.has(key)) { clean.searchParams.delete(key); changed = true; }
+    }
+    if (changed) return NextResponse.redirect(clean, 308);
+  }
 
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const token = request.cookies.get("admin_token")?.value;
@@ -17,5 +25,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/contact-us", "/services/:path*", "/areas/:path*"],
 };

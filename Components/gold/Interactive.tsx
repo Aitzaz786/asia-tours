@@ -1,8 +1,8 @@
 "use client";
 import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { readJourney, saveJourney } from "./JourneyLink";
 import { MapPin, CalendarDays, CarFront, UsersRound } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { areas } from "@/app/areas/areasData";
 import { serviceTypeContent } from "@/app/services/serviceTypeData";
 import { submitInquiry } from "@/app/actions/submitInquiry";
@@ -34,7 +34,7 @@ export function FleetSection({featured=false}:{featured?:boolean}){
 }
 export function QuickBooking(){
  const [city,setCity]=useState(''),[date,setDate]=useState(''),[service,setService]=useState(serviceTypeContent[0]?.title??''),[passengers,setPassengers]=useState('1'),[error,setError]=useState('');
- function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();if(!city||!date){setError('Choose your pickup city and travel date.');return;}window.location.assign(inquiryUrl({city,date,service,passengers}));}
+ function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();if(!city||!date){setError('Choose your pickup city and travel date.');return;}saveJourney({city,date,service,passengers});window.location.assign("/contact-us");}
  const cityOptions=areas.map(area=>({value:area.name,label:area.name}));
  const serviceOptions=serviceTypeContent.map(item=>({value:item.title,label:item.title}));
  const passengerOptions=[1,2,3,4,5,6,7,8,10,15,20].map(value=>({value:String(value),label:value===1?'1 passenger':value+' passengers'}));
@@ -47,7 +47,11 @@ export function QuickBooking(){
 }
 function localDate(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 export function ContactForm(){return <Suspense fallback={<p>Loading your journey details…</p>}><ContactContext/></Suspense>}
-function ContactContext(){const params=useSearchParams();return <InquiryForm key={params.toString()} initial={{city:params.get('city')||'',date:params.get('date')||'',service:params.get('service')||'',vehicle:params.get('vehicle')||'',passengers:params.get('passengers')||'1'}}/>}
+function ContactContext(){
+  const [saved,setSaved]=useState({city:'',date:'',service:'',vehicle:'',passengers:'1'});
+  useEffect(()=>{const journey=readJourney();setSaved({city:journey.city||'',date:journey.date||'',service:journey.service||'',vehicle:journey.vehicle||'',passengers:journey.passengers||'1'})},[]);
+  return <InquiryForm key={JSON.stringify(saved)} initial={saved}/>;
+}
 function InquiryForm({initial}:{initial:{city:string;date:string;service:string;vehicle:string;passengers:string}}){
   const [state,setState]=useState<'idle'|'sending'|'success'|'error'>('idle'),[travelDate,setTravelDate]=useState(initial.date),[service,setService]=useState(serviceTypeContent.some(s=>s.title===initial.service)?initial.service:'Luxury Vehicles'),[validation,setValidation]=useState('');const form=useRef<HTMLFormElement>(null);
   async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();if(state==='sending')return;if(!travelDate){setValidation('Please choose a travel date.');return;}const d=new FormData(e.currentTarget);setValidation('');setState('sending');try{await submitInquiry({full_name:String(d.get('name')).trim(),phone:String(d.get('phone')).trim(),email:String(d.get('email')).trim(),pickup_location:String(d.get('city')).trim(),travel_date:travelDate,service_type:service,passengers:Number(d.get('passengers')),trip_details:[`Preferred vehicle: ${d.get('vehicle')||'Please recommend'}`,String(d.get('details'))].join('\n'),form_source:'contact_us'});setState('success')}catch{setState('error')}}

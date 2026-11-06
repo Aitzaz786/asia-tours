@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { BagIcon } from "./Bag";
 import { GoldFooter } from "./Footer";
 import WhatsAppFloatingButton from "../WhatsAppFloatingButton";
 import BackToTopButton from "../BackToTopButton";
@@ -74,7 +76,7 @@ function ShellContent({children,pathname}:{children:React.ReactNode;pathname:str
     <div className="topbar"><div className="wrap"><span>Exceptional journeys. Across Pakistan.</span><a href="tel:+923004591145">24/7 assistance <span className="gold">＋92 300 4591145 ↗</span></a></div></div>
     <header className="site-header"><div className="wrap nav"><Link className="brand" href="/" aria-label="Asia Tours home"><img src="/gold/assets/a9b2e9d45dad38e4.webp" alt="Asia Tours" width="132" height="58" /></Link>
       <nav id="gold-nav" aria-label="Main navigation" className={open?"open":""}>{links.map(([href,label])=><Link key={href} href={href} onClick={()=>setOpen(false)} className={pathname===href||(href!=="/"&&pathname.startsWith(href+"/"))?"active":""} aria-current={pathname===href?"page":undefined}>{label}</Link>)}</nav>
-      <Link className="btn goldbtn navcta" href="/contact-us">Plan your journey <span>↗</span></Link><button type="button" className="menubtn" aria-controls="gold-nav" aria-expanded={open} aria-label="Toggle navigation" onClick={()=>setOpen(!open)}>{open?"×":"☰"}</button></div></header>
+      <div className="navtools"><BagIcon/><button type="button" className="menubtn" aria-controls="gold-nav" aria-expanded={open} aria-label={open?"Close navigation":"Open navigation"} onClick={()=>setOpen(!open)}>{open?<X size={25}/>:<Menu size={25}/>}</button></div></div></header>
     {children}
     <GoldFooter />
     <WhatsAppFloatingButton />
