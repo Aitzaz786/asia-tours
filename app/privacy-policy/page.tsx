@@ -94,6 +94,9 @@ export default function PrivacyPolicyPage() {
       description="How we collect, use, share, retain, and protect information while arranging your journey with Asia Tours."
       lastUpdated="July 21, 2026"
       sections={sections}
+      heroImage="/gold/assets/privacy-hero-v1.webp"
+      heroAlt="Asia Tours travel coordinator handling booking information at a private concierge desk"
+      heroCaption="PERSONAL DETAILS · HANDLED WITH CARE"
     />
   );
 }

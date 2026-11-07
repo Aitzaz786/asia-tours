@@ -87,6 +87,9 @@ export default function TermsAndConditionsPage() {
       description="Clear terms for bookings, payments, cancellations, passenger responsibilities, and the premium transport services we provide."
       lastUpdated="July 21, 2026"
       sections={sections}
+      heroImage="/gold/assets/terms-hero-v1.webp"
+      heroAlt="Asia Tours travel concierge reviewing an itinerary and booking terms with a client"
+      heroCaption="CLEAR PLANS · CONSIDERED JOURNEYS"
     />
   );
 }
